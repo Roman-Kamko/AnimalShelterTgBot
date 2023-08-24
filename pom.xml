@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <testconteiners.version>1.19.0</testconteiners.version>
+        <pengard.version>5.7.0</pengard.version>
     </properties>
     <dependencies>
 
@@ -68,6 +69,14 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+    <!--telegram-->
+        <dependency>
+            <groupId>com.github.pengrad</groupId>
+            <artifactId>java-telegram-bot-api</artifactId>
+            <version>${pengard.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
