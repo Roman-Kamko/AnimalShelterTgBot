@@ -26,6 +26,10 @@ public class Animal {
     @JoinColumn(name = "user", nullable = false)
     User user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter", nullable = false)
+    Shelter shelter;
+
     @OneToMany(mappedBy = "animal")
     List<Adaptation> adaptations;
 }
