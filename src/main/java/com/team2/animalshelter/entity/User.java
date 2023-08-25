@@ -2,10 +2,7 @@ package com.team2.animalshelter.entity;
 
 import com.team2.animalshelter.entity.enums.AnimalType;
 import com.team2.animalshelter.entity.enums.UserStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Entity;
@@ -15,9 +12,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
@@ -41,6 +36,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<Animal> animals;
 
-    @OneToMany(mappedBy = "userId")
+    @OneToMany(mappedBy = "user")
     List<Adaptation> adaptations;
 }
