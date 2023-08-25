@@ -26,10 +26,13 @@ public class Animal {
     @JoinColumn(name = "user", nullable = false)
     User user;
 
+<<<<<<< HEAD
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter", nullable = false)
     Shelter shelter;
 
+=======
+>>>>>>> origin/feature-nikitin
     @OneToMany(mappedBy = "animal")
     List<Adaptation> adaptations;
 }
