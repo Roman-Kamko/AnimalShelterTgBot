@@ -14,15 +14,13 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Shelter {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private String address;
-
     private String phoneNumber;
     private String timeTable;
-
 
 }
