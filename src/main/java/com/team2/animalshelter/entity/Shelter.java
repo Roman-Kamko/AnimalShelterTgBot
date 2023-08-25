@@ -1,8 +1,10 @@
 package com.team2.animalshelter.entity;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 
@@ -10,21 +12,22 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Shelter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
-    private String name;
+    String name;
 
-    private String address;
+    String address;
 
-    private String phoneNumber;
+    String phoneNumber;
 
-    private String timeTable;
+    String timeTable;
 
     @OneToMany(mappedBy = "shelter")
-    private List<Animal> animals;
+    List<Animal> animals;
 
 }
