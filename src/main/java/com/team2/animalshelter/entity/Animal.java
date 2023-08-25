@@ -1,18 +1,13 @@
 package com.team2.animalshelter.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "animal")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Animal {
@@ -28,9 +23,9 @@ public class Animal {
     Boolean isHealthy;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user", nullable = false)
     User user;
 
-    @OneToMany(mappedBy = "animalId")
+    @OneToMany(mappedBy = "animal")
     List<Adaptation> adaptations;
 }

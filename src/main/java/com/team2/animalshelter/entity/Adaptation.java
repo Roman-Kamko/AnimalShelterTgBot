@@ -1,18 +1,13 @@
 package com.team2.animalshelter.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 @Table(name = "adaptation")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Adaptation {
@@ -28,10 +23,10 @@ public class Adaptation {
     Boolean isNeedComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id", nullable = false)
-    Animal animalId;
+    @JoinColumn(name = "animal", nullable = false)
+    Animal animal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    User userId;
+    @JoinColumn(name = "user", nullable = false)
+    User user;
 }
