@@ -1,5 +1,6 @@
 package com.team2.animalshelter.entity;
 
+import com.team2.animalshelter.entity.enums.AnimalType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,6 +9,8 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "animal")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Animal {
@@ -22,14 +25,18 @@ public class Animal {
 
     Boolean isHealthy;
 
+    @Enumerated(EnumType.STRING)
+    AnimalType animalType;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user", nullable = false)
+    @JoinColumn(name = "user_id")
     User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shelter", nullable = false)
+    @JoinColumn(name = "shelter_id")
     Shelter shelter;
 
     @OneToMany(mappedBy = "animal")
     List<Adaptation> adaptations;
+
 }

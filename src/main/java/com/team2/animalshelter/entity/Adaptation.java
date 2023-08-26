@@ -5,9 +5,12 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "adaptation")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Adaptation {
@@ -23,10 +26,14 @@ public class Adaptation {
     Boolean isNeedComment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal", nullable = false)
+    @JoinColumn(name = "animal_id")
     Animal animal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user", nullable = false)
+    @JoinColumn(name = "user_id")
     User user;
+
+    @OneToMany(mappedBy = "adaptation")
+    List<Report> reports;
+
 }

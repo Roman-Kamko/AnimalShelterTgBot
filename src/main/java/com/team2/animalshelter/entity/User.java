@@ -5,22 +5,23 @@ import com.team2.animalshelter.entity.enums.UserStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
+
     @Id
     Long chatId;
 
     String userName;
 
+    @Enumerated(EnumType.STRING)
     AnimalType animalType;
 
     String name;
@@ -31,6 +32,7 @@ public class User {
 
     String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
     UserStatus userStatus;
 
     @OneToMany(mappedBy = "user")
@@ -38,4 +40,5 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     List<Adaptation> adaptations;
+
 }
