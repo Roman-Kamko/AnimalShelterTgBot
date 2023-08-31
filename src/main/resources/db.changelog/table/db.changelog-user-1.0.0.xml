@@ -12,13 +12,12 @@
             </not>
         </preConditions>
         <createTable tableName="users">
-            <column name="chat_id" type="BIGINT">
+            <column name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(128)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="shelter_type" type="VARCHAR(16)"/>
             <column name="name" type="VARCHAR(64)">
                 <constraints nullable="false"/>
             </column>

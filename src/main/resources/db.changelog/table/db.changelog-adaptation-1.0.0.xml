@@ -61,7 +61,7 @@
                                  baseColumnNames="user_id"
                                  constraintName="FK_ADAPTATION_USERS_ID"
                                  referencedTableName="users"
-                                 referencedColumnNames="chat_id"/>
+                                 referencedColumnNames="id"/>
         <rollback>
             <dropForeignKeyConstraint baseTableName="FK_ADAPTATION_USERS_ID"/>
         </rollback>

@@ -12,17 +12,15 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = {"animals", "adaptations"})
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     @Id
-    Long chatId;
+    Long id;
 
-    String userName;
-
-    @Enumerated(EnumType.STRING)
-    AnimalType animalType;
+    String username;
 
     String name;
 
