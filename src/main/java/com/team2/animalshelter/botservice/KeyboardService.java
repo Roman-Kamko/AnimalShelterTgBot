@@ -1,29 +1,26 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.TelegramBot;
-import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
-import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.team2.animalshelter.constant.ButtonKey.*;
 
 @Service
 @RequiredArgsConstructor
 public class KeyboardService {
 
     private final TelegramBot telegramBot;
-    private final UserService userService;
+    //    private final UserService userService;
     private static final String CHOOSE = "Выберите:";
 
     /**
      * Утилитный метод содержащий необходимые настройки для всех менюшек.
+     *
      * @param replyKeyboardMarkup передать собранное меню
-     * @param chatId передать идентификатор чата.
-     * @param text передать текст, для всего кроме приветствия использовать {@link KeyboardService#CHOOSE}
+     * @param chatId              передать идентификатор чата.
+     * @param text                передать текст, для всего кроме приветствия использовать {@link KeyboardService#CHOOSE}
      */
     private void returnResponseReplyKeyboardMarkup(ReplyKeyboardMarkup replyKeyboardMarkup, Long chatId, String text) {
         replyKeyboardMarkup.resizeKeyboard(true);
