@@ -1,6 +1,7 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
@@ -31,5 +32,14 @@ public class KeyboardService {
                 .parseMode(ParseMode.HTML)
                 .disableWebPagePreview(true);
         telegramBot.execute(request);
+    }
+    public void sendChooseAnimalMenu(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(CAT_SHELTER),
+                new KeyboardButton(DOG_SHELTER)
+        ).addRow(
+                new KeyboardButton(SHELTER_MENU)
+        );
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
 }
