@@ -1,17 +1,27 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.team2.animalshelter.constant.ButtonKey.START;
+
+
 @Service
 @RequiredArgsConstructor
 public class KeyboardService {
 
     private final TelegramBot telegramBot;
+    public void sendGreetings(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(START));
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
+
+    }
     //    private final UserService userService;
     private static final String CHOOSE = "Выберите:";
 

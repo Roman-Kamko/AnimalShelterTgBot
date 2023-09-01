@@ -1,5 +1,6 @@
 package com.team2.animalshelter.constant;
 
 public class ButtonKey {
+    public static final String START = "Привет";
 
 }
