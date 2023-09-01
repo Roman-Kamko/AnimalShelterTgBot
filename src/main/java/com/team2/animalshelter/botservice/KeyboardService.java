@@ -48,5 +48,14 @@ public class KeyboardService {
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
 
+    public void sendChooseAnimalMenu(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(CAT_SHELTER),
+                new KeyboardButton(DOG_SHELTER)
+        ).addRow(
+                new KeyboardButton(SHELTER_MENU)
+        );
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+    }
 
 }
