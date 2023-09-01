@@ -5,11 +5,11 @@ import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.team2.animalshelter.constant.ButtonKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.team2.animalshelter.constant.ButtonKey.CAT_SHELTER;
-import static com.team2.animalshelter.constant.ButtonKey.DOG_SHELTER;
+import static com.team2.animalshelter.constant.ButtonKey.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +36,18 @@ public class KeyboardService {
                 .disableWebPagePreview(true);
         telegramBot.execute(request);
     }
+
+    public void sendMainMenu(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(SHELTER_MENU),
+                new KeyboardButton(FAQ)
+        ).addRow(
+                new KeyboardButton(SEND_REPORT_FORM),
+                new KeyboardButton(CALL_A_VOLUNTEER)
+        );
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+    }
+
     public void sendChooseAnimalMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(CAT_SHELTER),
@@ -45,4 +57,5 @@ public class KeyboardService {
         );
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
+
 }
