@@ -19,14 +19,15 @@ import static com.team2.animalshelter.constant.ButtonKey.*;
 public class KeyboardService {
 
     private final TelegramBot telegramBot;
+    //    private final UserService userService;
+    private static final String CHOOSE = "Выберите:";
+
     public void sendGreetings(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(START));
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
 
     }
-    //    private final UserService userService;
-    private static final String CHOOSE = "Выберите:";
 
     /**
      * Утилитный метод содержащий необходимые настройки для всех менюшек.
