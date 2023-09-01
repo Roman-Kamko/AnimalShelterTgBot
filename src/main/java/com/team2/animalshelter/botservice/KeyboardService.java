@@ -8,6 +8,9 @@ import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import static com.team2.animalshelter.constant.ButtonKey.CAT_SHELTER;
+import static com.team2.animalshelter.constant.ButtonKey.DOG_SHELTER;
+
 @Service
 @RequiredArgsConstructor
 public class KeyboardService {
