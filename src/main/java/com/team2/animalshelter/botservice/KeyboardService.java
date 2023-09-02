@@ -22,13 +22,6 @@ public class KeyboardService {
     //    private final UserService userService;
     private static final String CHOOSE = "Выберите:";
 
-    public void sendGreetings(Long chatId) {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(START));
-        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
-
-    }
-
     /**
      * Утилитный метод содержащий необходимые настройки для всех менюшек.
      *
@@ -45,6 +38,13 @@ public class KeyboardService {
                 .parseMode(ParseMode.HTML)
                 .disableWebPagePreview(true);
         telegramBot.execute(request);
+    }
+
+    public void sendGreetings(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(START));
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
+
     }
 
     public void sendMainMenu(Long chatId) {
