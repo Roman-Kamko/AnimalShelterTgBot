@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import static com.team2.animalshelter.constant.ButtonKey.*;
 
+/**
+ * Класс в котором строятся основные меню для навигации по боту
+ */
 @Service
 @RequiredArgsConstructor
 public class KeyboardService {

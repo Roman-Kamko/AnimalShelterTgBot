@@ -23,6 +23,8 @@ public class Animal {
 
     Integer age;
 
+    String breed;
+
     Boolean isHealthy;
 
     @Enumerated(EnumType.STRING)

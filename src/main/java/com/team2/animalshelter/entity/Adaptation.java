@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Адаптационный период животного взятого под опеку.
+ */
 @Entity
 @Data
 @AllArgsConstructor
@@ -21,8 +24,16 @@ public class Adaptation {
 
     LocalDate endsDate;
 
+    /**
+     * Комментарий от волонтера при необходимости.
+     */
     String comment;
 
+    /**
+     * Флаг для волонтеров в случае необходимости дать комментарий по адаптационному периоду.
+     * Например: при длительной не отправке отчетов опекуном.
+     *
+     */
     Boolean isNeedComment;
 
     @ManyToOne(fetch = FetchType.LAZY)

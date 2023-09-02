@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import static com.team2.animalshelter.constant.ButtonKey.*;
 
+/**
+ * Класс для обработки Update'ов
+ */
 @Service
 @RequiredArgsConstructor
 public class UpdateHandler {
