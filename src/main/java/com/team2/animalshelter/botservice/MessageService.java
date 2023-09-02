@@ -6,6 +6,9 @@ import com.team2.animalshelter.constant.Information;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * Класс для отправки сообщений пользователю
+ */
 @Service
 @RequiredArgsConstructor
 public class MessageService {
