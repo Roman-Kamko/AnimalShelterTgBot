@@ -1,6 +1,5 @@
 package com.team2.animalshelter.entity;
 
-import com.team2.animalshelter.entity.enums.AnimalType;
 import com.team2.animalshelter.entity.enums.UserStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

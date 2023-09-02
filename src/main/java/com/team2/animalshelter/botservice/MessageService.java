@@ -12,4 +12,24 @@ public class MessageService {
 
     private final TelegramBot telegramBot;
 
+    /**
+     * Отправка списка всех доступных команд в разделе FAQ.
+     *
+     * @param chatId указать в какой чат отправить сообщение.
+     */
+    public void sendFaqMessage(Long chatId) {
+        var message = new SendMessage(chatId, Information.FAQ_COMMAND);
+        telegramBot.execute(message);
+    }
+
+    /**
+     * Отправка сообщения в случае не поддерживаемой команды.
+     *
+     * @param chatId указать в какой чат отправить сообщение.
+     */
+    public void sendUnknownCommand(Long chatId) {
+        var message = new SendMessage(chatId, Information.UNKNOWN_COMMAND);
+        telegramBot.execute(message);
+    }
+
 }
