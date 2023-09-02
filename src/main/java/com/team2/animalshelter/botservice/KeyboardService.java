@@ -5,12 +5,8 @@ import com.pengrad.telegrambot.model.request.KeyboardButton;
 import com.pengrad.telegrambot.model.request.ParseMode;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardMarkup;
 import com.pengrad.telegrambot.request.SendMessage;
-import com.team2.animalshelter.constant.ButtonKey;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import static com.team2.animalshelter.constant.ButtonKey.START;
-
 
 import static com.team2.animalshelter.constant.ButtonKey.*;
 
@@ -19,7 +15,6 @@ import static com.team2.animalshelter.constant.ButtonKey.*;
 public class KeyboardService {
 
     private final TelegramBot telegramBot;
-    //    private final UserService userService;
     private static final String CHOOSE = "Выберите:";
 
     /**
@@ -40,6 +35,11 @@ public class KeyboardService {
         telegramBot.execute(request);
     }
 
+    /**
+     * Приветствие для пользователя еще не сохраненного в БД.
+     *
+     * @param chatId передать идентификатор чата.
+     */
     public void sendGreetings(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(START));
@@ -47,6 +47,11 @@ public class KeyboardService {
 
     }
 
+    /**
+     * Главное меню.
+     *
+     * @param chatId передать идентификатор чата.
+     */
     public void sendMainMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(SHELTER_MENU),
@@ -58,6 +63,11 @@ public class KeyboardService {
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
 
+    /**
+     * Меню выбора типа животного.
+     *
+     * @param chatId передать идентификатор чата.
+     */
     public void sendChooseAnimalMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(CAT_SHELTER),
@@ -69,7 +79,7 @@ public class KeyboardService {
     }
 
     /**
-     * Утилитарный метод содержащий необходимые настройки для выбора меню приюта.
+     * Меню приюта.
      *
      * @param chatId передать идентификатор чата.
      */

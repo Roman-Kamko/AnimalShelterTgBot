@@ -6,24 +6,25 @@ import org.springframework.stereotype.Service;
 public class ButtonKey {
 
     /**
-     * Приветствие
+     * Приветствие.
      */
     public static final String START = "Привет";
 
     /**
-     * Общие
+     * Общие.
      */
     public static final String CALL_A_VOLUNTEER = "Позвать волонтёра";
+    public static final String MAIN_MENU = "Главное меню";
 
     /**
-     * Меню приюта
+     * Меню приюта.
      */
     public static final String SHELTER_MENU = "Меню приюта";
     public static final String FAQ = "ЧаВо";
     public static final String SEND_REPORT_FORM = "Отправить отчёт";
 
     /**
-     * Меню выбора животных
+     * Меню выбора животных.
      */
     public static final String CAT_SHELTER = "Приют для кошек";
     public static final String DOG_SHELTER = "Приют для собак";
@@ -37,6 +38,5 @@ public class ButtonKey {
     public static final String TIME_TABLE = "Расписание";
     public static final String SAFETY_PRECAUTIONS = "Техника безопасности";
     public static final String SEND_CONTACT = "Оставить телефон";
-    public static final String MAIN_MENU = "Главное меню";
 
 }
