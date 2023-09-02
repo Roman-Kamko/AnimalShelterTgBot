@@ -23,7 +23,7 @@ public class KeyboardService {
     private static final String CHOOSE = "Выберите:";
 
     /**
-     * Утилитный метод содержащий необходимые настройки для всех менюшек.
+     * Утилитарный метод содержащий необходимые настройки для всех менюшек.
      *
      * @param replyKeyboardMarkup передать собранное меню
      * @param chatId              передать идентификатор чата.
@@ -64,6 +64,28 @@ public class KeyboardService {
                 new KeyboardButton(DOG_SHELTER)
         ).addRow(
                 new KeyboardButton(SHELTER_MENU)
+        );
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+    }
+
+    /**
+     * Утилитарный метод содержащий необходимые настройки для выбора меню приюта.
+     *
+     * @param chatId передать идентификатор чата.
+     */
+    public void sendShelterMenu(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
+                new KeyboardButton(CHOOSE_ANIMAL_TYPE)
+        ).addRow(
+                new KeyboardButton(SHELTER_CONTACT),
+                new KeyboardButton(SHELTER_ADDRESS),
+                new KeyboardButton(TIME_TABLE)
+        ).addRow(
+                new KeyboardButton(SAFETY_PRECAUTIONS),
+                new KeyboardButton(SEND_CONTACT)
+        ).addRow(
+                new KeyboardButton(CALL_A_VOLUNTEER),
+                new KeyboardButton(MAIN_MENU)
         );
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
