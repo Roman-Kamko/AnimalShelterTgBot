@@ -6,26 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
+@Entity
+@Table(name = "volunteers")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class Volunteer {
 
     @Id
-    Long telegramId;
-
-    String username;
+    Long Id;
 
     String firstname;
 
     String lastname;
 
-    String phoneNumber;
+    @ManyToOne
+    @JoinColumn(name = "shelter_id")
+    Shelter shelter;
 }

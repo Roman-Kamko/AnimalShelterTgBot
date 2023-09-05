@@ -2,7 +2,6 @@ package com.team2.animalshelter.mapper;
 
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.entity.User;
-import com.team2.animalshelter.entity.enums.UserStatus;
 import org.springframework.stereotype.Component;
 
 @Component

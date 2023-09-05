@@ -31,14 +31,6 @@ public class Animal {
     AnimalType animalType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter_id")
     Shelter shelter;
-
-    @OneToMany(mappedBy = "animal")
-    List<Adaptation> adaptations;
-
 }
