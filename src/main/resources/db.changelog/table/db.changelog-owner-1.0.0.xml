@@ -8,10 +8,10 @@
     <changeSet id="1" author="Kamko">
         <preConditions>
             <not>
-                <tableExists tableName="users"/>
+                <tableExists tableName="owner"/>
             </not>
         </preConditions>
-        <createTable tableName="users">
+        <createTable tableName="owner">
             <column name="telegram_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
@@ -27,7 +27,7 @@
             <column name="phone_number" type="VARCHAR(16)"/>
         </createTable>
         <rollback>
-            <dropTable tableName="users"/>
+            <dropTable tableName="owner"/>
         </rollback>
     </changeSet>
 

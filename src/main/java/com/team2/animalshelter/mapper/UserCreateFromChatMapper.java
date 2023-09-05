@@ -15,10 +15,10 @@ public class UserCreateFromChatMapper {
      */
     public User toEntity(Chat chat) {
         var user = new User();
-        user.setId(chat.id());
+        user.setTelegramId(chat.id());
         user.setUsername(chat.username());
-        user.setName(chat.firstName());
-        user.setUserStatus(UserStatus.USER);
+        user.setFirstname(chat.firstName());
+        user.setLastname(chat.lastName());
         return user;
     }
 

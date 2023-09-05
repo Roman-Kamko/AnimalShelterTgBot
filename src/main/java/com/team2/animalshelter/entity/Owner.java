@@ -7,16 +7,17 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.List;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Volunteer {
+public class Owner {
 
     @Id
-    Long telegram_id;
+    Long telegramId;
 
     String username;
 
@@ -24,7 +25,9 @@ public class Volunteer {
 
     String lastname;
 
-    @ManyToOne
-    @JoinColumn(name = "shelter_id")
-    Shelter shelter;
+    String phoneNumber;
+
+    @OneToMany(mappedBy = "owner")
+    List<Adaptation> adaptations;
+
 }

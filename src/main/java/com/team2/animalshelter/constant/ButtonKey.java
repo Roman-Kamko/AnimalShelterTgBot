@@ -17,7 +17,7 @@ public class ButtonKey {
     public static final String MAIN_MENU = "Главное меню";
 
     /**
-     * Меню приюта.
+     * Главное меню пользователя.
      */
     public static final String SHELTER_MENU = "Меню приюта";
     public static final String FAQ = "ЧаВо";
@@ -38,5 +38,15 @@ public class ButtonKey {
     public static final String TIME_TABLE = "Расписание";
     public static final String SAFETY_PRECAUTIONS = "Техника безопасности";
     public static final String SEND_CONTACT = "Оставить телефон";
+
+    /**
+     * Меню администратора
+     */
+    public static final String WAITING_USERS = "Пользователи ожидающие ответа";
+
+    /**
+     * Inline keyboard
+     */
+    public static final String QUESTION_SOLVED = "Вопрос решен";
 
 }

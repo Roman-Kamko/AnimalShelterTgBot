@@ -31,6 +31,6 @@ public class Shelter {
     @OneToMany(mappedBy = "shelter")
     List<Animal> animals;
 
-    @OneToMany(mappedBy = "Shelter")
+    @OneToMany(mappedBy = "shelter")
     List<Volunteer> volunteers;
 }

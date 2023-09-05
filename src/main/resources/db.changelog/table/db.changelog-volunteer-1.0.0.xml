@@ -8,10 +8,10 @@
     <changeSet id="1" author="Kamko">
         <preConditions>
             <not>
-                <tableExists tableName="users"/>
+                <tableExists tableName="volunteer"/>
             </not>
         </preConditions>
-        <createTable tableName="users">
+        <createTable tableName="volunteer">
             <column name="telegram_id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
@@ -24,10 +24,29 @@
             <column name="lastname" type="VARCHAR(64)">
                 <constraints nullable="false"/>
             </column>
-            <column name="phone_number" type="VARCHAR(16)"/>
+            <column name="shelter_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <rollback>
-            <dropTable tableName="users"/>
+            <dropTable tableName="volunteer"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2" author="Kamko">
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK_VOLUNTEER_SHELTER_ID"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="volunteer"
+                                 baseColumnNames="shelter_id"
+                                 constraintName="FK_VOLUNTEER_SHELTER_ID"
+                                 referencedTableName="shelter"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FK_VOLUNTEER_SHELTER_ID"/>
         </rollback>
     </changeSet>
 

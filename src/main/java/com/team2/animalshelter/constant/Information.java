@@ -21,7 +21,10 @@ public class Information {
                 /homeForPuppy - список рекомендаций по обустройству дома для щенка
                 /homeForAdultDog - список рекомендаций по обустройству дома для взрослой собаки
                 /homeForDisabledDog - список рекомендаций по обустройству дома для собаки с ограниченными возможностями
+                /cynologistAdvice - советы кинолога по первичному общению с собакой
+                /provenCynologists - проверенные кинологи для дальнейшего обращения
             """;
     public static final String UNKNOWN_COMMAND = "Данная команда пока не поддерживается \uD83D\uDE14";
 
+    public static final String CALL_VOLUNTEER = "Запрос принят, как только освободится волонтер, он сразу же Вам ответит \uD83D\uDE0A";
 }

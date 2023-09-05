@@ -15,10 +15,10 @@
             <column name="id" type="BIGSERIAL" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="message" type="VARCHAR(512)">
+            <column name="report_message" type="VARCHAR(512)">
                 <constraints nullable="false"/>
             </column>
-            <column name="photo" type="VARCHAR(128)"/>
+            <column name="photo" type="VARCHAR(255)"/>
             <column name="date" type="DATE">
                 <constraints nullable="false"/>
             </column>
