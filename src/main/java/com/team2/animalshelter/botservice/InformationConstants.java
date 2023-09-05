@@ -1,10 +1,10 @@
-package com.team2.animalshelter.constant;
+package com.team2.animalshelter.botservice;
 
-public class Information {
+public class InformationConstants {
 
     public static final String FAQ_COMMAND = """
             Вот что я могу тебе рассказать:
-            
+                        
                 Общие темы:
                 /datingRules - правила знакомства с животным до того, как забрать его из приюта
                 /docList - список документов, необходимых для того, чтобы взять животное из приюта

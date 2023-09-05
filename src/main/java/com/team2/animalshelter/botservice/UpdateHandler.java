@@ -7,8 +7,6 @@ import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.team2.animalshelter.constant.ButtonKey.*;
-
 /**
  * Класс для обработки Update'ов
  */
@@ -19,6 +17,7 @@ public class UpdateHandler {
     private final UserService userService;
     private final KeyboardService keyboardService;
     private final MessageService messageService;
+    private final NavigationCommandHandler navigationCommandHandler;
 
     public void handleUpdate(Update update) {
         if (update.message() != null) {
@@ -34,15 +33,8 @@ public class UpdateHandler {
             }
 
             if (text != null) {
-                switch (text) {
-                    case START, MAIN_MENU -> keyboardService.sendMainMenu(chatId);
-                    case SHELTER_MENU -> keyboardService.sendShelterMenu(chatId);
-                    case CHOOSE_ANIMAL_TYPE -> keyboardService.sendChooseAnimalMenu(chatId);
-                    case FAQ -> messageService.sendFaqMessage(chatId);
-                    default -> messageService.sendUnknownCommand(chatId);
-                }
+                navigationCommandHandler.handle(text, chat);
             }
-
         }
     }
 
