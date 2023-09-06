@@ -19,31 +19,38 @@ public class AnimalMapper {
     final ShelterRepository shelterRepository;
     final ShelterMapper shelterMapper;
 
-    public Animal toEntity(AnimalDtoIn animalDtoIn) {
-        Animal animal = new Animal();
-        animal.setName(animal.getName());
-        animal.setAge(animalDtoIn.getAge());
-        animal.setBreed(animal.getBreed());
-        animal.setHealthy(animal.getHealthy());
-        animal.setAnimalType(animalDtoIn.getAnimalType());
-        animal.setShelter(
-                shelterRepository.findById(animalDtoIn.getShelterId())
-                        .orElseThrow(RuntimeException::new)
-        );
-        return animal;
+    public Animal toEntity(AnimalDtoIn fromObj) {
+        Animal toObj = new Animal();
+        copy(fromObj, toObj);
+        return toObj;
     }
 
+    public Animal toEntity(AnimalDtoIn fromObj, Animal toObj) {
+        copy(fromObj, toObj);
+        return toObj;
+    }
 
-
-    public AnimalDtoOut toDto(Animal animal) {
+    public AnimalDtoOut toDto(Animal fromObj) {
         return new AnimalDtoOut(
-                animal.getId(),
-                animal.getName(),
-                animal.getAge(),
-                animal.getBreed(),
-                animal.getHealthy(),
-                animal.getAnimalType(),
-                shelterMapper.toDto(animal.getShelter())
+                fromObj.getId(),
+                fromObj.getName(),
+                fromObj.getAge(),
+                fromObj.getBreed(),
+                fromObj.getHealthy(),
+                fromObj.getAnimalType(),
+                shelterMapper.toDto(fromObj.getShelter())
+        );
+    }
+
+    private void copy(AnimalDtoIn fromObj, Animal toObj) {
+        toObj.setName(fromObj.getName());
+        toObj.setAge(fromObj.getAge());
+        toObj.setBreed(fromObj.getBreed());
+        toObj.setHealthy(fromObj.getHealthy());
+        toObj.setAnimalType(fromObj.getAnimalType());
+        toObj.setShelter(
+                shelterRepository.findById(fromObj.getShelterId())
+                        .orElseThrow(RuntimeException::new)
         );
     }
 }

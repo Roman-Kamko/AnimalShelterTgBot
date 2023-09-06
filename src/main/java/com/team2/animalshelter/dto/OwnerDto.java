@@ -13,4 +13,6 @@ public class OwnerDto {
 
     String lastname;
 
+    String phoneNumber;
+
 }

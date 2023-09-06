@@ -19,25 +19,25 @@ public class VolunteerMapper {
     final ShelterRepository shelterRepository;
     final ShelterMapper shelterMapper;
 
-    public Volunteer toEntity(VolunteerDtoIn volunteerDtoIn) {
-        var volunteer = new Volunteer();
-        volunteer.setUsername(volunteerDtoIn.getUsername());
-        volunteer.setFirstname(volunteerDtoIn.getFirstname());
-        volunteer.setLastname(volunteerDtoIn.getLastname());
-        volunteer.setShelter(
-                shelterRepository.findById(volunteerDtoIn.getShelterId())
+    public Volunteer toEntity(VolunteerDtoIn fromObj) {
+        var toObj = new Volunteer();
+        toObj.setUsername(fromObj.getUsername());
+        toObj.setFirstname(fromObj.getFirstname());
+        toObj.setLastname(fromObj.getLastname());
+        toObj.setShelter(
+                shelterRepository.findById(fromObj.getShelterId())
                         .orElseThrow(RuntimeException::new)
         );
-        return volunteer;
+        return toObj;
     }
 
-    public VolunteerDtoOut toDto(Volunteer volunteer) {
+    public VolunteerDtoOut toDto(Volunteer fromObj) {
         return new VolunteerDtoOut(
-                volunteer.getTelegramId(),
-                volunteer.getUsername(),
-                volunteer.getFirstname(),
-                volunteer.getLastname(),
-                shelterMapper.toDto(volunteer.getShelter())
+                fromObj.getTelegramId(),
+                fromObj.getUsername(),
+                fromObj.getFirstname(),
+                fromObj.getLastname(),
+                shelterMapper.toDto(fromObj.getShelter())
         );
     }
 }

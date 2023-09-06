@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 @Slf4j
 @Component
 public class EntityUtils<T> {
-    // TODO: 02.09.2023 не протестировано
 
     /**
      * Вспомогательный параметризированный метод для копирования non null полей.

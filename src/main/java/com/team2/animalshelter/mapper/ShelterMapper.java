@@ -19,23 +19,23 @@ public class ShelterMapper {
         return toObj;
     }
 
-    private static void copy(ShelterDtoIn fromObj, Shelter toObj) {
+    public ShelterDtoOut toDto(Shelter fromObj) {
+        return new ShelterDtoOut(
+                fromObj.getId(),
+                fromObj.getName(),
+                fromObj.getAddress(),
+                fromObj.getPhoneNumber(),
+                fromObj.getTimeTable(),
+                fromObj.getDrivingDirections()
+        );
+    }
+
+    private void copy(ShelterDtoIn fromObj, Shelter toObj) {
         toObj.setName(fromObj.getName());
         toObj.setAddress(fromObj.getAddress());
         toObj.setPhoneNumber(fromObj.getPhoneNumber());
         toObj.setTimeTable(fromObj.getTimeTable());
         toObj.setDrivingDirections(fromObj.getDrivingDirections());
-    }
-
-    public ShelterDtoOut toDto(Shelter shelter) {
-        return new ShelterDtoOut(
-                shelter.getId(),
-                shelter.getName(),
-                shelter.getAddress(),
-                shelter.getPhoneNumber(),
-                shelter.getTimeTable(),
-                shelter.getDrivingDirections()
-        );
     }
 
 }
