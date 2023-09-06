@@ -1,11 +1,9 @@
 package com.team2.animalshelter.mapper;
 
-import com.team2.animalshelter.dto.in.AdaptationDtoIn;
 import com.team2.animalshelter.dto.in.AnimalDtoIn;
 import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.entity.Animal;
 import com.team2.animalshelter.repository.ShelterRepository;
-import com.team2.animalshelter.service.ShelterService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
