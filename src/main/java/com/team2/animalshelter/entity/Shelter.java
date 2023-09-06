@@ -27,10 +27,4 @@ public class Shelter {
     String phoneNumber;
 
     String timeTable;
-
-    @OneToMany(mappedBy = "shelter")
-    List<Animal> animals;
-
-    @OneToMany(mappedBy = "shelter")
-    List<Volunteer> volunteers;
 }
