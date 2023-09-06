@@ -18,4 +18,6 @@ public class AnimalDtoIn {
 
     AnimalType animalType;
 
+    Long shelterId;
+
 }

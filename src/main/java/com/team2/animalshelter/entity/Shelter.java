@@ -28,6 +28,8 @@ public class Shelter {
 
     String timeTable;
 
+    String drivingDirections;
+
     @OneToMany(mappedBy = "shelter")
     List<Animal> animals;
 

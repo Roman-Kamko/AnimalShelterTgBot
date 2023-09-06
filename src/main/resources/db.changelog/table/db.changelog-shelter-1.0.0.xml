@@ -27,6 +27,7 @@
             <column name="time_table" type="VARCHAR(1024)">
                 <constraints nullable="false"/>
             </column>
+            <column name="driving_directions" type="VARCHAR(256)"/>
         </createTable>
         <rollback>
             <dropTable tableName="shelter"/>

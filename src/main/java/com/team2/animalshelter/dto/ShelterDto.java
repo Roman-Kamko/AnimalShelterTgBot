@@ -16,4 +16,6 @@ public class ShelterDto {
 
     String timeTable;
 
+    String drivingDirections;
+
 }
