@@ -11,5 +11,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Volunteer extends BaseEntity{
+public class Volunteer extends BaseEntity {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    Shelter shelter;
+
 }

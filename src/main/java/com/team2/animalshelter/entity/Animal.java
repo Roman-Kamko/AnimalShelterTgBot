@@ -29,4 +29,8 @@ public class Animal {
     @Enumerated(EnumType.STRING)
     AnimalType animalType;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    Shelter shelter;
+
 }

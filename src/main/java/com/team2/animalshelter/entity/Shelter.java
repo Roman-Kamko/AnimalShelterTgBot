@@ -28,4 +28,10 @@ public class Shelter {
 
     String timeTable;
 
+    @OneToMany(mappedBy = "shelter")
+    List<Animal> animals;
+
+    @OneToMany(mappedBy = "shelter")
+    List<Volunteer> volunteers;
+
 }
