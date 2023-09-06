@@ -1,5 +1,8 @@
 package com.team2.animalshelter.botservice;
 
+/**
+ * Список поддерживаемых команд
+ */
 public enum NavigationCommand {
 
     START("/start"),

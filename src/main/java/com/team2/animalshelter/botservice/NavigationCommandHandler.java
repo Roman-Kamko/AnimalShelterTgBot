@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Класс для обработки команд
+ */
 @Component
 @RequiredArgsConstructor
 public class NavigationCommandHandler {
@@ -19,6 +22,11 @@ public class NavigationCommandHandler {
     private final KeyboardService keyboardService;
     private final MessageService messageService;
 
+    /**
+     * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
+     * {@link #navigationCommandExecutor} команду, передварительно созданную в {@link InformationConstants},
+     * а в виде значения ссылку на метод, который необходимо создать в этом классе.
+     */
     @PostConstruct
     private void initMethod() {
         navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
@@ -28,6 +36,14 @@ public class NavigationCommandHandler {
         navigationCommandExecutor.put(NavigationCommand.CHOOSE_ANIMAL_TYPE.getText(), this::showChooseAnimalMenu);
     }
 
+    /**
+     * Метод для обработки команд. В зависимости от поступившей команды будет выполнен соответствующий метод,
+     * если поступившая команда не зарегистрирована в {@link #initMethod()}, то будет выдано сообщение
+     * {@value InformationConstants#UNKNOWN_COMMAND}.
+     *
+     * @param navigationText поступившая команда.
+     * @param chat из какого чата поступила команда.
+     */
     public void handle(String navigationText, Chat chat) {
         var navigationCommands = NavigationCommand.values();
         if (navigationCommandExecutor.containsKey(navigationText)) {
