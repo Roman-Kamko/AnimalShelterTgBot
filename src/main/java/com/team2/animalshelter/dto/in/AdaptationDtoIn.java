@@ -7,10 +7,6 @@ import java.time.LocalDate;
 @Value
 public class AdaptationDtoIn {
 
-    LocalDate startDate;
-
-    LocalDate endDate;
-
     String comment;
 
     Boolean needComment;
