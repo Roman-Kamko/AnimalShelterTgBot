@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class VolunteerMapper {
 
+
+
     public Volunteer toEntity(VolunteerDtoIn volunteerDtoIn) {
         var volunteer = new Volunteer();
         volunteer.setUsername(volunteerDtoIn.getUsername());

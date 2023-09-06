@@ -4,7 +4,6 @@ import com.team2.animalshelter.entity.enums.AdaptationStatus;
 import lombok.Value;
 
 import java.time.LocalDate;
-import java.util.List;
 @Value
 public class AdaptationDtoOut {
 
