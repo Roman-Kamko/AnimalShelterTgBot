@@ -2,7 +2,7 @@ package com.team2.animalshelter.botservice;
 
 public enum NavigationCommand {
 
-    START("Привет"),
+    START("/start"),
     MAIN_MENU("Главное меню"),
     SHELTER_MENU("Меню приюта"),
     FAQ("ЧаВо"),

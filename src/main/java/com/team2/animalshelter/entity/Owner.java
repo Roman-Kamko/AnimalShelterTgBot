@@ -1,9 +1,6 @@
 package com.team2.animalshelter.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -11,19 +8,11 @@ import java.util.List;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Owner {
-
-    @Id
-    Long telegramId;
-
-    String username;
-
-    String firstname;
-
-    String lastname;
+public class Owner extends BaseEntity{
 
     String phoneNumber;
 

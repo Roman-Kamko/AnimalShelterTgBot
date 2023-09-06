@@ -30,6 +30,17 @@ public class UserService {
     }
 
     /**
+     * Метод определяющий зарегистрирован ли пользователь в системе.
+     *
+     * @param id идентификатор искомого пользователя.
+     * @return true если пользователь зарегистрирован, иначе false.
+     */
+    public boolean isRegistered(Long id) {
+        return userRepository.findById(id)
+                .isPresent();
+    }
+
+    /**
      * Создание экземпляра сущности {@link User} на основе данных из {@link Chat} с последующим сохранением
      * пользователя в БД.
      *

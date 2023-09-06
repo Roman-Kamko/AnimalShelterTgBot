@@ -21,7 +21,7 @@ public class KeyboardService {
     private static final String CHOOSE = "Выберите:";
 
     /**
-     * Утилитарный метод содержащий необходимые настройки для всех менюшек.
+     * Утилитарный метод содержащий необходимые настройки для всех меню.
      *
      * @param replyKeyboardMarkup передать собранное меню
      * @param chatId              передать идентификатор чата.
@@ -45,7 +45,7 @@ public class KeyboardService {
      */
     public void sendGreetings(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(START.getText()));
+                new KeyboardButton(MAIN_MENU.getText()));
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
 
     }

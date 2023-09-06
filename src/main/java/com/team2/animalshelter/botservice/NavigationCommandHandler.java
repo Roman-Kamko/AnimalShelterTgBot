@@ -1,6 +1,7 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,12 +15,13 @@ import java.util.function.Consumer;
 public class NavigationCommandHandler {
 
     private final Map<String, Consumer<Chat>> navigationCommandExecutor = new HashMap<>();
+    private final UserService userService;
     private final KeyboardService keyboardService;
     private final MessageService messageService;
 
     @PostConstruct
     private void initMethod() {
-        navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showMainMenu);
+        navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
         navigationCommandExecutor.put(NavigationCommand.MAIN_MENU.getText(), this::showMainMenu);
         navigationCommandExecutor.put(NavigationCommand.SHELTER_MENU.getText(), this::showShelterMenu);
         navigationCommandExecutor.put(NavigationCommand.FAQ.getText(), this::showFaqMenu);
@@ -37,6 +39,15 @@ public class NavigationCommandHandler {
             }
         } else {
             messageService.sendUnknownCommand(chat.id());
+        }
+    }
+
+    private void showGreetings(Chat chat) {
+        if (!userService.isRegistered(chat.id())) {
+            userService.create(chat);
+            keyboardService.sendGreetings(chat.id());
+        } else {
+            showMainMenu(chat);
         }
     }
 
