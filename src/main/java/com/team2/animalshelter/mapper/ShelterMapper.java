@@ -8,14 +8,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShelterMapper {
 
-    public Shelter toEntity(ShelterDtoIn shelterDtoIn) {
-        var shelter = new Shelter();
-        shelter.setName(shelterDtoIn.getName());
-        shelter.setAddress(shelterDtoIn.getAddress());
-        shelter.setPhoneNumber(shelterDtoIn.getPhoneNumber());
-        shelter.setTimeTable(shelterDtoIn.getTimeTable());
-        shelter.setDrivingDirections(shelterDtoIn.getDrivingDirections());
-        return shelter;
+    public Shelter toEntity(ShelterDtoIn fromObj) {
+        var toObj = new Shelter();
+        copy(fromObj, toObj);
+        return toObj;
+    }
+
+    public Shelter toEntity(ShelterDtoIn fromObj, Shelter toObj) {
+        copy(fromObj, toObj);
+        return toObj;
+    }
+
+    private static void copy(ShelterDtoIn fromObj, Shelter toObj) {
+        toObj.setName(fromObj.getName());
+        toObj.setAddress(fromObj.getAddress());
+        toObj.setPhoneNumber(fromObj.getPhoneNumber());
+        toObj.setTimeTable(fromObj.getTimeTable());
+        toObj.setDrivingDirections(fromObj.getDrivingDirections());
     }
 
     public ShelterDtoOut toDto(Shelter shelter) {

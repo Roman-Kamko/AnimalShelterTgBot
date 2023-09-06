@@ -24,7 +24,10 @@ public class VolunteerMapper {
         volunteer.setUsername(volunteerDtoIn.getUsername());
         volunteer.setFirstname(volunteerDtoIn.getFirstname());
         volunteer.setLastname(volunteerDtoIn.getLastname());
-        volunteer.setShelter(shelterRepository.findById(volunteerDtoIn.getShelterId()).orElseThrow(RuntimeException::new));
+        volunteer.setShelter(
+                shelterRepository.findById(volunteerDtoIn.getShelterId())
+                        .orElseThrow(RuntimeException::new)
+        );
         return volunteer;
     }
 
@@ -34,9 +37,7 @@ public class VolunteerMapper {
                 volunteer.getUsername(),
                 volunteer.getFirstname(),
                 volunteer.getLastname(),
-                Optional.of(volunteer.getShelter())
-                        .map(shelterMapper::toDto)
-                        .orElseThrow(RuntimeException::new)
+                shelterMapper.toDto(volunteer.getShelter())
         );
     }
 }

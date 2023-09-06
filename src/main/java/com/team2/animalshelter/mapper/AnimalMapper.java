@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 public class AnimalMapper {
 
     final ShelterRepository shelterRepository;
-
     final ShelterMapper shelterMapper;
 
     public Animal toEntity(AnimalDtoIn animalDtoIn) {
@@ -27,9 +26,14 @@ public class AnimalMapper {
         animal.setBreed(animal.getBreed());
         animal.setHealthy(animal.getHealthy());
         animal.setAnimalType(animalDtoIn.getAnimalType());
-        animal.setShelter(shelterRepository.findById(animalDtoIn.getShelterId()).orElseThrow(RuntimeException::new));
+        animal.setShelter(
+                shelterRepository.findById(animalDtoIn.getShelterId())
+                        .orElseThrow(RuntimeException::new)
+        );
         return animal;
     }
+
+
 
     public AnimalDtoOut toDto(Animal animal) {
         return new AnimalDtoOut(
