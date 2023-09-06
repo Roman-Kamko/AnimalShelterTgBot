@@ -2,10 +2,10 @@ package com.team2.animalshelter.dto;
 
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Value
 public class UserDto {
 
     Long telegramId;
@@ -15,4 +15,5 @@ public class UserDto {
     String firstname;
 
     String lastname;
+
 }

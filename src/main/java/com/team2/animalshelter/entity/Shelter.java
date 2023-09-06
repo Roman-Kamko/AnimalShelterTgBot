@@ -27,4 +27,5 @@ public class Shelter {
     String phoneNumber;
 
     String timeTable;
+
 }

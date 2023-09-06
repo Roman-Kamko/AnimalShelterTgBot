@@ -20,9 +20,6 @@ public class AnimalDtoOut {
 
     Boolean healthy;
 
-    @Enumerated(EnumType.STRING)
     AnimalType animalType;
 
-    List<AdaptationDtoOut> adaptationDtoOuts;
-    
 }

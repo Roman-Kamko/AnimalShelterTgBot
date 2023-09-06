@@ -28,4 +28,5 @@ public class Animal {
 
     @Enumerated(EnumType.STRING)
     AnimalType animalType;
+
 }
