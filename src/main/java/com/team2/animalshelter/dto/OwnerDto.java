@@ -1,9 +1,9 @@
-package com.team2.animalshelter.dto.in;
+package com.team2.animalshelter.dto;
 
 import lombok.Value;
 
 @Value
-public class OwnerDtoIn {
+public class OwnerDto {
 
     Long telegramId;
 
@@ -12,7 +12,5 @@ public class OwnerDtoIn {
     String firstname;
 
     String lastname;
-
-    Long AdaptationId;
 
 }
