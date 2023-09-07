@@ -3,6 +3,7 @@ package com.team2.animalshelter.mapper;
 import com.team2.animalshelter.dto.in.VolunteerDtoIn;
 import com.team2.animalshelter.dto.out.VolunteerDtoOut;
 import com.team2.animalshelter.entity.Volunteer;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.repository.ShelterRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class VolunteerMapper {
         toObj.setLastname(fromObj.getLastname());
         toObj.setShelter(
                 shelterRepository.findById(fromObj.getShelterId())
-                        .orElseThrow(RuntimeException::new)
+                        .orElseThrow(() -> new ShelterNotFoundException(fromObj.getShelterId()))
         );
         return toObj;
     }

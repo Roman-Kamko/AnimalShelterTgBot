@@ -3,6 +3,7 @@ package com.team2.animalshelter.mapper;
 import com.team2.animalshelter.dto.in.AnimalDtoIn;
 import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.entity.Animal;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.repository.ShelterRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,13 @@ public class AnimalMapper {
         return toObj;
     }
 
+    /**
+     * Метод позволяет внести изменения в сущность не создавая новую.
+     *
+     * @param fromObj объект копирования значений.
+     * @param toObj объект для вставки значений.
+     * @return измененный объект.
+     */
     public Animal toEntity(AnimalDtoIn fromObj, Animal toObj) {
         copy(fromObj, toObj);
         return toObj;
@@ -48,7 +56,7 @@ public class AnimalMapper {
         toObj.setAnimalType(fromObj.getAnimalType());
         toObj.setShelter(
                 shelterRepository.findById(fromObj.getShelterId())
-                        .orElseThrow(RuntimeException::new)
+                        .orElseThrow(() -> new ShelterNotFoundException(fromObj.getShelterId()))
         );
     }
 }

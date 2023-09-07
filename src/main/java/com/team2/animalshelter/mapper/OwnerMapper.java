@@ -13,6 +13,13 @@ public class OwnerMapper {
         return toObj;
     }
 
+    /**
+     * Метод позволяет внести изменения в сущность не создавая новую.
+     *
+     * @param fromObj объект копирования значений.
+     * @param toObj объект для вставки значений.
+     * @return измененный объект.
+     */
     public Owner toEntity(OwnerDto fromObj, Owner toObj) {
         copy(fromObj, toObj);
         return toObj;

@@ -3,6 +3,8 @@ package com.team2.animalshelter.mapper;
 import com.team2.animalshelter.dto.in.AdaptationDtoIn;
 import com.team2.animalshelter.dto.out.AdaptationDtoOut;
 import com.team2.animalshelter.entity.Adaptation;
+import com.team2.animalshelter.exception.AnimalNotFoundException;
+import com.team2.animalshelter.exception.OwnerNotFoundException;
 import com.team2.animalshelter.repository.AnimalRepository;
 import com.team2.animalshelter.repository.OwnerRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,13 @@ public class AdaptationMapper {
         return toObj;
     }
 
+    /**
+     * Метод позволяет внести изменения в сущность не создавая новую.
+     *
+     * @param fromObj объект копирования значений.
+     * @param toObj объект для вставки значений.
+     * @return измененный объект.
+     */
     public Adaptation toEntity(AdaptationDtoIn fromObj, Adaptation toObj) {
         copy(fromObj, toObj);
         return toObj;
@@ -47,11 +56,11 @@ public class AdaptationMapper {
         toObj.setAdaptationStatus(fromObj.getAdaptationStatus());
         toObj.setAnimal(
                 animalRepository.findById(fromObj.getAnimalId())
-                        .orElseThrow(RuntimeException::new)
+                        .orElseThrow(() -> new AnimalNotFoundException(fromObj.getAnimalId()))
         );
         toObj.setOwner(
                 ownerRepository.findById(fromObj.getOwnerId())
-                        .orElseThrow(RuntimeException::new)
+                        .orElseThrow(() -> new OwnerNotFoundException(fromObj.getOwnerId()))
         );
     }
 

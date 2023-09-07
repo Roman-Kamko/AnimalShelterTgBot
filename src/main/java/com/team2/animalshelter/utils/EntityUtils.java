@@ -1,4 +1,4 @@
-package com.team2.animalshelter.service;
+package com.team2.animalshelter.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

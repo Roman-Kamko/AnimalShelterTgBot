@@ -14,6 +14,13 @@ public class ShelterMapper {
         return toObj;
     }
 
+    /**
+     * Метод позволяет внести изменения в сущность не создавая новую.
+     *
+     * @param fromObj объект копирования значений.
+     * @param toObj объект для вставки значений.
+     * @return измененный объект.
+     */
     public Shelter toEntity(ShelterDtoIn fromObj, Shelter toObj) {
         copy(fromObj, toObj);
         return toObj;

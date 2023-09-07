@@ -1,9 +1,14 @@
 package com.team2.animalshelter.service;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.dto.UserDto;
 import com.team2.animalshelter.entity.User;
+import com.team2.animalshelter.exception.UserCreateException;
+import com.team2.animalshelter.exception.UserNotFoundException;
 import com.team2.animalshelter.mapper.UserCreateFromChatMapper;
+import com.team2.animalshelter.mapper.UserMapper;
 import com.team2.animalshelter.repository.UserRepository;
+import com.team2.animalshelter.utils.EntityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +22,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserCreateFromChatMapper userCreateFromChatMapper;
+    private final UserMapper userMapper;
     private final EntityUtils<User> entityUtils;
 
     /**
@@ -46,29 +52,33 @@ public class UserService {
      *
      * @param chat чат между ботом и пользователем.
      * @return экземпляр сущности {@link User}.
+     * @throws UserCreateException если возникла ошибки при сохранении пользователя.
      */
     @Transactional
-    public User create(Chat chat) {
+    public UserDto create(Chat chat) {
         return Optional.of(chat)
                 .map(userCreateFromChatMapper::toEntity)
                 .map(userRepository::save)
-                .orElseThrow(RuntimeException::new);
+                .map(userMapper::toDto)
+                .orElseThrow(UserCreateException::new);
     }
 
     /**
      * Метод для сохранения внесенных изменений в пользователя. Изменения вносятся при помощи
      * вспомогательного метода {@link EntityUtils#copyNonNullFields(Object, Object)}.
      *
-     * @param id идентификатор пользователя, которого нужно изменить.
+     * @param id          идентификатор пользователя, которого нужно изменить.
      * @param updatedUser пользователь с измененными данными.
      * @return экземпляр сущности {@link User}.
+     * @throws UserNotFoundException если пользователь не найден по id
      */
     @Transactional
-    public User update(Long id, User updatedUser) {
+    public UserDto update(Long id, User updatedUser) {
         return userRepository.findById(id)
                 .map(user -> entityUtils.copyNonNullFields(updatedUser, user))
                 .map(userRepository::saveAndFlush)
-                .orElseThrow(RuntimeException::new);
+                .map(userMapper::toDto)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
 }

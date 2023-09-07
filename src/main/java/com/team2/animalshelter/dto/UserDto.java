@@ -16,4 +16,6 @@ public class UserDto {
 
     String lastname;
 
+    String phoneNumber;
+
 }
