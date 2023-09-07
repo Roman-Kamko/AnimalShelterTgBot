@@ -22,7 +22,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="lastname" type="VARCHAR(64)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="phone_number" type="VARCHAR(16)"/>
         </createTable>
