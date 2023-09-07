@@ -13,7 +13,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,22 +29,17 @@ public class UserService {
     private final UserMapper userMapper;
     private final EntityUtils<User> entityUtils;
 
-    /**
-     * Поиск пользователя по идентификатору.
-     *
-     * @param id идентификатор искомого пользователя.
-     * @return {@code Optional<User>}.
-     */
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserDto> findById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::toDto);
     }
 
-    /**
-     * Метод определяющий зарегистрирован ли пользователь в системе.
-     *
-     * @param id идентификатор искомого пользователя.
-     * @return true если пользователь зарегистрирован, иначе false.
-     */
+    public List<UserDto> findAll() {
+        return userRepository.findAll().stream()
+                .map(userMapper::toDto)
+                .collect(toList());
+    }
+
     public boolean isRegistered(Long id) {
         return userRepository.findById(id)
                 .isPresent();
@@ -63,6 +62,15 @@ public class UserService {
                 .orElseThrow(UserCreateException::new);
     }
 
+    @Transactional
+    public UserDto create(UserDto userDto) {
+        return Optional.of(userDto)
+                .map(userMapper::toEntity)
+                .map(userRepository::save)
+                .map(userMapper::toDto)
+                .orElseThrow(UserCreateException::new);
+    }
+
     /**
      * Метод для сохранения внесенных изменений в пользователя. Изменения вносятся при помощи
      * вспомогательного метода {@link EntityUtils#copyNonNullFields(Object, Object)}.
@@ -73,12 +81,23 @@ public class UserService {
      * @throws UserNotFoundException если пользователь не найден по id
      */
     @Transactional
-    public UserDto update(Long id, User updatedUser) {
+    public Optional<UserDto> update(Long id, User updatedUser) {
         return userRepository.findById(id)
                 .map(user -> entityUtils.copyNonNullFields(updatedUser, user))
                 .map(userRepository::saveAndFlush)
-                .map(userMapper::toDto)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .map(userMapper::toDto);
+    }
+
+
+    @Transactional
+    public boolean delete(Long id) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    userRepository.delete(user);
+                    userRepository.flush();
+                    return true;
+                })
+                .orElse(false);
     }
 
 }
