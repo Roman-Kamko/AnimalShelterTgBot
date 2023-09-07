@@ -16,4 +16,6 @@ public class ReportDtoOut {
 
     LocalDate date;
 
+    AdaptationDtoOut adaptation;
+
 }
