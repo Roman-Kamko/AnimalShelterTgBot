@@ -10,6 +10,8 @@ import com.team2.animalshelter.repository.OwnerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 @RequiredArgsConstructor
 public class AdaptationMapper {
@@ -19,8 +21,11 @@ public class AdaptationMapper {
     private final AnimalMapper animalMapper;
     private final OwnerMapper ownerMapper;
 
+    //todo проверить
     public Adaptation toEntity(AdaptationDtoIn fromObj) {
         var toObj = new Adaptation();
+        toObj.setStartDate(LocalDate.now());
+        toObj.setEndDate(LocalDate.now().plusDays(30));
         copy(fromObj, toObj);
         return toObj;
     }
@@ -29,7 +34,7 @@ public class AdaptationMapper {
      * Метод позволяет внести изменения в сущность не создавая новую.
      *
      * @param fromObj объект копирования значений.
-     * @param toObj объект для вставки значений.
+     * @param toObj   объект для вставки значений.
      * @return измененный объект.
      */
     public Adaptation toEntity(AdaptationDtoIn fromObj, Adaptation toObj) {
@@ -43,7 +48,7 @@ public class AdaptationMapper {
                 fromObj.getStartDate(),
                 fromObj.getEndDate(),
                 fromObj.getComment(),
-                fromObj.getNeedComment(),
+                fromObj.getProblem(),
                 fromObj.getAdaptationStatus(),
                 animalMapper.toDto(fromObj.getAnimal()),
                 ownerMapper.toDto(fromObj.getOwner())
@@ -51,8 +56,7 @@ public class AdaptationMapper {
     }
 
     private void copy(AdaptationDtoIn fromObj, Adaptation toObj) {
-        toObj.setComment(fromObj.getComment());
-        toObj.setNeedComment(fromObj.getNeedComment());
+        toObj.setComment(fromObj.getAdaptationStatus().getDescription());
         toObj.setAdaptationStatus(fromObj.getAdaptationStatus());
         toObj.setAnimal(
                 animalRepository.findById(fromObj.getAnimalId())

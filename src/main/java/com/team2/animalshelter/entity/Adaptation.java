@@ -27,15 +27,14 @@ public class Adaptation {
     LocalDate endDate;
 
     /**
-     * Комментарий от волонтера при необходимости.
+     * Описание статуса
      */
     String comment;
 
     /**
-     * Флаг для волонтеров в случае необходимости дать комментарий по адаптационному периоду.
-     * Например: при длительной не отправке отчетов опекуном.
+     * Флаг для волонтеров в случае при длительной не отправке отчетов опекуном.
      */
-    Boolean needComment;
+    Boolean problem;
 
     @Enumerated(EnumType.STRING)
     AdaptationStatus adaptationStatus;

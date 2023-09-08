@@ -17,7 +17,7 @@ public class AdaptationDtoOut {
 
     String comment;
 
-    Boolean needComment;
+    Boolean problem;
 
     AdaptationStatus adaptationStatus;
 
