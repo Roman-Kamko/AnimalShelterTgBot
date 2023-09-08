@@ -1,6 +1,7 @@
 package com.team2.animalshelter.mapper;
 
 import com.team2.animalshelter.dto.OwnerDto;
+import com.team2.animalshelter.dto.UserDto;
 import com.team2.animalshelter.entity.Owner;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,22 @@ public class OwnerMapper {
                 fromObj.getLastname(),
                 fromObj.getPhoneNumber()
         );
+    }
+
+    /**
+     * Для создания Опекуна на основе данных Пользователя.
+     *
+     * @param fromObj {@link UserDto}.
+     * @return {@link Owner}.
+     */
+    public Owner toEntity(UserDto fromObj) {
+        var toObj = new Owner();
+        toObj.setTelegramId(fromObj.getTelegramId());
+        toObj.setUsername(fromObj.getUsername());
+        toObj.setFirstname(fromObj.getFirstname());
+        toObj.setLastname(fromObj.getLastname());
+        toObj.setPhoneNumber(fromObj.getPhoneNumber());
+        return toObj;
     }
 
     private void copy(OwnerDto fromObj, Owner toObj) {

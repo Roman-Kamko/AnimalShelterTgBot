@@ -5,16 +5,13 @@ import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.entity.enums.AnimalType;
 import com.team2.animalshelter.exception.AnimalCreateException;
 import com.team2.animalshelter.mapper.AnimalMapper;
-import com.team2.animalshelter.mapper.ShelterMapper;
 import com.team2.animalshelter.repository.AnimalRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -59,6 +56,7 @@ public class AnimalService {
                 .collect(toList());
     }
 
+    @Transactional
     public AnimalDtoOut create(AnimalDtoIn animalDtoIn) {
         return Optional.of(animalDtoIn)
                 .map(animalMapper::toEntity)
@@ -67,6 +65,7 @@ public class AnimalService {
                 .orElseThrow(AnimalCreateException::new);
     }
 
+    @Transactional
     public Optional<AnimalDtoOut> update(Long id, AnimalDtoIn animalDtoIn) {
         return animalRepository.findById(id)
                 .map(animal -> animalMapper.toEntity(animalDtoIn, animal))
@@ -74,6 +73,7 @@ public class AnimalService {
                 .map(animalMapper::toDto);
     }
 
+    @Transactional
     public boolean delete(Long id) {
         return animalRepository.findById(id)
                 .map(animal -> {
