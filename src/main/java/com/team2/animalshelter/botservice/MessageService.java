@@ -4,7 +4,11 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
 
 import static com.team2.animalshelter.botservice.InformationConstants.*;
 
@@ -46,13 +50,28 @@ public class MessageService {
         telegramBot.execute(message);
     }
 
+    @SneakyThrows
     public void sendShelterAddress(Long chatId) {
         var message1 = new SendMessage(chatId, "г. Астана, ул. Лесная, д. 3.");
-        var message2 = new SendPhoto(chatId,"src/main/resources/address.jpg");
-        telegramBot.execute(message1);
-        telegramBot.execute(message2);
+        //File image= ResourceUtils.getFile("src/main/resources/address.jpg");
+        //var message2 = new SendPhoto(chatId,"src/main/resources/address.jpg");
+        //message2.caption(imageCaption);
 
-    }
+        telegramBot.execute(message1);
+        //telegramBot.execute(message2);
+       /* File image= ResourceUtils.getFile("src/main/resources/address.jpg");
+SendPhoto sendPhoto=new SendPhoto().;//.setPhoto(image);
+sendPhoto.setChatId(chatId)*/
+        String imagePath="src/main/resources/address.jpg";
+        String imageCaption="г. Астана, ул. Лесная, д. 3.";
+            File image = ResourceUtils.getFile("classpath:" + imagePath);
+            SendPhoto sendPhoto = new SendPhoto(chatId, image);
+            sendPhoto.caption(imageCaption);
+            telegramBot.execute(sendPhoto);
+
+        }
+
+
 
     public void sendTimeTable(Long chatId) {
         var message = new SendMessage(chatId, "Часы работы: Пн-Пт 08:00 - 20:00");
@@ -64,8 +83,18 @@ public class MessageService {
     }
 
     public void sendContact(Long chatId) {
-        var message = new SendMessage(chatId, "Введите свой номер телефона");
+        var message = new SendMessage(chatId, "Введите свой номер телефона ");
         telegramBot.execute(message);
     }
+    public void answerContact(Long chatId) {
+        var message = new SendMessage(chatId, "Ваш телефон принят. Скоро с Вами свяжется волонтер ");
+        telegramBot.execute(message);
+    }
+    public void wrongContact(Long chatId) {
+        var message = new SendMessage(chatId, "Неправильно введен номер телефона");
+        telegramBot.execute(message);
+    }
+
+
 
 }

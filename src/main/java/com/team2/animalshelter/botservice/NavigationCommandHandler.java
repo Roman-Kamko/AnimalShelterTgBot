@@ -93,6 +93,8 @@ public class NavigationCommandHandler {
     }
 
     private void showShelterAddress(Chat chat) {
+//String imageCaption="г. Астана, ул. Лесная, д. 3.";
+//String imagePath="src/main/resources/address.jpg";
         messageService.sendShelterAddress(chat.id());
     }
 
