@@ -16,7 +16,8 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 @Service
 public class ImageService {
 
-    private final String bucket = "${app.image.bucket}";
+    @Value("${app.image.bucket}")
+    private String bucket;
 
     @SneakyThrows
     public void upload(String imagePath, InputStream content) {
