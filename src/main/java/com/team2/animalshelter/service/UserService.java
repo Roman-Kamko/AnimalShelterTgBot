@@ -76,14 +76,14 @@ public class UserService {
      * вспомогательного метода {@link EntityUtils#copyNonNullFields(Object, Object)}.
      *
      * @param id          идентификатор пользователя, которого нужно изменить.
-     * @param updatedUser пользователь с измененными данными.
+     * @param userDto пользователь с измененными данными.
      * @return экземпляр сущности {@link User}.
      * @throws UserNotFoundException если пользователь не найден по id
      */
     @Transactional
-    public Optional<UserDto> update(Long id, User updatedUser) {
-        return userRepository.findById(id)
-                .map(user -> entityUtils.copyNonNullFields(updatedUser, user))
+    public Optional<UserDto> update(UserDto userDto) {
+        return userRepository.findById(userDto.getTelegramId())
+                .map(user -> entityUtils.copyNonNullFields(userMapper.toEntity(userDto), user))
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::toDto);
     }

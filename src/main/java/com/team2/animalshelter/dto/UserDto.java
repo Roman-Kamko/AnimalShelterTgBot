@@ -7,13 +7,14 @@ import lombok.Value;
 import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Value
+@Schema(description = "Сущность пользователя")
 public class UserDto {
 
-    @NotBlank
-    @Pattern(regexp = "^[0-9]*$")
+    @NotNull
     @Schema(description = "Телеграм id пользователя", example = "12312321")
     Long telegramId;
 
