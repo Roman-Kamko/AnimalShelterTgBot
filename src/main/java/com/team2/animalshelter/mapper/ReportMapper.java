@@ -18,7 +18,6 @@ public class ReportMapper {
     public Report toEntity(ReportDtoIn fromObj) {
         var toObj = new Report();
         toObj.setReportMessage(fromObj.getReportMessage());
-        toObj.setPhoto(fromObj.getPhoto());
         toObj.setAdaptation(
                 adaptationRepository.findById(fromObj.getAdaptationId())
                         .orElseThrow(() -> new AdaptationNotFoundException(fromObj.getAdaptationId()))
