@@ -33,4 +33,7 @@ public class Animal {
     @JoinColumn(name = "shelter_id")
     Shelter shelter;
 
+    @OneToMany(mappedBy = "animal")
+    List<Adaptation> adaptations;
+
 }
