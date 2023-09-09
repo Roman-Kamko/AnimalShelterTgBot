@@ -4,6 +4,10 @@ import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.Shelter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 public class ShelterMapper {
@@ -42,6 +46,9 @@ public class ShelterMapper {
         toObj.setAddress(fromObj.getAddress());
         toObj.setPhoneNumber(fromObj.getPhoneNumber());
         toObj.setTimeTable(fromObj.getTimeTable());
+        Optional.ofNullable(fromObj.getImage())
+                .filter(Predicate.not(MultipartFile::isEmpty))
+                .ifPresent(image -> toObj.setDrivingDirections(image.getOriginalFilename()));
     }
 
 }

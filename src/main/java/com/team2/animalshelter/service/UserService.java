@@ -3,7 +3,7 @@ package com.team2.animalshelter.service;
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.dto.UserDto;
 import com.team2.animalshelter.entity.User;
-import com.team2.animalshelter.exception.UserCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.exception.UserNotFoundException;
 import com.team2.animalshelter.mapper.UserCreateFromChatMapper;
 import com.team2.animalshelter.mapper.UserMapper;
@@ -50,7 +50,7 @@ public class UserService {
      *
      * @param chat чат между ботом и пользователем.
      * @return экземпляр {@link UserDto}.
-     * @throws UserCreateException если возникла ошибки при сохранении пользователя.
+     * @throws EntityCreateException если возникла ошибки при сохранении сущности.
      */
     @Transactional
     public UserDto create(Chat chat) {
@@ -58,7 +58,7 @@ public class UserService {
                 .map(userCreateFromChatMapper::toEntity)
                 .map(userRepository::save)
                 .map(userMapper::toDto)
-                .orElseThrow(UserCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional
@@ -67,7 +67,7 @@ public class UserService {
                 .map(userMapper::toEntity)
                 .map(userRepository::save)
                 .map(userMapper::toDto)
-                .orElseThrow(UserCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     /**

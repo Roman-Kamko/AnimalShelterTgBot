@@ -1,10 +1,10 @@
 package com.team2.animalshelter.service;
 
-import com.team2.animalshelter.entity.Adaptation;
 import com.team2.animalshelter.dto.in.AdaptationDtoIn;
 import com.team2.animalshelter.dto.out.AdaptationDtoOut;
+import com.team2.animalshelter.entity.Adaptation;
 import com.team2.animalshelter.entity.enums.AdaptationStatus;
-import com.team2.animalshelter.exception.AdaptationCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.AdaptationMapper;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,7 +64,7 @@ public class AdaptationService {
                 .map(adaptationMapper::toEntity)
                 .map(adaptationRepository::save)
                 .map(adaptationMapper::toDto)
-                .orElseThrow(AdaptationCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional

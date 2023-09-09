@@ -3,7 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.in.AnimalDtoIn;
 import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.entity.enums.AnimalType;
-import com.team2.animalshelter.exception.AnimalCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.AnimalMapper;
 import com.team2.animalshelter.repository.AnimalRepository;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +62,7 @@ public class AnimalService {
                 .map(animalMapper::toEntity)
                 .map(animalRepository::save)
                 .map(animalMapper::toDto)
-                .orElseThrow(AnimalCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional
