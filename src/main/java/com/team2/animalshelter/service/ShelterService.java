@@ -61,6 +61,7 @@ public class ShelterService {
                 .map(shelterMapper::toDto);
     }
 
+    @Transactional
     public boolean delete(Long id) {
         return shelterRepository.findById(id)
                 .map(shelter -> {
