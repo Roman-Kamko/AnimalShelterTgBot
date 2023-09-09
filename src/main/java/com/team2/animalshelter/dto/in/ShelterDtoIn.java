@@ -29,7 +29,4 @@ public class ShelterDtoIn {
     @Schema(name = "Время работы", example = "Пн-Пт 9:00-18:00")
     String timeTable;
 
-    @Schema(name = "Схема проезда", description = "Картинка")
-    MultipartFile image;
-
 }

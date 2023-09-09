@@ -46,9 +46,6 @@ public class ShelterMapper {
         toObj.setAddress(fromObj.getAddress());
         toObj.setPhoneNumber(fromObj.getPhoneNumber());
         toObj.setTimeTable(fromObj.getTimeTable());
-        Optional.ofNullable(fromObj.getImage())
-                .filter(Predicate.not(MultipartFile::isEmpty))
-                .ifPresent(image -> toObj.setDrivingDirections(image.getOriginalFilename()));
     }
 
 }

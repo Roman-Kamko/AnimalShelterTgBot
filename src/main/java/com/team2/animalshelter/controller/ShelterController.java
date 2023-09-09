@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -74,23 +76,22 @@ public class ShelterController {
                 .orElseThrow(() -> new ShelterNotFoundException(id));
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Создать новый приют",
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Приют успешно создан",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = ShelterDtoOut.class)
-                            )
+                            description = "Приют успешно создан"
                     )
             }
     )
-    public ShelterDtoOut create(@RequestBody @Validated ShelterDtoIn shelterDtoIn) {
-        return shelterService.create(shelterDtoIn);
+    public ShelterDtoOut create(
+            @RequestPart(value = "dto") @Validated ShelterDtoIn shelterDtoIn,
+            @RequestPart(value = "file") MultipartFile image
+    ) {
+        return shelterService.create(shelterDtoIn, image);
     }
 
 

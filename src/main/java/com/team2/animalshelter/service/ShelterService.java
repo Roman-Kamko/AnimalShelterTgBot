@@ -39,11 +39,12 @@ public class ShelterService {
     }
 
     @Transactional
-    public ShelterDtoOut create(ShelterDtoIn shelterDtoIn) {
+    public ShelterDtoOut create(ShelterDtoIn shelterDtoIn, MultipartFile image) {
         return Optional.of(shelterDtoIn)
                 .map(shelterMapper::toEntity)
                 .map(shelter -> {
-                    uploadImage(shelterDtoIn.getImage());
+                    shelterRepository.saveAndFlush(shelter);
+                    uploadImage(image, shelter);
                     return shelterRepository.save(shelter);
                 })
                 .map(shelterMapper::toDto)
@@ -54,7 +55,7 @@ public class ShelterService {
     public Optional<ShelterDtoOut> update(Long id, ShelterDtoIn shelterDtoIn) {
         return shelterRepository.findById(id)
                 .map(shelter -> {
-                    uploadImage(shelterDtoIn.getImage());
+//                    uploadImage(shelterDtoIn.getImage());
                     return shelterMapper.toEntity(shelterDtoIn, shelter);
                 })
                 .map(shelterRepository::saveAndFlush)
@@ -85,9 +86,10 @@ public class ShelterService {
      * @param image {@link MultipartFile}.
      */
     @SneakyThrows
-    private void uploadImage(MultipartFile image) {
+    private void uploadImage(MultipartFile image, Shelter shelter) {
         if (!image.isEmpty()) {
             imageService.upload(image.getOriginalFilename(), image.getInputStream());
+            shelter.setDrivingDirections(image.getOriginalFilename());
         }
     }
 
