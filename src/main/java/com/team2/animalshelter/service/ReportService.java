@@ -3,7 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.in.ReportDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.entity.Report;
-import com.team2.animalshelter.exception.ReportCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.ReportMapper;
 import com.team2.animalshelter.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class ReportService {
                     return reportRepository.save(report);
                 })
                 .map(reportMapper::toDto)
-                .orElseThrow(ReportCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional

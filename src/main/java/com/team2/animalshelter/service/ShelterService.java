@@ -3,7 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.Shelter;
-import com.team2.animalshelter.exception.ShelterCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.ShelterMapper;
 import com.team2.animalshelter.repository.ShelterRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +47,7 @@ public class ShelterService {
                     return shelterRepository.save(shelter);
                 })
                 .map(shelterMapper::toDto)
-                .orElseThrow(ShelterCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional
