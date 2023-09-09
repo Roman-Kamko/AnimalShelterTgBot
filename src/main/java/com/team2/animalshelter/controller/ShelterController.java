@@ -1,8 +1,11 @@
 package com.team2.animalshelter.controller;
 
 import com.team2.animalshelter.dto.UserDto;
+import com.team2.animalshelter.dto.in.ShelterDtoIn;
+import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.exception.UserNotFoundException;
-import com.team2.animalshelter.service.UserService;
+import com.team2.animalshelter.service.ShelterService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -20,121 +23,122 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/shelters")
 @RequiredArgsConstructor
-@Tag(name = "Пользователь", description = "Эндпоинты для работы с пользователями")
-public class UserController {
+@Tag(name = "Приют", description = "Эндпоинты для работы с приютами")
+public class ShelterController {
 
-    private final UserService userService;
+    private final ShelterService shelterService;
 
     @GetMapping
     @Operation(
-            summary = "Получить список всех пользователей",
+            summary = "Получить список всех приютов",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = UserDto.class))
+                                    array = @ArraySchema(schema = @Schema(implementation = ShelterDtoOut.class))
                             )
                     )
             }
     )
-    public List<UserDto> findAll() {
-        return userService.findAll();
+    public List<ShelterDtoOut> findAll() {
+        return shelterService.findAll();
     }
 
     @GetMapping("/{id}")
     @Operation(
-            summary = "Получить пользователя по идентификатору",
+            summary = "Получить приют по идентификатору",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Пользователь успешно найден",
+                            description = "Приют успешно найден",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDto.class)
+                                    schema = @Schema(implementation = ShelterDtoOut.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Пользователь не найден по идентификатору"
+                            description = "Приют не найден по идентификатору"
                     )
             }
     )
-    public ResponseEntity<UserDto> findById(
-            @PathVariable @Parameter(description = "Идентификатор пользователя") Long id
+    public ResponseEntity<ShelterDtoOut> findById(
+            @PathVariable @Parameter(description = "Идентификатор приюта") Long id
     ) {
-        return userService.findById(id)
+        return shelterService.findById(id)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new UserNotFoundException(id));
+                .orElseThrow(() -> new ShelterNotFoundException(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
-            summary = "Создать нового пользователя",
+            summary = "Создать новый приют",
             responses = {
                     @ApiResponse(
                             responseCode = "201",
-                            description = "Пользователь успешно создан",
+                            description = "Приют успешно создан",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDto.class)
+                                    schema = @Schema(implementation = ShelterDtoOut.class)
                             )
                     )
             }
     )
-    public UserDto create(@RequestBody @Validated UserDto userDto) {
-        return userService.create(userDto);
+    public ShelterDtoOut create(@RequestBody @Validated ShelterDtoIn shelterDtoIn) {
+        return shelterService.create(shelterDtoIn);
     }
 
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Operation(
-            summary = "Обновить данные пользователя",
+            summary = "Обновить данные приюта",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Пользователь успешно обновлен",
+                            description = "Приют успешно обновлен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    schema = @Schema(implementation = UserDto.class)
+                                    schema = @Schema(implementation = ShelterDtoOut.class)
                             )
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Пользователь не найден по идентификатору"
+                            description = "Приют не найден по идентификатору"
                     )
             }
     )
-    public ResponseEntity<UserDto> update(
-            @RequestBody @Validated UserDto userDto
+    public ResponseEntity<ShelterDtoOut> update(
+            @PathVariable @Parameter(description = "Идентификатор приюта") Long id,
+            @RequestBody @Validated ShelterDtoIn shelterDtoIn
     ) {
-        return userService.update(userDto)
+        return shelterService.update(id, shelterDtoIn)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new UserNotFoundException(userDto.getTelegramId()));
+                .orElseThrow(() -> new ShelterNotFoundException(id));
     }
 
     @DeleteMapping("{id}")
     @Operation(
-            summary = "Удалить пользователя",
+            summary = "Удалить приют",
             responses = {
                     @ApiResponse(
                             responseCode = "204",
-                            description = "Пользователь успешно удален"
+                            description = "Приют успешно удален"
                     ),
                     @ApiResponse(
                             responseCode = "404",
-                            description = "Пользователь не найден по идентификатору"
+                            description = "Приют не найден по идентификатору"
                     )
             }
     )
     public ResponseEntity<?> delete(
-            @PathVariable @Parameter(description = "Идентификатор пользователя") Long id
+            @PathVariable @Parameter(description = "Идентификатор приюта") Long id
     ) {
-        return userService.delete(id)
+        return shelterService.delete(id)
                 ? ResponseEntity.noContent().build()
                 : ResponseEntity.notFound().build();
     }
