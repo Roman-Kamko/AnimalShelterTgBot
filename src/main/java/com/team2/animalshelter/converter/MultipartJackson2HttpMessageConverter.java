@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 
+/**
+ * Конвертер для HTTP-запросов, решающий проблему unsupported application/octet-stream, при попытке
+ * отправить json + файл картинки одним запросом.
+ */
 @Component
 public class MultipartJackson2HttpMessageConverter extends AbstractJackson2HttpMessageConverter {
 
-    /**
-     * Converter for support http request with header Content-Type: multipart/form-data
-     */
     public MultipartJackson2HttpMessageConverter(ObjectMapper objectMapper) {
         super(objectMapper, MediaType.APPLICATION_OCTET_STREAM);
     }
