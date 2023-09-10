@@ -53,24 +53,14 @@ public class MessageService {
     @SneakyThrows
     public void sendShelterAddress(Long chatId) {
         var message1 = new SendMessage(chatId, "г. Астана, ул. Лесная, д. 3.");
-        //File image= ResourceUtils.getFile("src/main/resources/address.jpg");
-        //var message2 = new SendPhoto(chatId,"src/main/resources/address.jpg");
-        //message2.caption(imageCaption);
-
         telegramBot.execute(message1);
-        //telegramBot.execute(message2);
-       /* File image= ResourceUtils.getFile("src/main/resources/address.jpg");
-SendPhoto sendPhoto=new SendPhoto().;//.setPhoto(image);
-sendPhoto.setChatId(chatId)*/
-        String imagePath="src/main/resources/address.jpg";
-        String imageCaption="г. Астана, ул. Лесная, д. 3.";
-            File image = ResourceUtils.getFile("classpath:" + imagePath);
-            SendPhoto sendPhoto = new SendPhoto(chatId, image);
-            sendPhoto.caption(imageCaption);
-            telegramBot.execute(sendPhoto);
 
-        }
+        File image = ResourceUtils.getFile("src/main/resources/address.jpg");
+        SendPhoto sendPhoto = new SendPhoto(chatId, image);
+        telegramBot.execute(sendPhoto);
 
+
+    }
 
 
     public void sendTimeTable(Long chatId) {
@@ -86,15 +76,16 @@ sendPhoto.setChatId(chatId)*/
         var message = new SendMessage(chatId, "Введите свой номер телефона ");
         telegramBot.execute(message);
     }
+
     public void answerContact(Long chatId) {
         var message = new SendMessage(chatId, "Ваш телефон принят. Скоро с Вами свяжется волонтер ");
         telegramBot.execute(message);
     }
+
     public void wrongContact(Long chatId) {
         var message = new SendMessage(chatId, "Неправильно введен номер телефона");
         telegramBot.execute(message);
     }
-
 
 
 }

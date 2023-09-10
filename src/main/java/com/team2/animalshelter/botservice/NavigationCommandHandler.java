@@ -89,23 +89,25 @@ public class NavigationCommandHandler {
         keyboardService.sendChooseAnimalMenu(chat.id());
     }
 
-    private void showShelterContact(Chat chat) { messageService.sendShelterContact(chat.id());
+    private void showShelterContact(Chat chat) {
+        messageService.sendShelterContact(chat.id());
     }
 
     private void showShelterAddress(Chat chat) {
-//String imageCaption="г. Астана, ул. Лесная, д. 3.";
-//String imagePath="src/main/resources/address.jpg";
+
         messageService.sendShelterAddress(chat.id());
     }
 
-    private void showTimeTable(Chat chat) { messageService.sendTimeTable(chat.id());
+    private void showTimeTable(Chat chat) {
+        messageService.sendTimeTable(chat.id());
     }
 
     private void showSafetyPrecautions(Chat chat) {
         messageService.sendSafetyPrecautions(chat.id());
     }
 
-    private void sendContact(Chat chat) { messageService.sendContact(chat.id());
+    private void sendContact(Chat chat) {
+        messageService.sendContact(chat.id());
     }
 
 }
