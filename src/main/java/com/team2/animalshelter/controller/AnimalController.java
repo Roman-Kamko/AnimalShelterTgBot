@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Найти животное по идентификатору",
             responses = {
@@ -38,7 +39,7 @@ public class AnimalController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDtoOut.class))
+                                    schema = @Schema(implementation = AnimalDtoOut.class)
                             )
                     ),
                     @ApiResponse(
@@ -55,25 +56,7 @@ public class AnimalController {
                 .orElseThrow(() -> new AnimalNotFoundException(id));
     }
 
-    @GetMapping("/adopted/{id}")
-    @Operation(
-            summary = "Находится ли животное на адаптации",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Запрос выполнен",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDtoOut.class))
-                            )
-                    )
-            }
-    )
-    public Boolean isAdopted(@PathVariable @Parameter(description = "Идентификатор животного") Long id) {
-        return animalService.isAdopted(id);
-    }
-
-    @GetMapping("/no-all-adopted/{animalType}")
+    @GetMapping("/{animalType}/non-adopted")
     @Operation(
             summary = "Найти всех животных, которых еще не взяли под опеку",
             responses = {
@@ -88,12 +71,15 @@ public class AnimalController {
             }
     )
     public List<AnimalDtoOut> findAllWithoutOwner(
-            @PathVariable @Parameter(description = "Тип животного") AnimalType animalType
+            @PathVariable
+            @Parameter(description = "Тип животного")
+            @Pattern(regexp = "CAT$|DOG$")
+            AnimalType animalType
     ) {
         return animalService.findAllWithoutOwner(animalType);
     }
 
-    @GetMapping("/all-adopted/{animalType}")
+    @GetMapping("/{animalType}/adopted")
     @Operation(
             summary = "Найти всех животных, которых взяли под опеку",
             responses = {
@@ -108,7 +94,10 @@ public class AnimalController {
             }
     )
     public List<AnimalDtoOut> findAllAdopted(
-            @PathVariable @Parameter(description = "Тип животного") AnimalType animalType
+            @PathVariable
+            @Parameter(description = "Тип животного")
+            @Pattern(regexp = "CAT$|DOG$")
+            AnimalType animalType
     ) {
         return animalService.findAllAdopted(animalType);
     }
@@ -119,11 +108,11 @@ public class AnimalController {
             summary = "Создать новое животное",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AnimalDtoOut.class))
+                                    schema = @Schema(implementation = AnimalDtoOut.class)
                             )
                     )
             }
