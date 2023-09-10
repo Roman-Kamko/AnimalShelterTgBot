@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
@@ -29,7 +30,7 @@ public class AdaptationController {
 
     private final AdaptationService adaptationService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Найти адоптацию по идентификатору",
             responses = {
@@ -38,7 +39,7 @@ public class AdaptationController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AdaptationDtoOut.class))
+                                    schema = @Schema(implementation = AdaptationDtoOut.class)
                             )
                     ),
                     @ApiResponse(
@@ -55,7 +56,7 @@ public class AdaptationController {
                 .orElseThrow(() -> new AdaptationNotFoundException(id));
     }
 
-    @GetMapping("/find-all")
+    @GetMapping
     @Operation(
             summary = "Получить список всех адоптаций",
             responses = {
@@ -73,7 +74,7 @@ public class AdaptationController {
         return adaptationService.findAll();
     }
 
-    @GetMapping("/find/{status}")
+    @GetMapping("/{status}")
     @Operation(
             summary = "Найти адоптации по статусу",
             responses = {
@@ -88,12 +89,15 @@ public class AdaptationController {
             }
     )
     public List<AdaptationDtoOut> findAllByAdaptationStatus(
-            @PathVariable @Parameter(description = "Статус адоптации") AdaptationStatus status
+            @PathVariable
+            @Parameter(description = "Статус адоптации")
+            @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$")
+            AdaptationStatus status
     ) {
         return adaptationService.findAllByAdaptationStatus(status);
     }
 
-    @GetMapping("/find-problem")
+    @GetMapping("/problem")
     @Operation(
             summary = "Найти проблемные адоптации",
             responses = {
@@ -117,11 +121,11 @@ public class AdaptationController {
             summary = "Создать новую адаптацию",
             responses = {
                     @ApiResponse(
-                            responseCode = "200",
+                            responseCode = "201",
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AdaptationDtoOut.class))
+                                    schema = @Schema(implementation = AdaptationDtoOut.class)
                             )
                     )
             }
