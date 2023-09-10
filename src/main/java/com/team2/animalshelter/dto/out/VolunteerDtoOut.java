@@ -1,6 +1,5 @@
 package com.team2.animalshelter.dto.out;
 
-import com.team2.animalshelter.dto.ShelterDto;
 import lombok.Value;
 
 @Value
@@ -14,6 +13,6 @@ public class VolunteerDtoOut {
 
     String lastname;
 
-    ShelterDto shelter;
+    ShelterDtoOut shelter;
 
 }
