@@ -1,10 +1,11 @@
 package com.team2.animalshelter.dto.out;
 
+import com.team2.animalshelter.dto.OwnerDto;
 import com.team2.animalshelter.entity.enums.AdaptationStatus;
 import lombok.Value;
 
 import java.time.LocalDate;
-import java.util.List;
+
 @Value
 public class AdaptationDtoOut {
 
@@ -16,12 +17,12 @@ public class AdaptationDtoOut {
 
     String comment;
 
-    Boolean needComment;
+    Boolean problem;
 
     AdaptationStatus adaptationStatus;
 
     AnimalDtoOut animalDtoOut;
 
-    OwnerDtoOut ownerDtoOut;
+    OwnerDto ownerDto;
 
 }

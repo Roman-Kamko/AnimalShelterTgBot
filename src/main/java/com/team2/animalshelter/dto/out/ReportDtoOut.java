@@ -1,6 +1,5 @@
 package com.team2.animalshelter.dto.out;
 
-import com.team2.animalshelter.dto.out.AdaptationDtoOut;
 import lombok.Value;
 
 import java.time.LocalDate;
@@ -15,5 +14,7 @@ public class ReportDtoOut {
     String photo;
 
     LocalDate date;
+
+    AdaptationDtoOut adaptation;
 
 }

@@ -21,8 +21,8 @@
             <column name="end_date" type="DATE">
                 <constraints nullable="false"/>
             </column>
-            <column name="comment" type="VARCHAR(512)"/>
-            <column name="need_comment" type="BOOLEAN" defaultValue="FALSE"/>
+            <column name="comment" type="VARCHAR(64)"/>
+            <column name="problem" type="BOOLEAN" defaultValue="FALSE"/>
             <column name="adaptation_status" type="VARCHAR(64)" defaultValue="IN_PROGRESS">
                 <constraints nullable="false"/>
             </column>

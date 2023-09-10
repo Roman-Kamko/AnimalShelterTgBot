@@ -10,16 +10,16 @@ public class UserCreateFromChatMapper {
     /**
      * Создание экземпляра сущности {@link User} на основе данных из {@link Chat}.
      *
-     * @param chat чат пользователя с ботом.
+     * @param fromObj чат пользователя с ботом.
      * @return экземпляра сущности {@link User}.
      */
-    public User toEntity(Chat chat) {
-        var user = new User();
-        user.setTelegramId(chat.id());
-        user.setUsername(chat.username());
-        user.setFirstname(chat.firstName());
-        user.setLastname(chat.lastName());
-        return user;
+    public User toEntity(Chat fromObj) {
+        var toObj = new User();
+        toObj.setTelegramId(fromObj.id());
+        toObj.setUsername(fromObj.username());
+        toObj.setFirstname(fromObj.firstName());
+        toObj.setLastname(fromObj.lastName());
+        return toObj;
     }
 
 }

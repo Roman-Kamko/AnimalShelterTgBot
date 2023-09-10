@@ -1,4 +1,4 @@
-package com.team2.animalshelter.service;
+package com.team2.animalshelter.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 @Slf4j
 @Component
 public class EntityUtils<T> {
-    // TODO: 02.09.2023 не протестировано
 
     /**
      * Вспомогательный параметризированный метод для копирования non null полей.

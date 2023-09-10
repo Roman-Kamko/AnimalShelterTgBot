@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <testconteiners.version>1.19.0</testconteiners.version>
         <pengard.version>5.7.0</pengard.version>
+        <springdoc.version>1.7.0</springdoc.version>
     </properties>
     <dependencies>
 
@@ -75,6 +76,19 @@
             <groupId>com.github.pengrad</groupId>
             <artifactId>java-telegram-bot-api</artifactId>
             <version>${pengard.version}</version>
+        </dependency>
+
+    <!--springdoc-->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+            <version>${springdoc.version}</version>
         </dependency>
 
     </dependencies>
