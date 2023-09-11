@@ -29,7 +29,7 @@ public class OwnerController {
 
     private final OwnerService ownerService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Найти опекуна по идентификатору",
             responses = {
@@ -38,7 +38,7 @@ public class OwnerController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = OwnerDto.class))
+                                    schema = @Schema(implementation = OwnerDto.class)
                             )
                     ),
                     @ApiResponse(
@@ -55,7 +55,7 @@ public class OwnerController {
                 .orElseThrow(() -> new OwnerNotFoundException(id));
     }
 
-    @GetMapping("/find-all")
+    @GetMapping
     @Operation(
             summary = "Получить список всех опекунов",
             responses = {
@@ -73,7 +73,7 @@ public class OwnerController {
         return ownerService.findAll();
     }
 
-    @PostMapping("/create/{id}")
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Создать нового опекуна на основе usera по идентификатору",
@@ -83,16 +83,20 @@ public class OwnerController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = OwnerDto.class))
+                                    schema = @Schema(implementation = OwnerDto.class)
                             )
                     )
             }
     )
-    public OwnerDto create(@PathVariable @Validated Long id) {
+    public OwnerDto create(
+            @PathVariable
+            @Parameter(description = "Идентификатор пользователя на основе которого необходимо создать опекуна")
+            Long id
+    ) {
         return ownerService.create(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     @Operation(
             summary = "Обновить данные опекуна",
             responses = {

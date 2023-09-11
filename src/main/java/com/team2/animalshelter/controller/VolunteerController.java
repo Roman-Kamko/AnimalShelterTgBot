@@ -28,7 +28,7 @@ public class VolunteerController {
 
     private final VolunteerService volunteerService;
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Найти волонтера по идентификатору",
             responses = {
@@ -37,7 +37,7 @@ public class VolunteerController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = VolunteerDtoOut.class))
+                                    schema = @Schema(implementation = VolunteerDtoOut.class)
                             )
                     ),
                     @ApiResponse(
@@ -54,7 +54,7 @@ public class VolunteerController {
                 .orElseThrow(() -> new VolunteerNotFoundException(id));
     }
 
-    @GetMapping("/find-all")
+    @GetMapping
     @Operation(
             summary = "Получить список всех волонтеров",
             responses = {
@@ -82,7 +82,7 @@ public class VolunteerController {
                             description = "Запрос выполнен",
                             content = @Content(
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = VolunteerDtoOut.class))
+                                    schema = @Schema(implementation = VolunteerDtoOut.class)
                             )
                     )
             }

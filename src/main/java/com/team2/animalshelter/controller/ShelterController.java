@@ -144,7 +144,7 @@ public class ShelterController {
     )
     public ResponseEntity<ShelterDtoOut> update(
             @PathVariable @Parameter(description = "Идентификатор приюта") Long id,
-            @RequestPart @Validated ShelterDtoIn shelterDtoIn,
+            @RequestPart(value = "dto") @Validated ShelterDtoIn shelterDtoIn,
             @RequestPart(value = "file", required = false) MultipartFile image
     ) {
         return shelterService.update(id, shelterDtoIn, image)
