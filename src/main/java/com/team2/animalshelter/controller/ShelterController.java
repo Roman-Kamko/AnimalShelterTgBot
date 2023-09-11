@@ -6,6 +6,7 @@ import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.exception.UserNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +52,7 @@ public class ShelterController {
         return shelterService.findAll();
     }
 
+    @Hidden
     @GetMapping("/{id}")
     @Operation(
             summary = "Получить приют по идентификатору",
@@ -76,6 +79,32 @@ public class ShelterController {
                 .orElseThrow(() -> new ShelterNotFoundException(id));
     }
 
+    @Operation(
+            summary = "Получить схему проезда",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Запрос выполнен",
+                            content = @Content(mediaType = MediaType.IMAGE_JPEG_VALUE)
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Приют не найден по идентификатору или у приюта нет схемы проезда"
+                    )
+            }
+    )
+    @GetMapping(value = "/{id}/map")
+    public ResponseEntity<byte[]> findDrivingDirections(@PathVariable Long id) {
+        return shelterService.getImage(id)
+                .map(content -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE)
+                        .contentLength(content.length)
+                        .body(content)
+                )
+                .orElseGet(ResponseEntity.notFound()::build);
+    }
+
+    @Hidden
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
@@ -89,7 +118,7 @@ public class ShelterController {
     )
     public ShelterDtoOut create(
             @RequestPart(value = "dto") @Validated ShelterDtoIn shelterDtoIn,
-            @RequestPart(value = "file") MultipartFile image
+            @RequestPart(value = "file", required = false) MultipartFile image
     ) {
         return shelterService.create(shelterDtoIn, image);
     }
@@ -115,13 +144,15 @@ public class ShelterController {
     )
     public ResponseEntity<ShelterDtoOut> update(
             @PathVariable @Parameter(description = "Идентификатор приюта") Long id,
-            @RequestBody @Validated ShelterDtoIn shelterDtoIn
+            @RequestPart @Validated ShelterDtoIn shelterDtoIn,
+            @RequestPart(value = "file", required = false) MultipartFile image
     ) {
-        return shelterService.update(id, shelterDtoIn)
+        return shelterService.update(id, shelterDtoIn, image)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new ShelterNotFoundException(id));
     }
 
+    @Hidden
     @DeleteMapping("{id}")
     @Operation(
             summary = "Удалить приют",

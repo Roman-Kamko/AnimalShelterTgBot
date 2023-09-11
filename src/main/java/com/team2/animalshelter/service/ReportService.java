@@ -26,6 +26,7 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
     private final ImageService imageService;
+    private static final String REPORT_BUCKET = "reports";
 
     public Optional<ReportDtoOut> findById(Long id) {
         return reportRepository.findById(id)
@@ -76,7 +77,7 @@ public class ReportService {
         return reportRepository.findById(id)
                 .map(Report::getPhoto)
                 .filter(StringUtils::hasText)
-                .flatMap(imageService::getImage);
+                .flatMap(path -> imageService.getImage(path, REPORT_BUCKET));
     }
 
     /**
@@ -87,7 +88,7 @@ public class ReportService {
     @SneakyThrows
     private void uploadImage(MultipartFile image) {
         if (!image.isEmpty()) {
-            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+            imageService.upload(image.getOriginalFilename(), REPORT_BUCKET, image.getInputStream());
         }
     }
 

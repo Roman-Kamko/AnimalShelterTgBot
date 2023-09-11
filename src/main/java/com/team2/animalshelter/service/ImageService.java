@@ -19,8 +19,8 @@ public class ImageService {
     private String bucket;
 
     @SneakyThrows
-    public void upload(String imagePath, InputStream content) {
-        var fullPath = Path.of(bucket, imagePath);
+    public void upload(String imagePath, String specialBucket, InputStream content) {
+        var fullPath = Path.of(bucket, specialBucket, imagePath);
         try (content) {
             Files.createDirectories(fullPath.getParent());
             Files.write(fullPath, content.readAllBytes(), CREATE, TRUNCATE_EXISTING);
@@ -28,8 +28,8 @@ public class ImageService {
     }
 
     @SneakyThrows
-    public Optional<byte[]> getImage(String imagePath) {
-        var fullPath = Path.of(bucket, imagePath);
+    public Optional<byte[]> getImage(String imagePath, String specialBucket) {
+        var fullPath = Path.of(bucket, specialBucket, imagePath);
         return Files.exists(fullPath)
                 ? Optional.of(Files.readAllBytes(fullPath))
                 : Optional.empty();

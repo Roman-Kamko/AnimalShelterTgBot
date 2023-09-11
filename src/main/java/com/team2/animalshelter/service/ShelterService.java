@@ -26,9 +26,15 @@ public class ShelterService {
     private final ShelterRepository shelterRepository;
     private final ShelterMapper shelterMapper;
     private final ImageService imageService;
+    private static final String SHELTER_BUCKET = "shelters";
 
     public Optional<ShelterDtoOut> findById(Long id) {
         return shelterRepository.findById(id)
+                .map(shelterMapper::toDto);
+    }
+
+    public Optional<ShelterDtoOut> findByUserId(Long id) {
+        return shelterRepository.findShelterByUsers_telegramId(id)
                 .map(shelterMapper::toDto);
     }
 
@@ -43,7 +49,6 @@ public class ShelterService {
         return Optional.of(shelterDtoIn)
                 .map(shelterMapper::toEntity)
                 .map(shelter -> {
-                    shelterRepository.saveAndFlush(shelter);
                     uploadImage(image, shelter);
                     return shelterRepository.save(shelter);
                 })
@@ -52,10 +57,10 @@ public class ShelterService {
     }
 
     @Transactional
-    public Optional<ShelterDtoOut> update(Long id, ShelterDtoIn shelterDtoIn) {
+    public Optional<ShelterDtoOut> update(Long id, ShelterDtoIn shelterDtoIn, MultipartFile image) {
         return shelterRepository.findById(id)
                 .map(shelter -> {
-//                    uploadImage(shelterDtoIn.getImage());
+                    uploadImage(image, shelter);
                     return shelterMapper.toEntity(shelterDtoIn, shelter);
                 })
                 .map(shelterRepository::saveAndFlush)
@@ -77,7 +82,7 @@ public class ShelterService {
         return shelterRepository.findById(id)
                 .map(Shelter::getDrivingDirections)
                 .filter(StringUtils::hasText)
-                .flatMap(imageService::getImage);
+                .flatMap(path -> imageService.getImage(path, SHELTER_BUCKET));
     }
 
     /**
@@ -88,7 +93,7 @@ public class ShelterService {
     @SneakyThrows
     private void uploadImage(MultipartFile image, Shelter shelter) {
         if (!image.isEmpty()) {
-            imageService.upload(image.getOriginalFilename(), image.getInputStream());
+            imageService.upload(image.getOriginalFilename(), SHELTER_BUCKET, image.getInputStream());
             shelter.setDrivingDirections(image.getOriginalFilename());
         }
     }

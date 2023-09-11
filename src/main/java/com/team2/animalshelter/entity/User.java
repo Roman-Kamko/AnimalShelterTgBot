@@ -3,9 +3,7 @@ package com.team2.animalshelter.entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -17,5 +15,9 @@ import javax.persistence.Table;
 public class User extends BaseEntity{
 
     String phoneNumber;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    Shelter shelter;
 
 }
