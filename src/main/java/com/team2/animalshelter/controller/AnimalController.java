@@ -23,7 +23,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/animal")
+@RequestMapping("/api/v1/animals")
 @RequiredArgsConstructor
 @Tag(name = "Животные", description = "Эндпоинты для работы с животными")
 public class AnimalController {

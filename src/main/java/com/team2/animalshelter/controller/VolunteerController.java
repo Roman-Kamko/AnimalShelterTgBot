@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/volunteer")
+@RequestMapping("/api/v1/volunteers")
 @RequiredArgsConstructor
 @Tag(name = "Волонтеры", description = "Эндпоинты для работы с волотерами")
 public class VolunteerController {

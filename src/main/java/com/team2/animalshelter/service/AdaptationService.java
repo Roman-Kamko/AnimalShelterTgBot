@@ -8,6 +8,7 @@ import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.AdaptationMapper;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

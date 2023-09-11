@@ -30,6 +30,8 @@ public class Shelter {
 
     String drivingDirections;
 
+    String drivingDirectionsUrl;
+
     @OneToMany(mappedBy = "shelter")
     List<Animal> animals;
 

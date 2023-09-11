@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/owner")
+@RequestMapping("/api/v1/owners")
 @RequiredArgsConstructor
 @Tag(name = "Опекун", description = "Эндпоинты для работы с опекунами")
 public class OwnerController {

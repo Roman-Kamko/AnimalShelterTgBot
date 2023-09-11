@@ -11,7 +11,7 @@ public class ReportDtoOut {
 
     String reportMessage;
 
-    String photo;
+    String photoUrl;
 
     LocalDate date;
 

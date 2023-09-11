@@ -23,9 +23,6 @@ public class ReportMapper {
     public Report toEntity(ReportDtoIn fromObj) {
         var toObj = new Report();
         toObj.setReportMessage(fromObj.getReportMessage());
-        Optional.ofNullable(fromObj.getPhoto())
-                .filter(Predicate.not(MultipartFile::isEmpty))
-                .ifPresent(image -> toObj.setPhoto(image.getOriginalFilename()));
         toObj.setDate(LocalDate.now());
         toObj.setAdaptation(
                 adaptationRepository.findById(fromObj.getAdaptationId())
@@ -38,7 +35,7 @@ public class ReportMapper {
         return new ReportDtoOut(
                 fromObject.getId(),
                 fromObject.getReportMessage(),
-                fromObject.getPhoto(),
+                fromObject.getPhotoUrl(),
                 fromObject.getDate(),
                 adaptationMapper.toDto(fromObject.getAdaptation())
         );

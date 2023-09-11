@@ -23,7 +23,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/adaptation")
+@RequestMapping("/api/v1/adaptations")
 @RequiredArgsConstructor
 @Tag(name = "Адаптации", description = "Эндпоинты для работы с адоптациями")
 public class AdaptationController {

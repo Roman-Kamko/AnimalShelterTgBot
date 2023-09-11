@@ -22,6 +22,4 @@ public class AnimalDtoOut {
 
     AnimalType animalType;
 
-    ShelterDtoOut shelterDtoOut;
-
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class ShelterService {
         return Optional.of(shelterDtoIn)
                 .map(shelterMapper::toEntity)
                 .map(shelter -> {
+                    shelterRepository.saveAndFlush(shelter);
                     uploadImage(image, shelter);
                     return shelterRepository.save(shelter);
                 })
@@ -95,6 +97,14 @@ public class ShelterService {
         if (!image.isEmpty()) {
             imageService.upload(image.getOriginalFilename(), SHELTER_BUCKET, image.getInputStream());
             shelter.setDrivingDirections(image.getOriginalFilename());
+            shelter.setDrivingDirectionsUrl(
+                    UriComponentsBuilder.newInstance()
+                            .scheme("http")
+                            .host("localhost")
+                            .port("8081")
+                            .pathSegment("api", "v1", "shelters", String.valueOf(shelter.getId()), "map")
+                            .toUriString()
+            );
         }
     }
 

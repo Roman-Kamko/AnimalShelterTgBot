@@ -28,6 +28,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="driving_directions" type="VARCHAR(256)"/>
+            <column name="driving_directions_url" type="VARCHAR(256)"/>
         </createTable>
         <rollback>
             <dropTable tableName="shelter"/>

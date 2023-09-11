@@ -8,11 +8,15 @@ import com.team2.animalshelter.mapper.ReportMapper;
 import com.team2.animalshelter.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.InetAddress;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +44,12 @@ public class ReportService {
     }
 
     @Transactional
-    public ReportDtoOut create(ReportDtoIn reportDtoIn) {
+    public ReportDtoOut create(ReportDtoIn reportDtoIn, MultipartFile image) {
         return Optional.of(reportDtoIn)
                 .map(reportMapper::toEntity)
                 .map(report -> {
-                    uploadImage(reportDtoIn.getPhoto());
+                    reportRepository.saveAndFlush(report);
+                    uploadImage(image, report);
                     return reportRepository.save(report);
                 })
                 .map(reportMapper::toDto)
@@ -52,10 +57,10 @@ public class ReportService {
     }
 
     @Transactional
-    public Optional<ReportDtoOut> update(Long id, ReportDtoIn reportDtoIn) {
+    public Optional<ReportDtoOut> update(Long id, ReportDtoIn reportDtoIn, MultipartFile image) {
         return reportRepository.findById(id)
                 .map(report -> {
-                    uploadImage(reportDtoIn.getPhoto());
+                    uploadImage(image, report);
                     return reportMapper.toEntity(reportDtoIn);
                 })
                 .map(reportRepository::saveAndFlush)
@@ -86,9 +91,18 @@ public class ReportService {
      * @param image {@link MultipartFile}.
      */
     @SneakyThrows
-    private void uploadImage(MultipartFile image) {
+    private void uploadImage(MultipartFile image, Report report) {
         if (!image.isEmpty()) {
             imageService.upload(image.getOriginalFilename(), REPORT_BUCKET, image.getInputStream());
+            report.setPhoto(image.getOriginalFilename());
+            report.setPhotoUrl(
+                    UriComponentsBuilder.newInstance()
+                            .scheme("http")
+                            .host("localhost")
+                            .port("8081")
+                            .pathSegment("api", "v1", "reports", String.valueOf(report.getId()), "photo")
+                            .toUriString()
+            );
         }
     }
 

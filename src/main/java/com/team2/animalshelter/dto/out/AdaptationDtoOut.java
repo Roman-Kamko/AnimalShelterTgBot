@@ -21,8 +21,8 @@ public class AdaptationDtoOut {
 
     AdaptationStatus adaptationStatus;
 
-    AnimalDtoOut animalDtoOut;
+    AnimalDtoOut animal;
 
-    OwnerDto ownerDto;
+    OwnerDto owner;
 
 }

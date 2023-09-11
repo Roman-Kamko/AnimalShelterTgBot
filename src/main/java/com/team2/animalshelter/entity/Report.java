@@ -23,6 +23,8 @@ public class Report {
 
     String photo;
 
+    String photoUrl;
+
     LocalDate date;
 
     @ManyToOne(fetch = FetchType.LAZY)

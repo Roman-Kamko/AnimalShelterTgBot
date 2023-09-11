@@ -23,7 +23,4 @@ public class ReportDtoIn {
     @Schema(name = "Идентификатор адаптационного периода", example = "1")
     Long adaptationId;
 
-    @Schema(name = "Фото животного")
-    MultipartFile photo;
-
 }
