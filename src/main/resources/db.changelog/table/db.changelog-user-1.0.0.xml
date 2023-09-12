@@ -25,9 +25,27 @@
                 <constraints nullable="true"/>
             </column>
             <column name="phone_number" type="VARCHAR(16)"/>
+            <column name="shelter_id" type="BIGINT"/>
         </createTable>
         <rollback>
             <dropTable tableName="users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="2" author="Kamko">
+        <preConditions>
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="FK_USERS_SHELTER_ID"/>
+            </not>
+        </preConditions>
+        <addForeignKeyConstraint baseTableName="users"
+                                 baseColumnNames="shelter_id"
+                                 constraintName="FK_USERS_SHELTER_ID"
+                                 referencedTableName="shelter"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="FK_USERS_SHELTER_ID"/>
         </rollback>
     </changeSet>
 

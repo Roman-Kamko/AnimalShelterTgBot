@@ -2,6 +2,7 @@ package com.team2.animalshelter.dto.in;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

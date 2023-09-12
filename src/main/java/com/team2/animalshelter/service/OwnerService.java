@@ -3,7 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.OwnerDto;
 import com.team2.animalshelter.entity.Owner;
 import com.team2.animalshelter.entity.User;
-import com.team2.animalshelter.exception.OwnerCreateException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.OwnerMapper;
 import com.team2.animalshelter.repository.OwnerRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +40,7 @@ public class OwnerService {
      *
      * @param id идентификатор {@link User} на основе которого необходимо создать {@link Owner}.
      * @return экземпляр {@link OwnerDto}.
+     * @throws EntityCreateException если возникла ошибки при сохранении сущности.
      */
     @Transactional
     public OwnerDto create(Long id) {
@@ -47,7 +48,7 @@ public class OwnerService {
                 .map(ownerMapper::toEntity)
                 .map(ownerRepository::save)
                 .map(ownerMapper::toDto)
-                .orElseThrow(OwnerCreateException::new);
+                .orElseThrow(EntityCreateException::new);
     }
 
     @Transactional

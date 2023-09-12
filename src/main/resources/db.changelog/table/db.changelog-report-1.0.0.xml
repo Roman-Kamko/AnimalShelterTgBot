@@ -19,6 +19,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="photo" type="VARCHAR(255)"/>
+            <column name="photo_url" type="VARCHAR(255)"/>
             <column name="date" type="DATE">
                 <constraints nullable="false"/>
             </column>

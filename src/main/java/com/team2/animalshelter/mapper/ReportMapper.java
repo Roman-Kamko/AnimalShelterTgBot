@@ -7,6 +7,11 @@ import com.team2.animalshelter.exception.AdaptationNotFoundException;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 @RequiredArgsConstructor
@@ -18,6 +23,7 @@ public class ReportMapper {
     public Report toEntity(ReportDtoIn fromObj) {
         var toObj = new Report();
         toObj.setReportMessage(fromObj.getReportMessage());
+        toObj.setDate(LocalDate.now());
         toObj.setAdaptation(
                 adaptationRepository.findById(fromObj.getAdaptationId())
                         .orElseThrow(() -> new AdaptationNotFoundException(fromObj.getAdaptationId()))
@@ -29,7 +35,7 @@ public class ReportMapper {
         return new ReportDtoOut(
                 fromObject.getId(),
                 fromObject.getReportMessage(),
-                fromObject.getPhoto(),
+                fromObject.getPhotoUrl(),
                 fromObject.getDate(),
                 adaptationMapper.toDto(fromObject.getAdaptation())
         );

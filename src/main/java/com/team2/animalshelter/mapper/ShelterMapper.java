@@ -4,6 +4,10 @@ import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.Shelter;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Optional;
+import java.util.function.Predicate;
 
 @Component
 public class ShelterMapper {
@@ -33,7 +37,7 @@ public class ShelterMapper {
                 fromObj.getAddress(),
                 fromObj.getPhoneNumber(),
                 fromObj.getTimeTable(),
-                fromObj.getDrivingDirections()
+                fromObj.getDrivingDirectionsUrl()
         );
     }
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="1" author="Kamko">
+        <preConditions>
+            <tableExists tableName="animal"/>
+            <and>
+                <tableIsEmpty tableName="shelter"/>
+            </and>
+        </preConditions>
+        <insert tableName="shelter">
+            <column name="name">КотоПес</column>
+            <column name="address">г. Астана, ул. Лесная, д. 3.</column>
+            <column name="phone_number">
+                Общий телефон: +7-999-99-99
+                Телефон охраны для оформления пропуска: +7-888-88-88
+            </column>
+            <column name="time_table">Часы работы: Пн-Пт 08:00 - 20:00</column>
+            <column name="driving_directions">address.jpg</column>
+            <column name="driving_directions_url">http://localhost:8081/api/v1/shelters/3/map</column>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

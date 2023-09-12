@@ -30,10 +30,15 @@ public class Shelter {
 
     String drivingDirections;
 
+    String drivingDirectionsUrl;
+
     @OneToMany(mappedBy = "shelter")
     List<Animal> animals;
 
     @OneToMany(mappedBy = "shelter")
     List<Volunteer> volunteers;
+
+    @OneToMany(mappedBy = "shelter")
+    List<User> users;
 
 }

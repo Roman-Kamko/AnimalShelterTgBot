@@ -1,0 +1,41 @@
+###
+POST http://localhost:8081/api/v1/shelters
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="dto"
+Content-Type: application/json
+
+{
+  "name": "test",
+  "address": "test test test",
+  "phoneNumber": "77776665544",
+  "timeTable": "test"
+}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="266-16.jpg"
+Content-Type: image/jpeg
+
+< address.jpg
+--WebAppBoundary--
+
+###
+POST http://localhost:8081/api/v1/reports
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="dto"
+Content-Type: application/json
+
+{
+  "reportMessage": "test test test",
+  "adaptationId": "5"
+}
+
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="testReport.jpg"
+Content-Type: image/jpeg
+
+< testReport.jpg
+--WebAppBoundary--

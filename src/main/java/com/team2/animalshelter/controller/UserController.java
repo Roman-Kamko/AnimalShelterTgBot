@@ -119,7 +119,7 @@ public class UserController {
 
     @DeleteMapping("{id}")
     @Operation(
-            summary = "Обновить данные пользователя",
+            summary = "Удалить пользователя",
             responses = {
                     @ApiResponse(
                             responseCode = "204",

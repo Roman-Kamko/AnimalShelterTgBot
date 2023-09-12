@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 public class AnimalMapper {
 
     final ShelterRepository shelterRepository;
-    final ShelterMapper shelterMapper;
 
     public Animal toEntity(AnimalDtoIn fromObj) {
         Animal toObj = new Animal();
@@ -43,8 +42,7 @@ public class AnimalMapper {
                 fromObj.getAge(),
                 fromObj.getBreed(),
                 fromObj.getHealthy(),
-                fromObj.getAnimalType(),
-                shelterMapper.toDto(fromObj.getShelter())
+                fromObj.getAnimalType()
         );
     }
 
