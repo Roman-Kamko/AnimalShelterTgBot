@@ -64,10 +64,6 @@ public class ShelterController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ShelterDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Приют не найден по идентификатору"
                     )
             }
     )
@@ -135,10 +131,6 @@ public class ShelterController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ShelterDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Приют не найден по идентификатору"
                     )
             }
     )

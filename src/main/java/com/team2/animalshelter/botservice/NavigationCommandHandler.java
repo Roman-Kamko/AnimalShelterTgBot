@@ -30,7 +30,6 @@ public class NavigationCommandHandler {
     @PostConstruct
     private void initMethod() {
         navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
-
         navigationCommandExecutor.put(NavigationCommand.MAIN_MENU.getText(), this::showMainMenu);
         navigationCommandExecutor.put(NavigationCommand.SHELTER_MENU.getText(), this::showShelterMenu);
         navigationCommandExecutor.put(NavigationCommand.FAQ.getText(), this::showFaqMenu);

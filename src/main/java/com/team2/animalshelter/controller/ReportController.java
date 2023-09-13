@@ -62,10 +62,6 @@ public class ReportController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ReportDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Отчет не найден по идентификатору"
                     )
             }
     )
@@ -131,10 +127,6 @@ public class ReportController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ReportDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Отчет не найден по идентификатору"
                     )
             }
     )

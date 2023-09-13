@@ -41,10 +41,6 @@ public class AnimalController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AnimalDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Животное не найдено по идентификатору"
                     )
             }
     )
@@ -132,10 +128,6 @@ public class AnimalController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AnimalDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Животное не найдено по идентификатору"
                     )
             }
     )

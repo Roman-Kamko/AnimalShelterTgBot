@@ -56,10 +56,6 @@ public class UserController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDto.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Пользователь не найден по идентификатору"
                     )
             }
     )
@@ -102,10 +98,6 @@ public class UserController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = UserDto.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Пользователь не найден по идентификатору"
                     )
             }
     )

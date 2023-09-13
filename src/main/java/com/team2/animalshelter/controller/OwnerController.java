@@ -40,10 +40,6 @@ public class OwnerController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = OwnerDto.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Опекун не найден по идентификатору"
                     )
             }
     )
@@ -107,10 +103,6 @@ public class OwnerController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = OwnerDto.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Опекун не найден по идентификатору"
                     )
             }
     )

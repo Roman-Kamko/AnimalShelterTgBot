@@ -39,10 +39,6 @@ public class VolunteerController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = VolunteerDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Волонтер не найден по идентификатору"
                     )
             }
     )
@@ -102,10 +98,6 @@ public class VolunteerController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = VolunteerDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Волонтер не найден по идентификатору"
                     )
             }
     )

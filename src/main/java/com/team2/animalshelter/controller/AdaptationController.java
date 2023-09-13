@@ -41,10 +41,6 @@ public class AdaptationController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdaptationDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Адоптация не найдена по идентификатору"
                     )
             }
     )
@@ -145,10 +141,6 @@ public class AdaptationController {
                                     mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = AdaptationDtoOut.class)
                             )
-                    ),
-                    @ApiResponse(
-                            responseCode = "404",
-                            description = "Адаптация не найдена по идентификатору"
                     )
             }
     )
