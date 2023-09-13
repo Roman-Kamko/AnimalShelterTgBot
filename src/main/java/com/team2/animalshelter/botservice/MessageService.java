@@ -25,15 +25,6 @@ public class MessageService {
         sendMessage(chatId, FAQ_COMMAND);
     }
 
-    /**
-     * Отправка сообщения в случае не поддерживаемой команды.
-     *
-     * @param chatId указать в какой чат отправить сообщение.
-     */
-    public void sendUnknownCommand(Long chatId) {
-        sendMessage(chatId, UNKNOWN_COMMAND);
-    }
-
     private void sendMessage(Long chatId, String information) {
         var message = new SendMessage(chatId, information);
         telegramBot.execute(message);
