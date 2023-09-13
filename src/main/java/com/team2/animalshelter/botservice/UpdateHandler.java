@@ -31,26 +31,30 @@ public class UpdateHandler {
 
             if (text != null) {
                 navigationCommandHandler.handle(text, chat);
-            }
 
-            Pattern pattern = Pattern.compile("^([+]?[\\s0-9]+)?(\\d{3}|[(]?[0-9]+[)])?([-]?[\\s]?[0-9])+$");
+                //if (update.message() != null && update.message().text() != null) {
 
-            Matcher matcher = pattern.matcher(Objects.requireNonNull(text));
-            if (matcher.matches()) {
-                String telephone = matcher.group();
-                User user = new User();
-                user.setTelegramId(update.message().chat().id());
-                user.setFirstname(update.message().from().firstName());
-                user.setPhoneNumber(telephone);
-                userRepository.save(user);
-                messageService.answerContact(update.message().chat().id());
-            }
-        } else {
-            messageService.wrongContact(update.message().chat().id());
+                Pattern pattern = Pattern.compile("^([+]?[\\s0-9]+)?(\\d{3}|[(]?[0-9]+[)])?([-]?[\\s]?[0-9])+$");
 
-
-
+                Matcher matcher = pattern.matcher(Objects.requireNonNull(text));
+                if (matcher.matches()) {
+                    String telephone = matcher.group();
+                    User user = new User();
+                    user.setTelegramId(update.message().chat().id());
+                    user.setFirstname(update.message().from().firstName());
+                    user.setPhoneNumber(telephone);
+                    userRepository.save(user);
+                    messageService.answerContact(update.message().chat().id());}
+                } else {
+                    messageService.wrongContact(update.message().chat().id());
+                }
             }
         }
-
     }
+
+
+
+
+
+
+

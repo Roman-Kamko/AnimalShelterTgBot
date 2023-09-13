@@ -3,6 +3,8 @@ package com.team2.animalshelter.botservice;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
+import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.service.ShelterService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import static com.team2.animalshelter.botservice.InformationConstants.*;
 public class MessageService {
 
     private final TelegramBot telegramBot;
+    private final ShelterService shelterService;
 
     /**
      * Отправка списка всех доступных команд в разделе FAQ.
@@ -45,18 +48,26 @@ public class MessageService {
     }
 
     public void sendShelterContact(Long chatId) {
-        var message = new SendMessage(chatId, "Общий телефон: +7-999-99-99\n" +
-                "Телефон охраны для оформления пропуска: +7-888-88-88");
+        //"Общий телефон: +7-999-99-99\n" + "Телефон охраны для оформления пропуска: +7-888-88-88"
+        String telephone = shelterService.findById(1L)
+                .map(ShelterDtoOut::getPhoneNumber)
+                .orElse(null);
+        var message = new SendMessage(chatId,telephone);
         telegramBot.execute(message);
     }
 
     @SneakyThrows
     public void sendShelterAddress(Long chatId) {
-        var message1 = new SendMessage(chatId, "г. Астана, ул. Лесная, д. 3.");
-        telegramBot.execute(message1);
+        //"г. Астана, ул. Лесная, д. 3."
+        String time = shelterService.findById(1L)
+                .map(ShelterDtoOut::getAddress)
+                .orElse(null);
 
-        File image = ResourceUtils.getFile("src/main/resources/address.jpg");
-        SendPhoto sendPhoto = new SendPhoto(chatId, image);
+        var message = new SendMessage(chatId, time);
+        telegramBot.execute(message);
+
+        File image = ResourceUtils.getFile("image/shelters/address.jpg");
+        SendPhoto sendPhoto = new SendPhoto(chatId,image);
         telegramBot.execute(sendPhoto);
 
 
@@ -64,7 +75,12 @@ public class MessageService {
 
 
     public void sendTimeTable(Long chatId) {
-        var message = new SendMessage(chatId, "Часы работы: Пн-Пт 08:00 - 20:00");
+        //"Часы работы: Пн-Пт 08:00 - 20:00"
+        String time = shelterService.findById(1L)
+                .map(ShelterDtoOut::getTimeTable)
+                .orElse(null);
+
+        var message = new SendMessage(chatId, time);
         telegramBot.execute(message);
     }
 
@@ -78,7 +94,7 @@ public class MessageService {
     }
 
     public void answerContact(Long chatId) {
-        var message = new SendMessage(chatId, "Ваш телефон принят. Скоро с Вами свяжется волонтер ");
+        var message = new SendMessage(chatId,"Ваш телефон принят. Скоро с Вами свяжется волонтер");
         telegramBot.execute(message);
     }
 

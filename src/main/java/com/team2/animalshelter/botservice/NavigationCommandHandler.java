@@ -30,7 +30,6 @@ public class NavigationCommandHandler {
     @PostConstruct
     private void initMethod() {
         navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
-
         navigationCommandExecutor.put(NavigationCommand.MAIN_MENU.getText(), this::showMainMenu);
         navigationCommandExecutor.put(NavigationCommand.SHELTER_MENU.getText(), this::showShelterMenu);
         navigationCommandExecutor.put(NavigationCommand.FAQ.getText(), this::showFaqMenu);
@@ -88,25 +87,16 @@ public class NavigationCommandHandler {
         keyboardService.sendChooseAnimalMenu(chat.id());
     }
 
-    private void showShelterContact(Chat chat) {
-        messageService.sendShelterContact(chat.id());
-    }
+    private void showShelterContact(Chat chat) { messageService.sendShelterContact(chat.id()); }
 
-    private void showShelterAddress(Chat chat) {
+    private void showShelterAddress(Chat chat) { messageService.sendShelterAddress(chat.id()); }
 
-        messageService.sendShelterAddress(chat.id());
-    }
-
-    private void showTimeTable(Chat chat) {
-        messageService.sendTimeTable(chat.id());
-    }
+    private void showTimeTable(Chat chat) { messageService.sendTimeTable(chat.id()); }
 
     private void showSafetyPrecautions(Chat chat) {
         messageService.sendSafetyPrecautions(chat.id());
     }
 
-    private void sendContact(Chat chat) {
-        messageService.sendContact(chat.id());
-    }
+    private void sendContact(Chat chat) { messageService.sendContact(chat.id());  }
 
 }
