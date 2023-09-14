@@ -29,10 +29,16 @@ public class NavigationCommandHandler {
     @PostConstruct
     private void initMethod() {
         navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
-        navigationCommandExecutor.put(MAIN_MENU.getText(), this::showMainMenu);
-        navigationCommandExecutor.put(SHELTER_MENU.getText(), this::showShelterMenu);
-        navigationCommandExecutor.put(FAQ.getText(), this::showFaqMenu);
-        navigationCommandExecutor.put(CHOOSE_ANIMAL_TYPE.getText(), this::showChooseAnimalMenu);
+        navigationCommandExecutor.put(NavigationCommand.MAIN_MENU.getText(), this::showMainMenu);
+        navigationCommandExecutor.put(NavigationCommand.SHELTER_MENU.getText(), this::showShelterMenu);
+        navigationCommandExecutor.put(NavigationCommand.FAQ.getText(), this::showFaqMenu);
+        navigationCommandExecutor.put(NavigationCommand.CHOOSE_ANIMAL_TYPE.getText(), this::showChooseAnimalMenu);
+        navigationCommandExecutor.put(NavigationCommand.SHELTER_CONTACT.getText(), this::showShelterContact);
+        navigationCommandExecutor.put(NavigationCommand.SHELTER_ADDRESS.getText(), this::showShelterAddress);
+        navigationCommandExecutor.put(NavigationCommand.TIME_TABLE.getText(), this::showTimeTable);
+        navigationCommandExecutor.put(NavigationCommand.SAFETY_PRECAUTIONS.getText(), this::showSafetyPrecautions);
+        navigationCommandExecutor.put(NavigationCommand.SEND_CONTACT.getText(), this::sendContact);
+
     }
 
     /**
@@ -77,5 +83,17 @@ public class NavigationCommandHandler {
     private void showChooseAnimalMenu(Chat chat) {
         keyboardService.sendChooseAnimalMenu(chat.id());
     }
+
+    private void showShelterContact(Chat chat) { messageService.sendShelterContact(chat.id()); }
+
+    private void showShelterAddress(Chat chat) { messageService.sendShelterAddress(chat.id()); }
+
+    private void showTimeTable(Chat chat) { messageService.sendTimeTable(chat.id()); }
+
+    private void showSafetyPrecautions(Chat chat) {
+        messageService.sendSafetyPrecautions(chat.id());
+    }
+
+    private void sendContact(Chat chat) { messageService.sendContact(chat.id());  }
 
 }
