@@ -37,6 +37,7 @@ public class ShelterMapper {
                 fromObj.getAddress(),
                 fromObj.getPhoneNumber(),
                 fromObj.getTimeTable(),
+                fromObj.getDrivingDirections(),
                 fromObj.getDrivingDirectionsUrl()
         );
     }

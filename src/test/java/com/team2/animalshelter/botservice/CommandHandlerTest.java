@@ -1,6 +1,9 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.IntegrationTestBase;
+import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,13 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 import static com.team2.animalshelter.botservice.Command.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = CommandHandler.class)
-class CommandHandlerTest {
+//@SpringBootTest(classes = CommandHandler.class)
+class CommandHandlerTest extends IntegrationTestBase {
 
     @Mock
     private Chat chat;
@@ -29,6 +34,9 @@ class CommandHandlerTest {
 
     @MockBean
     private MessageService messageService;
+
+    @Autowired
+    private ShelterService shelterService;
 
     @InjectMocks
     @Autowired
@@ -74,6 +82,36 @@ class CommandHandlerTest {
     void shouldSendFaqMessage() {
         commandHandler.handle(FAQ.getText(), chat);
         verify(messageService, times(ONCE)).sendMessage(anyLong(), anyString());
+    }
+
+    @Test
+    @DisplayName("showShelterContact")
+    void shouldSendShelterContact() {
+        commandHandler.handle(SHELTER_CONTACT.getText(), chat);
+        verify(messageService, times(ONCE))
+                .sendMessage(
+                        anyLong(),
+                        eq("Телефон охраны для оформления пропуска: +7-888-88-88; Общий телефон: +7-999-99-99")
+                );
+    }
+
+    @Test
+    @DisplayName("showShelterAddress")
+    void shouldSendShelterAddress() {
+        commandHandler.handle(SHELTER_ADDRESS.getText(), chat);
+        assertAll(
+                () -> verify(messageService, times(ONCE)).sendMessage(anyLong(), eq("г. Астана, ул. Лесная, д. 3.")),
+                () -> verify(messageService, times(ONCE)).sendPhoto(anyLong(), eq("image/shelters/address.jpg"))
+        );
+
+
+    }
+
+    @Test
+    @DisplayName("showTimeTable")
+    void shouldSendTimeTable() {
+        commandHandler.handle(TIME_TABLE.getText(), chat);
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq("Часы работы: Пн-Пт 08:00 - 20:00"));
     }
 
 }

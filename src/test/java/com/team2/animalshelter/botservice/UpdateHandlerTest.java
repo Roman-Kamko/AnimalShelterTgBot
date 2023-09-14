@@ -16,6 +16,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.team2.animalshelter.botservice.Command.*;
@@ -55,6 +57,7 @@ class UpdateHandlerTest {
     @InjectMocks
     @Autowired
     private UpdateHandler updateHandler;
+    private static final long ID = 111111;
 
     @BeforeEach
     public void beforeEach() {
@@ -74,7 +77,7 @@ class UpdateHandlerTest {
     void handleFaqCommand() throws URISyntaxException, IOException {
         SendMessage actual = getArgumentCaptor(Command.FAQ).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.FAQ_COMMAND)
         );
 
@@ -94,7 +97,7 @@ class UpdateHandlerTest {
     void handleCommand(Command command) throws URISyntaxException, IOException {
         SendMessage actual = getArgumentCaptor(command).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:"),
                 () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
                 () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
@@ -105,7 +108,7 @@ class UpdateHandlerTest {
     void handleStartCommandIf() throws URISyntaxException, IOException {
         SendMessage actual = getArgumentCaptor(START).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo("Привет"),
                 () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
                 () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
@@ -116,16 +119,18 @@ class UpdateHandlerTest {
     void handleStartCommandElse() throws URISyntaxException, IOException {
         doReturn(true).when(userService).isRegistered(anyLong());
         SendMessage actual = getArgumentCaptor(START).getValue();
-        assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
-        assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
-        assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
-        assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true);
+        assertAll(
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:"),
+                () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
+                () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
+        );
     }
 
     @NotNull
     private ArgumentCaptor<SendMessage> getArgumentCaptor(Command start) throws IOException, URISyntaxException {
         String json = Files.readString(
-                Paths.get(UpdateHandlerTest.class.getResource("update.json").toURI()));
+                Paths.get(Objects.requireNonNull(UpdateHandlerTest.class.getResource("update.json")).toURI()));
         Update update = getUpdate(json, start.getText());
         updateHandler.handleUpdate(update);
         ArgumentCaptor<SendMessage> argumentCaptor = ArgumentCaptor.forClass(SendMessage.class);

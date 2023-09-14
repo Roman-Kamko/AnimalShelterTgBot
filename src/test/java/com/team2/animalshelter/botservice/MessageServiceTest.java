@@ -2,6 +2,7 @@ package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
+import com.pengrad.telegrambot.request.SendPhoto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -22,9 +23,15 @@ class MessageServiceTest {
     private MessageService messageService;
 
     @Test
-    void sendFaqMessage() {
+    void sendMessage() {
         messageService.sendMessage(1L, "text");
         verify(telegramBot, times(1)).execute(any(SendMessage.class));
+    }
+
+    @Test
+    void sendPhoto() {
+        messageService.sendPhoto(1L, "text");
+        verify(telegramBot, times(1)).execute(any(SendPhoto.class));
     }
 
 }

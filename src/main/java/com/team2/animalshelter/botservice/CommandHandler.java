@@ -1,13 +1,18 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.pengrad.telegrambot.request.SendPhoto;
+import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static com.team2.animalshelter.botservice.Command.*;
@@ -20,6 +25,7 @@ public class CommandHandler {
     private final UserService userService;
     private final KeyboardService keyboardService;
     private final MessageService messageService;
+    private final ShelterService shelterService;
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
@@ -97,23 +103,38 @@ public class CommandHandler {
     }
 
     private void showShelterContact(Chat chat) {
-        messageService.sendShelterContact(chat.id());
+        var phone = shelterService.findById(1L)
+                .map(ShelterDtoOut::getPhoneNumber)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), phone);
     }
 
     private void showShelterAddress(Chat chat) {
-        messageService.sendShelterAddress(chat.id());
+        var shelter = shelterService.findById(1L);
+        var address = shelter
+                .map(ShelterDtoOut::getAddress)
+                .orElse(null);
+        var drivingDirections = shelter
+                .map(ShelterDtoOut::getDrivingDirections)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), address);
+        var path = "image/" + ShelterService.SHELTER_BUCKET + "/" + drivingDirections;
+        messageService.sendPhoto(chat.id(), path);
     }
 
     private void showTimeTable(Chat chat) {
-        messageService.sendTimeTable(chat.id());
+        var timeTable = shelterService.findById(1L)
+                .map(ShelterDtoOut::getTimeTable)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), timeTable);
     }
 
     private void showSafetyPrecautions(Chat chat) {
-        messageService.sendSafetyPrecautions(chat.id());
+        messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
 
     private void sendContact(Chat chat) {
-        messageService.sendContact(chat.id());
+        messageService.sendMessage(chat.id(), "Введите свой номер телефона в формате +79998886655:");
     }
 
     private void sendRules(Chat chat) {
