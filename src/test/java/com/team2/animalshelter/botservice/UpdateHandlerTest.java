@@ -5,6 +5,8 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
+import com.team2.animalshelter.repository.UserRepository;
+import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +28,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import static com.team2.animalshelter.botservice.NavigationCommand.*;
+import static com.team2.animalshelter.botservice.Command.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
@@ -35,13 +37,19 @@ import static org.mockito.Mockito.*;
 class UpdateHandlerTest {
 
     @MockBean
+    private UserRepository userRepository;
+    @MockBean
     private UserService userService;
+    @MockBean
+    private ShelterService shelterService;
     @SpyBean
     private KeyboardService keyboardService;
     @SpyBean
     private MessageService messageService;
     @SpyBean
-    private NavigationCommandHandler navigationCommandHandler;
+    private CommandHandler commandHandler;
+    @SpyBean
+    private PhoneNumberHandler phoneNumberHandler;
     @MockBean
     private TelegramBot telegramBot;
     @InjectMocks
@@ -64,7 +72,7 @@ class UpdateHandlerTest {
 
     @Test
     void handleFaqCommand() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(NavigationCommand.FAQ).getValue();
+        SendMessage actual = getArgumentCaptor(Command.FAQ).getValue();
         assertAll(
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.FAQ_COMMAND)
@@ -83,7 +91,7 @@ class UpdateHandlerTest {
 
     @ParameterizedTest
     @MethodSource("paramByHandleCommandTest")
-    void handleCommand(NavigationCommand command) throws URISyntaxException, IOException {
+    void handleCommand(Command command) throws URISyntaxException, IOException {
         SendMessage actual = getArgumentCaptor(command).getValue();
         assertAll(
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
@@ -115,7 +123,7 @@ class UpdateHandlerTest {
     }
 
     @NotNull
-    private ArgumentCaptor<SendMessage> getArgumentCaptor(NavigationCommand start) throws IOException, URISyntaxException {
+    private ArgumentCaptor<SendMessage> getArgumentCaptor(Command start) throws IOException, URISyntaxException {
         String json = Files.readString(
                 Paths.get(UpdateHandlerTest.class.getResource("update.json").toURI()));
         Update update = getUpdate(json, start.getText());

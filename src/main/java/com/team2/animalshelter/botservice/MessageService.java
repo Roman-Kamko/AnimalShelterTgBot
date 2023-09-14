@@ -10,8 +10,6 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-
 /**
  * Класс для отправки сообщений пользователю
  */
@@ -28,60 +26,44 @@ public class MessageService {
     }
 
     public void sendShelterContact(Long chatId) {
-        //"Общий телефон: +7-999-99-99\n" + "Телефон охраны для оформления пропуска: +7-888-88-88"
-        String telephone = shelterService.findById(1L)
+        var phone = shelterService.findById(1L)
                 .map(ShelterDtoOut::getPhoneNumber)
                 .orElse(null);
-        var message = new SendMessage(chatId,telephone);
-        telegramBot.execute(message);
+        sendMessage(chatId, phone);
     }
 
     @SneakyThrows
     public void sendShelterAddress(Long chatId) {
-        //"г. Астана, ул. Лесная, д. 3."
-        String time = shelterService.findById(1L)
+        var address = shelterService.findById(1L)
                 .map(ShelterDtoOut::getAddress)
                 .orElse(null);
-
-        var message = new SendMessage(chatId, time);
-        telegramBot.execute(message);
-
-        File image = ResourceUtils.getFile("image/shelters/address.jpg");
-        SendPhoto sendPhoto = new SendPhoto(chatId,image);
+        sendMessage(chatId, address);
+        var image = ResourceUtils.getFile("image/shelters/address.jpg");
+        SendPhoto sendPhoto = new SendPhoto(chatId, image);
         telegramBot.execute(sendPhoto);
-
-
     }
 
-
     public void sendTimeTable(Long chatId) {
-        //"Часы работы: Пн-Пт 08:00 - 20:00"
-        String time = shelterService.findById(1L)
+        var timeTable = shelterService.findById(1L)
                 .map(ShelterDtoOut::getTimeTable)
                 .orElse(null);
-
-        var message = new SendMessage(chatId, time);
-        telegramBot.execute(message);
+        sendMessage(chatId, timeTable);
     }
 
     public void sendSafetyPrecautions(Long chatId) {
-        sendMessage(chatId, SAFETY_PRECAUTIONS);
+        sendMessage(chatId, InformationConstants.SAFETY_PRECAUTIONS);
     }
 
     public void sendContact(Long chatId) {
-        var message = new SendMessage(chatId, "Введите свой номер телефона ");
-        telegramBot.execute(message);
+        sendMessage(chatId, "Введите свой номер телефона в формате +79998886655:");
     }
 
     public void answerContact(Long chatId) {
-        var message = new SendMessage(chatId,"Ваш телефон принят. Скоро с Вами свяжется волонтер");
-        telegramBot.execute(message);
+        sendMessage(chatId, "Ваш телефон принят");
     }
 
     public void wrongContact(Long chatId) {
-        var message = new SendMessage(chatId, "Неправильно введен номер телефона");
-        telegramBot.execute(message);
+        sendMessage(chatId, "Неправильно введен номер телефона");
     }
-
 
 }

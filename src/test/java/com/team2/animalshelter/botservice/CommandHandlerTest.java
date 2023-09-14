@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import static com.team2.animalshelter.botservice.NavigationCommand.*;
+import static com.team2.animalshelter.botservice.Command.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest(classes = NavigationCommandHandler.class)
-class NavigationCommandHandlerTest {
+@SpringBootTest(classes = CommandHandler.class)
+class CommandHandlerTest {
 
     @Mock
     private Chat chat;
@@ -32,7 +32,7 @@ class NavigationCommandHandlerTest {
 
     @InjectMocks
     @Autowired
-    private NavigationCommandHandler navigationCommandHandler;
+    private CommandHandler commandHandler;
 
     private static final int ONCE = 1;
 
@@ -40,7 +40,7 @@ class NavigationCommandHandlerTest {
     @DisplayName("showGreetingsIf")
     void shouldSendMainMenuIfUserIsRegister() {
         doReturn(true).when(userService).isRegistered(anyLong());
-        navigationCommandHandler.handle(START.getText(), chat);
+        commandHandler.handle(START.getText(), chat);
         verify(keyboardService, times(ONCE)).sendMainMenu(anyLong());
     }
 
@@ -48,7 +48,7 @@ class NavigationCommandHandlerTest {
     @DisplayName("showGreetingsElse")
     void shouldSendGreetingsIfUserIsNotRegister() {
         doReturn(false).when(userService).isRegistered(anyLong());
-        navigationCommandHandler.handle(START.getText(), chat);
+        commandHandler.handle(START.getText(), chat);
         assertAll(
                 () -> verify(userService, times(ONCE)).create(chat),
                 () -> verify(keyboardService, times(ONCE)).sendGreetings(anyLong())
@@ -58,21 +58,21 @@ class NavigationCommandHandlerTest {
     @Test
     @DisplayName("showShelterMenu")
     void shouldSendShelterMenu() {
-        navigationCommandHandler.handle(SHELTER_MENU.getText(), chat);
+        commandHandler.handle(SHELTER_MENU.getText(), chat);
         verify(keyboardService, times(ONCE)).sendShelterMenu(anyLong());
     }
 
     @Test
     @DisplayName("showChooseAnimalMenu")
     void shouldSendChooseAnimalMenu() {
-        navigationCommandHandler.handle(CHOOSE_ANIMAL_TYPE.getText(), chat);
+        commandHandler.handle(CHOOSE_ANIMAL_TYPE.getText(), chat);
         verify(keyboardService, times(ONCE)).sendChooseAnimalMenu(anyLong());
     }
 
     @Test
     @DisplayName("showFaqMenu")
     void shouldSendFaqMessage() {
-        navigationCommandHandler.handle(FAQ.getText(), chat);
+        commandHandler.handle(FAQ.getText(), chat);
         verify(messageService, times(ONCE)).sendMessage(anyLong(), anyString());
     }
 

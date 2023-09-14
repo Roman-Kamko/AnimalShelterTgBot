@@ -33,3 +33,4 @@ build/
 .vscode/
 /src/main/resources/application-test.properties
 /image/266-16.jpg
+/src/test/resources/application-t.properties

@@ -1,6 +1,5 @@
-package com.team2.animalshelter.integration.annotation;
+package com.team2.animalshelter.annotation;
 
-import com.team2.animalshelter.integration.TestApplicationRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Transactional
-@SpringBootTest(classes = TestApplicationRunner.class)
-@ActiveProfiles("test")
+@SpringBootTest
+@ActiveProfiles("t")
 public @interface IntegrationTest {
 }

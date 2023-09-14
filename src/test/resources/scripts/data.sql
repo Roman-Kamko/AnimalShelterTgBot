@@ -10,11 +10,11 @@ VALUES (1, 'Пушок', 3, 'Сфинкс', true, 'CAT', 1),
 SELECT SETVAL('animal_id_seq', (SELECT MAX(id) FROM animal));
 
 INSERT INTO owner (telegram_id, username, firstname, lastname, phone_number)
-VALUES (111111, 'Ivan_Ivanov', 'Иван', 'Иванов', '79115648532'),
-       (222222, 'Petr_Petros', 'Петр', 'Петров', '79256279136'),
-       (333333, 'Alex', 'Алексей', 'Алексеев', '79053648512'),
-       (444444, 'Semen_Semenov', 'Семен', 'Семенов', '79308493265'),
-       (555555, 'Svetlaya', 'Света', 'Светикова', '79913665885');
+VALUES (111111, 'Ivan_Ivanov', 'Иван', 'Иванов', '+79115648532'),
+       (222222, 'Petr_Petros', 'Петр', 'Петров', '+79256279136'),
+       (333333, 'Alex', 'Алексей', 'Алексеев', '+79053648512'),
+       (444444, 'Semen_Semenov', 'Семен', 'Семенов', '+79308493265'),
+       (555555, 'Svetlaya', 'Света', 'Светикова', '+79913665885');
 
 INSERT INTO adaptation (id, start_date, end_date, comment, problem, adaptation_status, animal_id, owner_id)
 VALUES (1, '2023-09-09', '2023-10-09', null, false, 'IN_PROGRESS', 3, 111111),
@@ -30,10 +30,10 @@ VALUES (1, 'Забился в угол, не выходит есть и пить
 SELECT SETVAL('report_id_seq', (SELECT MAX(id) FROM report));
 
 INSERT INTO users (telegram_id, username, firstname, lastname, phone_number, shelter_id)
-VALUES (111111, 'Ivan_Ivanov', 'Иван', 'Иванов', '79115648532', 1),
-       (222222, 'Petr_Petros', 'Петр', 'Петров', '79256279136', 1),
-       (333333, 'Alex', 'Алексей', 'Алексеев', '79053648512', 1),
-       (444444, 'Semen_Semenov', 'Семен', 'Семенов', '79308493265', 1),
-       (555555, 'Svetlaya', 'Света', 'Светикова', '79913665885', 1),
-       (666666, 'Dimon', 'Дмитрий', 'Дмитриев', '79913665885', 1),
-       (777777, 'Romashka', 'Роман', 'Романов', '79913665885', 1);
+VALUES (111111, 'Ivan_Ivanov', 'Ivan', 'Ivanov', '+79115648532', 1),
+       (222222, 'Petr_Petros', 'Петр', 'Петров', '+79256279136', 1),
+       (333333, 'Alex', 'Алексей', 'Алексеев', '+79053648512', 1),
+       (444444, 'Semen_Semenov', 'Семен', 'Семенов', '+79308493265', 1),
+       (555555, 'Svetlaya', 'Света', 'Светикова', '+79913665885', 1),
+       (666666, 'Dimon', 'Дмитрий', 'Дмитриев', '+79913665885', 1),
+       (777777, 'Romashka', 'Роман', 'Романов', '+79913665885', 1);

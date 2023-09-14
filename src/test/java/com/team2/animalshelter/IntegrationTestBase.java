@@ -1,7 +1,6 @@
-package com.team2.animalshelter.integration;
+package com.team2.animalshelter;
 
-import com.team2.animalshelter.integration.annotation.IntegrationTest;
-import org.junit.jupiter.api.AfterAll;
+import com.team2.animalshelter.annotation.IntegrationTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;

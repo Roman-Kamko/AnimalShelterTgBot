@@ -3,7 +3,7 @@ package com.team2.animalshelter.botservice;
 /**
  * Список поддерживаемых команд
  */
-public enum NavigationCommand {
+public enum Command {
 
     START("/start"),
     MAIN_MENU("Главное меню"),
@@ -18,10 +18,23 @@ public enum NavigationCommand {
     SHELTER_ADDRESS("Адрес"),
     TIME_TABLE("Расписание"),
     SAFETY_PRECAUTIONS("Техника безопасности"),
-    SEND_CONTACT("Оставить телефон");
+    SEND_CONTACT("Оставить телефон"),
+    RULES("/datingRules"),
+    DOC_LIST("/docList"),
+    DENIAL_REASONS("/denialReasons"),
+    CAT_TRANSPORTATION("/catTransportation"),
+    HOME_FOR_KITTY("/homeForKitty"),
+    HOME_FOR_ADULT_CAT("/homeForAdultCat"),
+    HOME_FOR_DIS_CAT("/homeForDisabledCat"),
+    DOG_TRANSPORTATION("/dogTransportation"),
+    HOME_FOR_PUPPY("/homeForPuppy"),
+    HOME_FOR_ADULT_DOG("/homeForAdultDog"),
+    HOME_FOR_DIS_DOG("/homeForDisabledDog"),
+    CYNOLOGIST_ADVISE("/cynologistAdvice"),
+    PROVEN_CYNOLOGISTS("/provenCynologists");
     private final String text;
 
-    NavigationCommand(String text) {
+    Command(String text) {
         this.text = text;
     }
 

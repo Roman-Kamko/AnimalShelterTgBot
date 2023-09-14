@@ -8,7 +8,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.team2.animalshelter.botservice.NavigationCommand.*;
+import static com.team2.animalshelter.botservice.Command.*;
 
 /**
  * Класс в котором строятся основные меню для навигации по боту
