@@ -9,6 +9,9 @@ import com.team2.animalshelter.service.UserService;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mockito;
@@ -21,13 +24,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 import static com.team2.animalshelter.botservice.NavigationCommand.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = UpdateHandler.class)
 class UpdateHandlerTest {
 
@@ -44,9 +47,6 @@ class UpdateHandlerTest {
     @InjectMocks
     @Autowired
     private UpdateHandler updateHandler;
-
-    private static final String MESSAGE_TEXT = "some message";
-    private static final int ONCE = 1;
 
     @BeforeEach
     public void beforeEach() {
@@ -73,6 +73,26 @@ class UpdateHandlerTest {
 
     }
 
+    static Stream<Arguments> paramByHandleCommandTest() {
+        return Stream.of(
+                Arguments.of(MAIN_MENU),
+                Arguments.of(SHELTER_MENU),
+                Arguments.of(CHOOSE_ANIMAL_TYPE)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("paramByHandleCommandTest")
+    void handleCommand(NavigationCommand command) throws URISyntaxException, IOException {
+        SendMessage actual = getArgumentCaptor(command).getValue();
+        assertAll(
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:"),
+                () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
+                () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
+        );
+    }
+
     @Test
     void handleStartCommandIf() throws URISyntaxException, IOException {
         SendMessage actual = getArgumentCaptor(START).getValue();
@@ -88,33 +108,6 @@ class UpdateHandlerTest {
     void handleStartCommandElse() throws URISyntaxException, IOException {
         doReturn(true).when(userService).isRegistered(anyLong());
         SendMessage actual = getArgumentCaptor(START).getValue();
-        assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
-        assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
-        assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
-        assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true);
-    }
-
-    @Test
-    void handleMainMenuCommand() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(MAIN_MENU).getValue();
-        assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
-        assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
-        assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
-        assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true);
-    }
-
-    @Test
-    void handleShelterMenuCommand() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(SHELTER_MENU).getValue();
-        assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
-        assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
-        assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
-        assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true);
-    }
-
-    @Test
-    void handleAnimalMenuCommand() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(CHOOSE_ANIMAL_TYPE).getValue();
         assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
         assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
         assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
