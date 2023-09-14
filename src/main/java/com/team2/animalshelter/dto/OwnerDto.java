@@ -28,7 +28,7 @@ public class OwnerDto {
     String lastname;
 
     @Schema(description = "Контактный телефон опекуна", example = "79998887766")
-    @Pattern(regexp = "7[0-9]{10}$")
+    @Pattern(regexp = "\\+7[0-9]{10}$")
     String phoneNumber;
 
 }

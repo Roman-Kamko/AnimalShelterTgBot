@@ -73,7 +73,7 @@ class NavigationCommandHandlerTest {
     @DisplayName("showFaqMenu")
     void shouldSendFaqMessage() {
         navigationCommandHandler.handle(FAQ.getText(), chat);
-        verify(messageService, times(ONCE)).sendFaqMessage(anyLong());
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), anyString());
     }
 
 }

@@ -10,9 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-/**
- * Класс для обработки команд
- */
+import static com.team2.animalshelter.botservice.NavigationCommand.*;
+
 @Component
 @RequiredArgsConstructor
 public class NavigationCommandHandler {
@@ -24,25 +23,23 @@ public class NavigationCommandHandler {
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
-     * {@link #navigationCommandExecutor} команду, передварительно созданную в {@link InformationConstants},
+     * {@link #navigationCommandExecutor} команду, передварительно созданную в {@link NavigationCommand},
      * а в виде значения ссылку на метод, который необходимо создать в этом классе.
      */
     @PostConstruct
     private void initMethod() {
         navigationCommandExecutor.put(NavigationCommand.START.getText(), this::showGreetings);
-        navigationCommandExecutor.put(NavigationCommand.MAIN_MENU.getText(), this::showMainMenu);
-        navigationCommandExecutor.put(NavigationCommand.SHELTER_MENU.getText(), this::showShelterMenu);
-        navigationCommandExecutor.put(NavigationCommand.FAQ.getText(), this::showFaqMenu);
-        navigationCommandExecutor.put(NavigationCommand.CHOOSE_ANIMAL_TYPE.getText(), this::showChooseAnimalMenu);
+        navigationCommandExecutor.put(MAIN_MENU.getText(), this::showMainMenu);
+        navigationCommandExecutor.put(SHELTER_MENU.getText(), this::showShelterMenu);
+        navigationCommandExecutor.put(FAQ.getText(), this::showFaqMenu);
+        navigationCommandExecutor.put(CHOOSE_ANIMAL_TYPE.getText(), this::showChooseAnimalMenu);
     }
 
     /**
-     * Метод для обработки команд. В зависимости от поступившей команды будет выполнен соответствующий метод,
-     * если поступившая команда не зарегистрирована в {@link #initMethod()}, то будет выдано сообщение
-     * {@value InformationConstants#UNKNOWN_COMMAND}.
+     * Метод для обработки команд. В зависимости от поступившей команды будет выполнен соответствующий метод.
      *
      * @param navigationText поступившая команда.
-     * @param chat из какого чата поступила команда.
+     * @param chat           из какого чата поступила команда.
      */
     public void handle(String navigationText, Chat chat) {
         var navigationCommands = NavigationCommand.values();
@@ -74,7 +71,7 @@ public class NavigationCommandHandler {
     }
 
     private void showFaqMenu(Chat chat) {
-        messageService.sendFaqMessage(chat.id());
+        messageService.sendMessage(chat.id(), InformationConstants.FAQ_COMMAND);
     }
 
     private void showChooseAnimalMenu(Chat chat) {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class UpdateHandler {
 
     private final NavigationCommandHandler navigationCommandHandler;
+    private final FaqCommandHandler faqCommandHandler;
 
     public void handleUpdate(Update update) {
         if (update.message() != null) {
@@ -23,6 +24,7 @@ public class UpdateHandler {
 
             if (text != null) {
                 navigationCommandHandler.handle(text, chat);
+                faqCommandHandler.handle(text, chat);
             }
         }
     }

@@ -31,7 +31,7 @@ public class UserDto {
     String lastname;
 
     @Schema(description = "Контактный телефон пользователя", example = "79998887766")
-    @Pattern(regexp = "7[0-9]{10}$")
+    @Pattern(regexp = "\\+7[0-9]{10}$")
     String phoneNumber;
 
 }
