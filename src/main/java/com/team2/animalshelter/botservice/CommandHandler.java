@@ -1,18 +1,15 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
-import com.pengrad.telegrambot.request.SendPhoto;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Consumer;
 
 import static com.team2.animalshelter.botservice.Command.*;
@@ -43,7 +40,7 @@ public class CommandHandler {
         commandExecutor.put(SHELTER_ADDRESS.getText(), this::showShelterAddress);
         commandExecutor.put(TIME_TABLE.getText(), this::showTimeTable);
         commandExecutor.put(SAFETY_PRECAUTIONS.getText(), this::showSafetyPrecautions);
-        commandExecutor.put(SEND_CONTACT.getText(), this::sendContact);
+        commandExecutor.put(SEND_CONTACT.getText(), this::sendContactRequest);
         commandExecutor.put(RULES.getText(), this::sendRules);
         commandExecutor.put(DOC_LIST.getText(), this::sendDocList);
         commandExecutor.put(DENIAL_REASONS.getText(), this::sendDenialReasons);
@@ -133,8 +130,8 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
 
-    private void sendContact(Chat chat) {
-        messageService.sendMessage(chat.id(), "Введите свой номер телефона в формате +79998886655:");
+    private void sendContactRequest(Chat chat) {
+        messageService.sendMessage(chat.id(), InformationConstants.CONTACT_REQUEST);
     }
 
     private void sendRules(Chat chat) {
