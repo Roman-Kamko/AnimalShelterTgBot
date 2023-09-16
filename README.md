@@ -36,11 +36,11 @@
 * [ссылка на ТЗ](https://skyengpublic.notion.site/47bcac1b049f4af6b351e2ab5d05afb4)
 
 ## Команда разработчиков:
-* Камко Р.
-* Никитин Н.
-* Волынкина А.
-* Азаренко А.
-* Березкин А.
+* [Камко Р.](https://github.com/Roman-Kamko)
+* [Никитин Н.](https://github.com/NikitinNikita94)
+* [Волынкина А.](https://github.com/ModelS87)
+* [Назаренко А.](https://github.com/hyperpositron)
+* [Березкин А.](https://github.com/a7479)
 
 ## Стек технологий:
 * Язык: _Java 17_
