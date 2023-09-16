@@ -70,22 +70,13 @@ public class UserService {
                 .orElseThrow(EntityCreateException::new);
     }
 
-    /**
-     * Метод для сохранения внесенных изменений в пользователя. Изменения вносятся при помощи
-     * вспомогательного метода {@link EntityUtils#copyNonNullFields(Object, Object)}.
-     *
-     * @param userDto пользователь с измененными данными.
-     * @return экземпляр {@link UserDto}.
-     * @throws UserNotFoundException если пользователь не найден по id.
-     */
     @Transactional
     public Optional<UserDto> update(UserDto userDto) {
         return userRepository.findById(userDto.getTelegramId())
-                .map(user -> entityUtils.copyNonNullFields(userMapper.toEntity(userDto), user))
+                .map(user -> userMapper.toEntity(userDto))
                 .map(userRepository::saveAndFlush)
                 .map(userMapper::toDto);
     }
-
 
     @Transactional
     public boolean delete(Long id) {
