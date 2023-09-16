@@ -44,7 +44,9 @@ class UserServiceTest extends IntegrationTestBase {
 
     @Test
     void shouldReturnOptionalOfUserDtoWhenFindById() {
-        userService.findById(ID).ifPresent(actual ->
+        var actualResult = userService.findById(ID);
+        assertThat(actualResult.isPresent()).isTrue();
+        actualResult.ifPresent(actual ->
                 assertThat(actual).isEqualTo(userDto)
         );
     }
@@ -52,7 +54,7 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void shouldReturnAllUsersDtoWhenFindAll() {
         var users = userService.findAll();
-        assertThat(users).hasSize(7);
+        assertThat(users).isNotEmpty().hasSize(7);
     }
 
     @Test
@@ -83,11 +85,18 @@ class UserServiceTest extends IntegrationTestBase {
                 null
         );
         assertThat(userService.create(chat)).isEqualTo(userFromChat);
+
+        var users = userService.findAll();
+        assertThat(users).contains(userFromChat);
     }
 
     @Test
     void shouldCreateUserFromUserDto() {
-        assertThat(userService.create(userDto)).isEqualTo(userDto);
+        var actualResult = userService.create(userDto);
+        assertThat(actualResult).isEqualTo(userDto);
+
+        var users = userService.findAll();
+        assertThat(users).contains(actualResult);
     }
 
     @Test
@@ -99,9 +108,13 @@ class UserServiceTest extends IntegrationTestBase {
                 "Ivanov123",
                 "+71111111111"
         );
-        userService.update(updatedUser).ifPresent(actual ->
+        var actualResult = userService.update(updatedUser);
+        actualResult.ifPresent(actual ->
                 assertThat(actual).isEqualTo(updatedUser)
         );
+
+        var users = userService.findAll();
+        assertThat(users).contains(updatedUser);
     }
 
     @Test

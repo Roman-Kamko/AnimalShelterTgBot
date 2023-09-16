@@ -48,9 +48,9 @@ class VolunteerServiceTest extends IntegrationTestBase {
 
     @Test
     void shouldReturnOptionalOfVolunteerWhenFindById() {
-        var maybeVolunteer = volunteerService.findById(ID);
-        assertThat(maybeVolunteer.isPresent()).isTrue();
-        maybeVolunteer.ifPresent(volunteer ->
+        var actualResult = volunteerService.findById(ID);
+        assertThat(actualResult.isPresent()).isTrue();
+        actualResult.ifPresent(volunteer ->
                 assertThat(volunteer).isEqualTo(volunteerDtoOut)
         );
     }
@@ -63,11 +63,11 @@ class VolunteerServiceTest extends IntegrationTestBase {
 
     @Test
     void shouldCreateVolunteerFromVolunteerDtoIn() {
-        var volunteer = volunteerService.create(volunteerDtoIn);
-        assertThat(volunteer).isEqualTo(volunteerDtoOut);
+        var actualResult = volunteerService.create(volunteerDtoIn);
+        assertThat(actualResult).isEqualTo(volunteerDtoOut);
 
         var volunteers = volunteerService.findAll();
-        assertThat(volunteers).contains(volunteer);
+        assertThat(volunteers).contains(actualResult);
     }
 
     @Test
