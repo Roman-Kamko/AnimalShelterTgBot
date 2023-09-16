@@ -37,3 +37,7 @@ VALUES (111111, 'Ivan_Ivanov', 'Ivan', 'Ivanov', '+79115648532', 1),
        (555555, 'Svetlaya', 'Света', 'Светикова', '+79913665885', 1),
        (666666, 'Dimon', 'Дмитрий', 'Дмитриев', '+79913665885', 1),
        (777777, 'Romashka', 'Роман', 'Романов', '+79913665885', 1);
+
+INSERT INTO volunteer (telegram_id, username, firstname, lastname, shelter_id)
+VALUES (666666, 'Dimon', 'Дмитрий', 'Дмитриев', 1),
+       (777777, 'Romashka', 'Роман', 'Романов', 1);

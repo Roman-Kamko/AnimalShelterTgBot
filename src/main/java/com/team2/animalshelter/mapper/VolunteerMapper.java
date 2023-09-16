@@ -20,6 +20,7 @@ public class VolunteerMapper {
 
     public Volunteer toEntity(VolunteerDtoIn fromObj) {
         var toObj = new Volunteer();
+        toObj.setTelegramId(fromObj.getTelegramId());
         toObj.setUsername(fromObj.getUsername());
         toObj.setFirstname(fromObj.getFirstname());
         toObj.setLastname(fromObj.getLastname());
