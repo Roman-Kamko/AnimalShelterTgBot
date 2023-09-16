@@ -4,11 +4,9 @@ import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.dto.UserDto;
 import com.team2.animalshelter.entity.User;
 import com.team2.animalshelter.exception.EntityCreateException;
-import com.team2.animalshelter.exception.UserNotFoundException;
 import com.team2.animalshelter.mapper.UserCreateFromChatMapper;
 import com.team2.animalshelter.mapper.UserMapper;
 import com.team2.animalshelter.repository.UserRepository;
-import com.team2.animalshelter.utils.EntityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +24,6 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserCreateFromChatMapper userCreateFromChatMapper;
     private final UserMapper userMapper;
-    private final EntityUtils<User> entityUtils;
 
     public Optional<UserDto> findById(Long id) {
         return userRepository.findById(id)

@@ -1,9 +1,7 @@
 package com.team2.animalshelter.controller;
 
 import com.team2.animalshelter.dto.in.ReportDtoIn;
-import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
-import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.exception.ReportNotFoundException;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ReportService;

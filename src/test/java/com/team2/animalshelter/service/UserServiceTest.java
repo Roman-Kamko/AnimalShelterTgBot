@@ -4,7 +4,6 @@ import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.IntegrationTestBase;
 import com.team2.animalshelter.dto.UserDto;
-import com.team2.animalshelter.entity.Shelter;
 import com.team2.animalshelter.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +24,6 @@ class UserServiceTest extends IntegrationTestBase {
     private static final long ID = 111111L;
     private UserDto userDto;
     private User user;
-    private Shelter shelter;
 
     @BeforeEach
     void beforeEach() {
@@ -36,16 +34,12 @@ class UserServiceTest extends IntegrationTestBase {
                 "Ivanov",
                 "+79115648532"
         );
-        shelter = new Shelter();
-        shelter.setId(1L);
-        shelter.setName("testName");
         user = new User();
         user.setTelegramId(111111L);
         user.setUsername("Ivan_Ivanov");
         user.setFirstname("Ivan");
         user.setLastname("Ivanov");
         user.setPhoneNumber("+79115648532");
-        user.setShelter(shelter);
     }
 
     @Test
@@ -76,7 +70,10 @@ class UserServiceTest extends IntegrationTestBase {
     @Test
     void shouldCreateUserFromChat() throws URISyntaxException, IOException {
         String json = Files.readString(
-                Paths.get(Objects.requireNonNull(UserServiceTest.class.getResource("chat.json")).toURI()));
+                Paths.get(Objects.requireNonNull(
+                        UserServiceTest.class.getResource("chat.json")
+                ).toURI())
+        );
         var chat = BotUtils.fromJson(json, Chat.class);
         var userFromChat = new UserDto(
                 111111L,

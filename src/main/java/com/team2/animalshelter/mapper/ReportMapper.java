@@ -7,11 +7,8 @@ import com.team2.animalshelter.exception.AdaptationNotFoundException;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.Optional;
-import java.util.function.Predicate;
 
 @Component
 @RequiredArgsConstructor

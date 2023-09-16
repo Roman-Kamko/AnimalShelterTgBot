@@ -1,6 +1,5 @@
 package com.team2.animalshelter.repository;
 
-import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.Shelter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
