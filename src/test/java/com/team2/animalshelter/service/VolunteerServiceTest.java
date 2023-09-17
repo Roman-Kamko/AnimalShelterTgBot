@@ -4,7 +4,7 @@ import com.team2.animalshelter.IntegrationTestBase;
 import com.team2.animalshelter.dto.in.VolunteerDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.dto.out.VolunteerDtoOut;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,21 +14,12 @@ class VolunteerServiceTest extends IntegrationTestBase {
 
     @Autowired
     private VolunteerService volunteerService;
-    private VolunteerDtoIn volunteerDtoIn;
-    private VolunteerDtoOut volunteerDtoOut;
-    private ShelterDtoOut shelterDtoOut;
+    private static ShelterDtoOut shelter;
     private static final long ID = 666666L;
 
-    @BeforeEach
-    void beforeEach() {
-        volunteerDtoIn = new VolunteerDtoIn(
-                666666L,
-                "Dimon",
-                "Дмитрий",
-                "Дмитриев",
-                1L
-        );
-        shelterDtoOut = new ShelterDtoOut(
+    @BeforeAll
+    static void beforeAll() {
+        shelter = new ShelterDtoOut(
                 1L,
                 "КотоПес",
                 "г. Астана, ул. Лесная, д. 3.",
@@ -37,34 +28,48 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 "address.jpg",
                 "http://localhost:8081/api/v1/shelters/3/map"
         );
-        volunteerDtoOut = new VolunteerDtoOut(
-                666666L,
-                "Dimon",
-                "Дмитрий",
-                "Дмитриев",
-                shelterDtoOut
-        );
     }
 
     @Test
     void shouldReturnOptionalOfVolunteerWhenFindById() {
         var actualResult = volunteerService.findById(ID);
         assertThat(actualResult.isPresent()).isTrue();
-        actualResult.ifPresent(volunteer ->
-                assertThat(volunteer).isEqualTo(volunteerDtoOut)
+
+        var expected = new VolunteerDtoOut(
+                666666L,
+                "Dimon",
+                "Дмитрий",
+                "Дмитриев",
+                shelter
         );
+        actualResult.ifPresent(volunteer -> assertThat(volunteer).isEqualTo(expected));
     }
 
     @Test
-    void shouldReturn2VolunteersWhenFindAll() {
+    void shouldReturnAllVolunteersWhenFindAll() {
         var volunteers = volunteerService.findAll();
         assertThat(volunteers).isNotEmpty().hasSize(2);
     }
 
     @Test
     void shouldCreateVolunteerFromVolunteerDtoIn() {
-        var actualResult = volunteerService.create(volunteerDtoIn);
-        assertThat(actualResult).isEqualTo(volunteerDtoOut);
+        var requestBody = new VolunteerDtoIn(
+                888888L,
+                "Volunteer",
+                "Алексей",
+                "Алексеев",
+                1L
+        );
+        var expected = new VolunteerDtoOut(
+                888888L,
+                "Volunteer",
+                "Алексей",
+                "Алексеев",
+                shelter
+        );
+
+        var actualResult = volunteerService.create(requestBody);
+        assertThat(actualResult).isEqualTo(expected);
 
         var volunteers = volunteerService.findAll();
         assertThat(volunteers).contains(actualResult);
@@ -87,7 +92,7 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 "Dimon123",
                 "Дмитрий123",
                 "Дмитриев123",
-                shelterDtoOut
+                shelter
         );
         actualResult.ifPresent(actual ->
                 assertThat(actual).isEqualTo(updatedVolunteerOut)
@@ -101,13 +106,14 @@ class VolunteerServiceTest extends IntegrationTestBase {
     void shouldReturnTrueWhenDeleteIfVolunteerIsPresent() {
         var delete = volunteerService.delete(ID);
         assertThat(delete).isTrue();
+
         var volunteer = volunteerService.findById(ID);
         assertThat(volunteer.isEmpty()).isTrue();
     }
 
     @Test
     void shouldReturnFalseWhenDeleteIfVolunteerIsNotPresent() {
-        var delete = volunteerService.delete(1L);
+        var delete = volunteerService.delete(0L);
         assertThat(delete).isFalse();
     }
 

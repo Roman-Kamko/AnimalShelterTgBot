@@ -3,6 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.in.AnimalDtoIn;
 import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.entity.enums.AnimalType;
+import com.team2.animalshelter.exception.AnimalNotFoundException;
 import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.AnimalMapper;
 import com.team2.animalshelter.repository.AnimalRepository;
@@ -28,10 +29,6 @@ public class AnimalService {
                 .map(animalMapper::toDto);
     }
 
-    public boolean isAdopted(Long id) {
-        return findById(id).isPresent();
-    }
-
     /**
      * Найти всех животных, которых еще не взяли под опеку
      *
@@ -54,6 +51,14 @@ public class AnimalService {
         return animalRepository.findAllAdopted(animalType).stream()
                 .map(animalMapper::toDto)
                 .collect(toList());
+    }
+
+    public boolean isAdopted(Long id) {
+        var animal = findById(id);
+        var animalType = animal
+                .map(AnimalDtoOut::getAnimalType)
+                .orElseThrow(() -> new AnimalNotFoundException(id));
+        return findAllAdopted(animalType).contains(animal.get());
     }
 
     @Transactional
