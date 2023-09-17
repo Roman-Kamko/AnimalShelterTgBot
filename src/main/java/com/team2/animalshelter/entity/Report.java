@@ -12,7 +12,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "report")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Report {
 
@@ -20,9 +19,11 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    String message;
+    String reportMessage;
 
     String photo;
+
+    String photoUrl;
 
     LocalDate date;
 

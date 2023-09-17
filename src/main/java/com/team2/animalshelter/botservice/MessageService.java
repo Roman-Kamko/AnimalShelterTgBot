@@ -2,9 +2,11 @@ package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
-import com.team2.animalshelter.constant.Information;
+import com.pengrad.telegrambot.request.SendPhoto;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
 /**
  * Класс для отправки сообщений пользователю
@@ -15,24 +17,17 @@ public class MessageService {
 
     private final TelegramBot telegramBot;
 
-    /**
-     * Отправка списка всех доступных команд в разделе FAQ.
-     *
-     * @param chatId указать в какой чат отправить сообщение.
-     */
-    public void sendFaqMessage(Long chatId) {
-        var message = new SendMessage(chatId, Information.FAQ_COMMAND);
+
+    public void sendMessage(Long chatId, String text) {
+        var message = new SendMessage(chatId, text);
         telegramBot.execute(message);
     }
 
-    /**
-     * Отправка сообщения в случае не поддерживаемой команды.
-     *
-     * @param chatId указать в какой чат отправить сообщение.
-     */
-    public void sendUnknownCommand(Long chatId) {
-        var message = new SendMessage(chatId, Information.UNKNOWN_COMMAND);
-        telegramBot.execute(message);
+    @SneakyThrows
+    public void sendPhoto(Long chatId, String path) {
+        var image = ResourceUtils.getFile(path);
+        SendPhoto sendPhoto = new SendPhoto(chatId, image);
+        telegramBot.execute(sendPhoto);
     }
 
 }

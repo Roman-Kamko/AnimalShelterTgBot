@@ -8,7 +8,7 @@ import com.pengrad.telegrambot.request.SendMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.team2.animalshelter.constant.ButtonKey.*;
+import static com.team2.animalshelter.botservice.Command.*;
 
 /**
  * Класс в котором строятся основные меню для навигации по боту
@@ -21,7 +21,7 @@ public class KeyboardService {
     private static final String CHOOSE = "Выберите:";
 
     /**
-     * Утилитарный метод содержащий необходимые настройки для всех менюшек.
+     * Утилитарный метод содержащий необходимые настройки для всех меню.
      *
      * @param replyKeyboardMarkup передать собранное меню
      * @param chatId              передать идентификатор чата.
@@ -45,7 +45,7 @@ public class KeyboardService {
      */
     public void sendGreetings(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(START));
+                new KeyboardButton(MAIN_MENU.getText()));
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
 
     }
@@ -57,11 +57,11 @@ public class KeyboardService {
      */
     public void sendMainMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(SHELTER_MENU),
-                new KeyboardButton(FAQ)
+                new KeyboardButton(SHELTER_MENU.getText()),
+                new KeyboardButton(FAQ.getText())
         ).addRow(
-                new KeyboardButton(SEND_REPORT_FORM),
-                new KeyboardButton(CALL_A_VOLUNTEER)
+                new KeyboardButton(SEND_REPORT_FORM.getText()),
+                new KeyboardButton(CALL_A_VOLUNTEER.getText())
         );
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
@@ -73,10 +73,10 @@ public class KeyboardService {
      */
     public void sendChooseAnimalMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(CAT_SHELTER),
-                new KeyboardButton(DOG_SHELTER)
+                new KeyboardButton(CAT_SHELTER.getText()),
+                new KeyboardButton(DOG_SHELTER.getText())
         ).addRow(
-                new KeyboardButton(SHELTER_MENU)
+                new KeyboardButton(SHELTER_MENU.getText())
         );
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }
@@ -88,17 +88,17 @@ public class KeyboardService {
      */
     public void sendShelterMenu(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
-                new KeyboardButton(CHOOSE_ANIMAL_TYPE)
+                new KeyboardButton(CHOOSE_ANIMAL_TYPE.getText())
         ).addRow(
-                new KeyboardButton(SHELTER_CONTACT),
-                new KeyboardButton(SHELTER_ADDRESS),
-                new KeyboardButton(TIME_TABLE)
+                new KeyboardButton(SHELTER_CONTACT.getText()),
+                new KeyboardButton(SHELTER_ADDRESS.getText()),
+                new KeyboardButton(TIME_TABLE.getText())
         ).addRow(
-                new KeyboardButton(SAFETY_PRECAUTIONS),
-                new KeyboardButton(SEND_CONTACT)
+                new KeyboardButton(SAFETY_PRECAUTIONS.getText()),
+                new KeyboardButton(SEND_CONTACT.getText())
         ).addRow(
-                new KeyboardButton(CALL_A_VOLUNTEER),
-                new KeyboardButton(MAIN_MENU)
+                new KeyboardButton(CALL_A_VOLUNTEER.getText()),
+                new KeyboardButton(MAIN_MENU.getText())
         );
         returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
     }

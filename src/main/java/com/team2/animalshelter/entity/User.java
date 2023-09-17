@@ -1,41 +1,23 @@
 package com.team2.animalshelter.entity;
 
-import com.team2.animalshelter.entity.enums.UserStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"animals", "adaptations"})
 @Table(name = "users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
-
-    @Id
-    Long id;
-
-    String username;
-
-    String name;
-
-    Integer age;
-
-    String address;
+public class User extends BaseEntity{
 
     String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    UserStatus userStatus;
-
-    @OneToMany(mappedBy = "user")
-    List<Animal> animals;
-
-    @OneToMany(mappedBy = "user")
-    List<Adaptation> adaptations;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shelter_id")
+    Shelter shelter;
 
 }

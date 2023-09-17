@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "animal")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Animal {
 
@@ -25,14 +24,10 @@ public class Animal {
 
     String breed;
 
-    Boolean isHealthy;
+    Boolean healthy;
 
     @Enumerated(EnumType.STRING)
     AnimalType animalType;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shelter_id")

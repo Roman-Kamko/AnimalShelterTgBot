@@ -1,5 +1,6 @@
 package com.team2.animalshelter.entity;
 
+import com.team2.animalshelter.entity.enums.AdaptationStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,7 +15,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "adaptation")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Adaptation {
 
@@ -22,27 +22,30 @@ public class Adaptation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    LocalDate endsDate;
+    LocalDate startDate;
+
+    LocalDate endDate;
 
     /**
-     * Комментарий от волонтера при необходимости.
+     * Описание статуса
      */
     String comment;
 
     /**
-     * Флаг для волонтеров в случае необходимости дать комментарий по адаптационному периоду.
-     * Например: при длительной не отправке отчетов опекуном.
-     *
+     * Флаг для волонтеров в случае при длительной не отправке отчетов опекуном.
      */
-    Boolean isNeedComment;
+    Boolean problem;
+
+    @Enumerated(EnumType.STRING)
+    AdaptationStatus adaptationStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_id")
     Animal animal;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    User user;
+    @JoinColumn(name = "owner_id")
+    Owner owner;
 
     @OneToMany(mappedBy = "adaptation")
     List<Report> reports;
