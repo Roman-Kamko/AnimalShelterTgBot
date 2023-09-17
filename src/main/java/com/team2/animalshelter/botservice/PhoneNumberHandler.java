@@ -14,9 +14,9 @@ public class PhoneNumberHandler {
 
     private final MessageService messageService;
     private final UserRepository userRepository;
+    private final Pattern pattern = Pattern.compile("\\+7[0-9]{10}$");
 
     public void handle(Chat chat, String text) {
-        var pattern = Pattern.compile("\\+7[0-9]{10}$");
         var matcher = pattern.matcher(Objects.requireNonNull(text));
         if (matcher.matches()) {
             String phone = matcher.group();

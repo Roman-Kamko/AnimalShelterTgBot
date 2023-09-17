@@ -15,6 +15,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "reports")
+@ToString(exclude = "reports")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Adaptation {
 

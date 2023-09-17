@@ -100,14 +100,16 @@ public class CommandHandler {
     }
 
     private void showShelterContact(Chat chat) {
-        var phone = shelterService.findById(1L)
+        var phone = shelterService.findAll().stream()
+                .findFirst()
                 .map(ShelterDtoOut::getPhoneNumber)
                 .orElse(null);
         messageService.sendMessage(chat.id(), phone);
     }
 
     private void showShelterAddress(Chat chat) {
-        var shelter = shelterService.findById(1L);
+        var shelter = shelterService.findAll().stream()
+                .findFirst();
         var address = shelter
                 .map(ShelterDtoOut::getAddress)
                 .orElse(null);
@@ -120,7 +122,8 @@ public class CommandHandler {
     }
 
     private void showTimeTable(Chat chat) {
-        var timeTable = shelterService.findById(1L)
+        var timeTable = shelterService.findAll().stream()
+                .findFirst()
                 .map(ShelterDtoOut::getTimeTable)
                 .orElse(null);
         messageService.sendMessage(chat.id(), timeTable);

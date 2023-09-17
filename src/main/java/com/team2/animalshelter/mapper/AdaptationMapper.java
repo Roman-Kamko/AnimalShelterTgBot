@@ -20,12 +20,16 @@ public class AdaptationMapper {
     private final OwnerRepository ownerRepository;
     private final AnimalMapper animalMapper;
     private final OwnerMapper ownerMapper;
+    /**
+     * Длительность адаптационного периода.
+     */
+    private final int duration = 30;
 
     //todo проверить
     public Adaptation toEntity(AdaptationDtoIn fromObj) {
         var toObj = new Adaptation();
         toObj.setStartDate(LocalDate.now());
-        toObj.setEndDate(LocalDate.now().plusDays(30));
+        toObj.setEndDate(LocalDate.now().plusDays(duration));
         copy(fromObj, toObj);
         return toObj;
     }

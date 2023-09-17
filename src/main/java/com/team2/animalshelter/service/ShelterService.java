@@ -8,6 +8,7 @@ import com.team2.animalshelter.mapper.ShelterMapper;
 import com.team2.animalshelter.repository.ShelterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -28,6 +29,8 @@ public class ShelterService {
     private final ShelterMapper shelterMapper;
     private final ImageService imageService;
     public static final String SHELTER_BUCKET = "shelters";
+    @Value("${server.port}")
+    private int port;
 
     public Optional<ShelterDtoOut> findById(Long id) {
         return shelterRepository.findById(id)
@@ -101,7 +104,7 @@ public class ShelterService {
                     UriComponentsBuilder.newInstance()
                             .scheme("http")
                             .host("localhost")
-                            .port("8081")
+                            .port(port)
                             .pathSegment("api", "v1", "shelters", String.valueOf(shelter.getId()), "map")
                             .toUriString()
             );

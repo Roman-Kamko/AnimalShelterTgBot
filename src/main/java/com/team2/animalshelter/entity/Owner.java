@@ -9,9 +9,10 @@ import java.util.List;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true, exclude = "adaptations")
+@ToString(exclude = "adaptations")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Owner extends BaseEntity {
 
