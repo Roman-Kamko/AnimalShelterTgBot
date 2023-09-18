@@ -1,5 +1,6 @@
 package com.team2.animalshelter.botservice;
 
+
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.util.List;
+
 
 /**
  * Класс для отправки сообщений пользователю
@@ -34,11 +36,22 @@ public class MessageService {
     }
 
 
-
     public void sendMessage(Long chatId, List<AnimalDtoOut> text) {
-        var message = new SendMessage(chatId, text.toString());
-        telegramBot.execute(message);
+
+        for (AnimalDtoOut animal : text) {
+
+            var message = new SendMessage(chatId, ("""
+                     Животное: %s
+                     Кличка: %s,
+                     Возраст: %s,
+                     Порода: %s
+                    """).formatted(animal.getAnimalType().getTypeOfAnimal(),animal.getName(), animal.getAge(), animal.getBreed()));
+
+            telegramBot.execute(message);
+        }
     }
-
-
 }
+
+
+
+
