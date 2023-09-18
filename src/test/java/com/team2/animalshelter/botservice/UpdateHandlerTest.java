@@ -2,6 +2,7 @@ package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.TelegramBot;
+import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
@@ -26,6 +27,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 import static com.team2.animalshelter.botservice.Command.*;
@@ -55,6 +57,7 @@ class UpdateHandlerTest {
     @InjectMocks
     @Autowired
     private UpdateHandler updateHandler;
+    private static final long ID = 111111;
 
     @BeforeEach
     public void beforeEach() {
@@ -72,9 +75,9 @@ class UpdateHandlerTest {
 
     @Test
     void handleFaqCommand() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(Command.FAQ).getValue();
+        SendMessage actual = getArgumentCaptor(FAQ.getText()).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.FAQ_COMMAND)
         );
 
@@ -92,9 +95,9 @@ class UpdateHandlerTest {
     @ParameterizedTest
     @MethodSource("paramByHandleCommandTest")
     void handleCommand(Command command) throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(command).getValue();
+        SendMessage actual = getArgumentCaptor(command.getText()).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:"),
                 () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
                 () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
@@ -103,9 +106,9 @@ class UpdateHandlerTest {
 
     @Test
     void handleStartCommandIf() throws URISyntaxException, IOException {
-        SendMessage actual = getArgumentCaptor(START).getValue();
+        SendMessage actual = getArgumentCaptor(START.getText()).getValue();
         assertAll(
-                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo("Привет"),
                 () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
                 () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
@@ -115,18 +118,30 @@ class UpdateHandlerTest {
     @Test
     void handleStartCommandElse() throws URISyntaxException, IOException {
         doReturn(true).when(userService).isRegistered(anyLong());
-        SendMessage actual = getArgumentCaptor(START).getValue();
-        assertThat(actual.getParameters().get("chat_id")).isEqualTo(111L);
-        assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:");
-        assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML");
-        assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true);
+        SendMessage actual = getArgumentCaptor(START.getText()).getValue();
+        assertAll(
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Выберите:"),
+                () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
+                () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
+        );
+    }
+
+    @Test
+    void shouldStartPhoneNumberHandleIfTextStartWithPlus() throws IOException, URISyntaxException {
+        var actual = getArgumentCaptor("+71112223344").getValue();
+        assertAll(
+                () -> verify(phoneNumberHandler, times(1)).handle(any(Chat.class), eq("+71112223344")),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Ваш телефон принят")
+        );
     }
 
     @NotNull
-    private ArgumentCaptor<SendMessage> getArgumentCaptor(Command start) throws IOException, URISyntaxException {
+    private ArgumentCaptor<SendMessage> getArgumentCaptor(String command) throws IOException, URISyntaxException {
         String json = Files.readString(
-                Paths.get(UpdateHandlerTest.class.getResource("update.json").toURI()));
-        Update update = getUpdate(json, start.getText());
+                Paths.get(Objects.requireNonNull(UpdateHandlerTest.class.getResource("update.json")).toURI()));
+        Update update = getUpdate(json, command);
         updateHandler.handleUpdate(update);
         ArgumentCaptor<SendMessage> argumentCaptor = ArgumentCaptor.forClass(SendMessage.class);
         Mockito.verify(telegramBot).execute(argumentCaptor.capture());

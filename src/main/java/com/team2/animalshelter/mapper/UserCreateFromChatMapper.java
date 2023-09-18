@@ -2,7 +2,7 @@ package com.team2.animalshelter.mapper;
 
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.entity.User;
-import com.team2.animalshelter.exception.ShelterNotFoundException;
+import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.repository.ShelterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,7 @@ public class UserCreateFromChatMapper {
         toObj.setShelter(
                 shelterRepository.findAll().stream()
                         .findFirst()
-                        .orElseThrow()
+                        .orElseThrow(EntityCreateException::new)
         );
         return toObj;
     }

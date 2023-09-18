@@ -27,7 +27,7 @@ public class ShelterService {
     private final ShelterRepository shelterRepository;
     private final ShelterMapper shelterMapper;
     private final ImageService imageService;
-    private static final String SHELTER_BUCKET = "shelters";
+    public static final String SHELTER_BUCKET = "shelters";
 
     public Optional<ShelterDtoOut> findById(Long id) {
         return shelterRepository.findById(id)

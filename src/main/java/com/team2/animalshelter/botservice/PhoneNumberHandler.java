@@ -25,10 +25,18 @@ public class PhoneNumberHandler {
                         user.setPhoneNumber(phone);
                         userRepository.saveAndFlush(user);
                     });
-            messageService.answerContact(chat.id());
+            answerContact(chat.id());
         } else {
-            messageService.wrongContact(chat.id());
+            wrongContact(chat.id());
         }
+    }
+
+    private void answerContact(Long chatId) {
+        messageService.sendMessage(chatId, "Ваш телефон принят");
+    }
+
+    private void wrongContact(Long chatId) {
+        messageService.sendMessage(chatId, "Неправильно введен номер телефона");
     }
 
 }

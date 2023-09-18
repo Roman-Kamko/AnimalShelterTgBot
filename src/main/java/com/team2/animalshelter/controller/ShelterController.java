@@ -1,17 +1,14 @@
 package com.team2.animalshelter.controller;
 
-import com.team2.animalshelter.dto.UserDto;
 import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
-import com.team2.animalshelter.exception.UserNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

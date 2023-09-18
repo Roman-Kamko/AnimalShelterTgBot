@@ -8,15 +8,12 @@ import com.team2.animalshelter.mapper.ReportMapper;
 import com.team2.animalshelter.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.InetAddress;
 import java.util.List;
 import java.util.Optional;
 

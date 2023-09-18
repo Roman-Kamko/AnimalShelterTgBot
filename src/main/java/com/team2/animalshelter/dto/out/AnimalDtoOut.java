@@ -3,10 +3,6 @@ package com.team2.animalshelter.dto.out;
 import com.team2.animalshelter.entity.enums.AnimalType;
 import lombok.Value;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import java.util.List;
-
 @Value
 public class AnimalDtoOut {
 

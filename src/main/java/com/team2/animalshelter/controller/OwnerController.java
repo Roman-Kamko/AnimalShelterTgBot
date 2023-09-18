@@ -1,8 +1,6 @@
 package com.team2.animalshelter.controller;
 
 import com.team2.animalshelter.dto.OwnerDto;
-import com.team2.animalshelter.dto.out.AnimalDtoOut;
-import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.exception.OwnerNotFoundException;
 import com.team2.animalshelter.service.OwnerService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,6 +1,8 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class CommandHandler {
     private final UserService userService;
     private final KeyboardService keyboardService;
     private final MessageService messageService;
+    private final ShelterService shelterService;
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
@@ -37,7 +40,7 @@ public class CommandHandler {
         commandExecutor.put(SHELTER_ADDRESS.getText(), this::showShelterAddress);
         commandExecutor.put(TIME_TABLE.getText(), this::showTimeTable);
         commandExecutor.put(SAFETY_PRECAUTIONS.getText(), this::showSafetyPrecautions);
-        commandExecutor.put(SEND_CONTACT.getText(), this::sendContact);
+        commandExecutor.put(SEND_CONTACT.getText(), this::sendContactRequest);
         commandExecutor.put(RULES.getText(), this::sendRules);
         commandExecutor.put(DOC_LIST.getText(), this::sendDocList);
         commandExecutor.put(DENIAL_REASONS.getText(), this::sendDenialReasons);
@@ -97,23 +100,38 @@ public class CommandHandler {
     }
 
     private void showShelterContact(Chat chat) {
-        messageService.sendShelterContact(chat.id());
+        var phone = shelterService.findById(1L)
+                .map(ShelterDtoOut::getPhoneNumber)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), phone);
     }
 
     private void showShelterAddress(Chat chat) {
-        messageService.sendShelterAddress(chat.id());
+        var shelter = shelterService.findById(1L);
+        var address = shelter
+                .map(ShelterDtoOut::getAddress)
+                .orElse(null);
+        var drivingDirections = shelter
+                .map(ShelterDtoOut::getDrivingDirections)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), address);
+        var path = "image/" + ShelterService.SHELTER_BUCKET + "/" + drivingDirections;
+        messageService.sendPhoto(chat.id(), path);
     }
 
     private void showTimeTable(Chat chat) {
-        messageService.sendTimeTable(chat.id());
+        var timeTable = shelterService.findById(1L)
+                .map(ShelterDtoOut::getTimeTable)
+                .orElse(null);
+        messageService.sendMessage(chat.id(), timeTable);
     }
 
     private void showSafetyPrecautions(Chat chat) {
-        messageService.sendSafetyPrecautions(chat.id());
+        messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
 
-    private void sendContact(Chat chat) {
-        messageService.sendContact(chat.id());
+    private void sendContactRequest(Chat chat) {
+        messageService.sendMessage(chat.id(), InformationConstants.CONTACT_REQUEST);
     }
 
     private void sendRules(Chat chat) {
