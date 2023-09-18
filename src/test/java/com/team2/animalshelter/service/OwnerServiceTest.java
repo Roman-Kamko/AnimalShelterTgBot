@@ -2,12 +2,8 @@ package com.team2.animalshelter.service;
 
 import com.team2.animalshelter.IntegrationTestBase;
 import com.team2.animalshelter.dto.OwnerDto;
-import com.team2.animalshelter.dto.UserDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
