@@ -34,6 +34,7 @@ public class AdaptationMapper {
         var toObj = new Adaptation();
         toObj.setStartDate(LocalDate.now());
         toObj.setEndDate(LocalDate.now().plusDays(duration));
+        toObj.setAnimal(verifyAnimal(fromObj.getAnimalId()));
         copy(fromObj, toObj);
         return toObj;
     }
@@ -66,7 +67,6 @@ public class AdaptationMapper {
     private void copy(AdaptationDtoIn fromObj, Adaptation toObj) {
         toObj.setComment(fromObj.getAdaptationStatus().getDescription());
         toObj.setAdaptationStatus(fromObj.getAdaptationStatus());
-        toObj.setAnimal(verifyAnimal(fromObj.getAnimalId()));
         toObj.setOwner(
                 ownerRepository.findById(fromObj.getOwnerId())
                         .orElseThrow(() -> new OwnerNotFoundException(fromObj.getOwnerId()))

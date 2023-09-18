@@ -32,7 +32,7 @@ class AdaptationServiceTest extends IntegrationTestBase {
         animal = new AnimalDtoOut(
                 3L,
                 "Барсик",
-                3,
+                5,
                 "Сибирская",
                 true,
                 AnimalType.CAT
@@ -101,7 +101,7 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 LocalDate.now(),
                 LocalDate.now().plusDays(30),
                 AdaptationStatus.IN_PROGRESS.getDescription(),
-                false,
+                null,
                 AdaptationStatus.IN_PROGRESS,
                 new AnimalDtoOut(
                         1L,
@@ -156,7 +156,7 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 1L,
                 LocalDate.of(2023, 9, 9),
                 LocalDate.of(2023, 10, 9),
-                null,
+                AdaptationStatus.SUCCESSFUL.getDescription(),
                 false,
                 AdaptationStatus.SUCCESSFUL,
                 animal,
