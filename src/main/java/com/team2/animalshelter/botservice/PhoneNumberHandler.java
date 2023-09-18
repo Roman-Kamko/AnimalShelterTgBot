@@ -32,7 +32,7 @@ public class PhoneNumberHandler {
     }
 
     private void answerContact(Long chatId) {
-        messageService.sendMessage(chatId, "Ваш телефон принят");
+        messageService.sendMessage(chatId, "Ваш телефон принят. Ожидайте звонка волонтера.");
     }
 
     private void wrongContact(Long chatId) {

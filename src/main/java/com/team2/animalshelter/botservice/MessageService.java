@@ -3,10 +3,13 @@ package com.team2.animalshelter.botservice;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
+import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+
+import java.util.List;
 
 /**
  * Класс для отправки сообщений пользователю
@@ -29,5 +32,13 @@ public class MessageService {
         SendPhoto sendPhoto = new SendPhoto(chatId, image);
         telegramBot.execute(sendPhoto);
     }
+
+
+
+    public void sendMessage(Long chatId, List<AnimalDtoOut> text) {
+        var message = new SendMessage(chatId, text.toString());
+        telegramBot.execute(message);
+    }
+
 
 }

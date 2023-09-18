@@ -2,6 +2,8 @@ package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.entity.enums.AnimalType;
+import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ public class CommandHandler {
     private final KeyboardService keyboardService;
     private final MessageService messageService;
     private final ShelterService shelterService;
+    private final AnimalService animalService;
+
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
@@ -54,6 +58,8 @@ public class CommandHandler {
         commandExecutor.put(HOME_FOR_DIS_DOG.getText(), this::sendHomeForDisDog);
         commandExecutor.put(CYNOLOGIST_ADVISE.getText(), this::sendCynologistAdvice);
         commandExecutor.put(PROVEN_CYNOLOGISTS.getText(), this::sendProvenCynologists);
+        commandExecutor.put(CAT_SHELTER.getText(), this::sendCatShelter);
+        commandExecutor.put(DOG_SHELTER.getText(), this::sendDogShelter);
     }
 
     /**
@@ -189,4 +195,11 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), InformationConstants.PROVEN_CYNOLOGISTS);
     }
 
+    private void sendCatShelter(Chat chat) {
+        messageService.sendMessage(chat.id(), animalService.findAllWithoutOwner(AnimalType.CAT));
+    }
+
+    private void sendDogShelter(Chat chat) {
+        messageService.sendMessage(chat.id(), animalService.findAllWithoutOwner(AnimalType.DOG));
+    }
 }
