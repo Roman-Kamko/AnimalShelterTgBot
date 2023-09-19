@@ -2,6 +2,9 @@ package com.team2.animalshelter.botservice;
 
 public class InformationConstants {
 
+    public static final String CHOOSE = "Выберите:";
+    public static final String GREETINGS = "Привет";
+
     public static final String FAQ_COMMAND = """
             Вот что я могу тебе рассказать:
                         
@@ -28,6 +31,11 @@ public class InformationConstants {
     public static final String CALL_VOLUNTEER = "Запрос принят, как только освободится волонтер, он сразу же Вам ответит \uD83D\uDE0A";
 
     public static final String CONTACT_REQUEST = "Введите свой номер телефона в формате +79998886655:";
+
+    public static final String PHONE_ACCEPTED = "Ваш телефон принят. Ожидайте звонка волонтера";
+
+    public static final String PHONE_WRONG = "Неправильно введен номер телефона";
+
     public static final String SAFETY_PRECAUTIONS = """
             1. В приют не допускаются:
             -дети до 16 лет без сопровождения взрослых (родителей, опекунов, представителей с предъявленной рукописной доверенностью);

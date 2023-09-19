@@ -1,7 +1,5 @@
 package com.team2.animalshelter.exception;
 
-import com.team2.animalshelter.entity.Animal;
-
 public class AnimalAlreadyAdoptedException extends RuntimeException {
 
     private final long id;

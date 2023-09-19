@@ -33,7 +33,7 @@ public class CommandHandler {
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
-     * {@link #commandExecutor} команду, передварительно созданную в {@link Command},
+     * {@link #commandExecutor} команду, предварительно созданную в {@link Command},
      * а в виде значения ссылку на метод, который необходимо создать в этом классе.
      */
     @PostConstruct
@@ -213,10 +213,10 @@ public class CommandHandler {
     private void showAnimal(Chat chat, List<AnimalDtoOut> animals) {
         for (AnimalDtoOut animal : animals) {
             String message = """
-                     Животное: %s
-                     Кличка: %s,
-                     Возраст: %s,
-                     Порода: %s
+                    Животное: %s,
+                    Кличка: %s,
+                    Возраст: %s,
+                    Порода: %s
                     """
                     .formatted(
                             animal.getAnimalType().getTypeOfAnimal(),
