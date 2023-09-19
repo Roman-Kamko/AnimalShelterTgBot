@@ -4,13 +4,11 @@ package com.team2.animalshelter.botservice;
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
-import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
-import java.util.List;
 
 
 /**
@@ -36,20 +34,7 @@ public class MessageService {
     }
 
 
-    public void sendMessage(Long chatId, List<AnimalDtoOut> text) {
 
-        for (AnimalDtoOut animal : text) {
-
-            var message = new SendMessage(chatId, ("""
-                     Животное: %s
-                     Кличка: %s,
-                     Возраст: %s,
-                     Порода: %s
-                    """).formatted(animal.getAnimalType().getTypeOfAnimal(),animal.getName(), animal.getAge(), animal.getBreed()));
-
-            telegramBot.execute(message);
-        }
-    }
 }
 
 

@@ -1,6 +1,7 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.enums.AnimalType;
 import com.team2.animalshelter.service.AnimalService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -135,6 +137,18 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), timeTable);
     }
 
+    private void showAnimal (Chat chat, List<AnimalDtoOut> text) {
+        for (AnimalDtoOut animal : text) {
+            String message = ("""
+                     Животное: %s
+                     Кличка: %s,
+                     Возраст: %s,
+                     Порода: %s
+                    """).formatted(animal.getAnimalType().getTypeOfAnimal(),animal.getName(), animal.getAge(), animal.getBreed());
+            messageService.sendMessage(chat.id(), message);
+        }
+    }
+
     private void showSafetyPrecautions(Chat chat) {
         messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
@@ -196,10 +210,10 @@ public class CommandHandler {
     }
 
     private void sendCatShelter(Chat chat) {
-        messageService.sendMessage(chat.id(), animalService.findAllWithoutOwner(AnimalType.CAT));
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.CAT));
     }
 
     private void sendDogShelter(Chat chat) {
-        messageService.sendMessage(chat.id(), animalService.findAllWithoutOwner(AnimalType.DOG));
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.DOG));
     }
 }
