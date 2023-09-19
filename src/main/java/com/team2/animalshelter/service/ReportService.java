@@ -61,7 +61,7 @@ public class ReportService {
         return reportRepository.findById(id)
                 .map(report -> {
                     uploadImage(image, report);
-                    return reportMapper.toEntity(reportDtoIn);
+                    return reportMapper.toEntity(reportDtoIn, report);
                 })
                 .map(reportRepository::saveAndFlush)
                 .map(reportMapper::toDto);
@@ -100,7 +100,7 @@ public class ReportService {
                             .scheme("http")
                             .host("localhost")
                             .port(port)
-                            .pathSegment("api", "v1", "reports", String.valueOf(report.getAdaptation().getId()), "photo")
+                            .pathSegment("api", "v1", "reports", String.valueOf(report.getId()), "photo")
                             .toUriString()
             );
         }
