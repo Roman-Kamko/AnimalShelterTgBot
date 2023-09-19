@@ -2,6 +2,7 @@ package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -100,16 +101,14 @@ public class CommandHandler {
     }
 
     private void showShelterContact(Chat chat) {
-        var phone = shelterService.findAll().stream()
-                .findFirst()
+        var phone = shelterService.getShelter()
                 .map(ShelterDtoOut::getPhoneNumber)
                 .orElse(null);
         messageService.sendMessage(chat.id(), phone);
     }
 
     private void showShelterAddress(Chat chat) {
-        var shelter = shelterService.findAll().stream()
-                .findFirst();
+        var shelter = shelterService.getShelter();
         var address = shelter
                 .map(ShelterDtoOut::getAddress)
                 .orElse(null);
@@ -122,10 +121,10 @@ public class CommandHandler {
     }
 
     private void showTimeTable(Chat chat) {
-        var timeTable = shelterService.findAll().stream()
-                .findFirst()
+        var timeTable = shelterService.getShelter().stream()
                 .map(ShelterDtoOut::getTimeTable)
-                .orElse(null);
+                .findFirst()
+                .orElseThrow(ShelterNotFoundException::new);
         messageService.sendMessage(chat.id(), timeTable);
     }
 

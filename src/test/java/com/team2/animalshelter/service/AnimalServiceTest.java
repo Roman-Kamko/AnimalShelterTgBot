@@ -84,8 +84,7 @@ class AnimalServiceTest extends IntegrationTestBase {
                 3,
                 "Сфинкс",
                 true,
-                AnimalType.CAT,
-                1L
+                AnimalType.CAT
         );
         var expected = new AnimalDtoOut(
                 9L,
@@ -110,8 +109,7 @@ class AnimalServiceTest extends IntegrationTestBase {
                 4,
                 "Сфинкс",
                 true,
-                AnimalType.CAT,
-                1L
+                AnimalType.CAT
         );
         var actualResult = animalService.update(ID, requestBody);
         assertThat(actualResult.isPresent()).isTrue();

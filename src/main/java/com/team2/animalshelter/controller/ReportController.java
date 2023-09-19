@@ -3,7 +3,6 @@ package com.team2.animalshelter.controller;
 import com.team2.animalshelter.dto.in.ReportDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.exception.ReportNotFoundException;
-import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ReportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -109,7 +108,7 @@ public class ReportController {
     )
     public ReportDtoOut create(
             @RequestPart(value = "dto") @Validated ReportDtoIn reportDtoIn,
-            @RequestPart(value = "file", required = false) MultipartFile image
+            @RequestPart(value = "file") MultipartFile image
     ) {
         return reportService.create(reportDtoIn, image);
     }
@@ -135,7 +134,7 @@ public class ReportController {
     ) {
         return reportService.update(id, reportDtoIn, image)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ShelterNotFoundException(id));
+                .orElseThrow(() -> new ReportNotFoundException(id));
     }
 
     @DeleteMapping("{id}")

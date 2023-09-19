@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 public class VolunteerMapper {
 
     final ShelterRepository shelterRepository;
-    final ShelterMapper shelterMapper;
 
     public Volunteer toEntity(VolunteerDtoIn fromObj) {
         var toObj = new Volunteer();
@@ -24,10 +23,9 @@ public class VolunteerMapper {
         toObj.setUsername(fromObj.getUsername());
         toObj.setFirstname(fromObj.getFirstname());
         toObj.setLastname(fromObj.getLastname());
-        toObj.setShelter(
-                shelterRepository.findById(fromObj.getShelterId())
-                        .orElseThrow(() -> new ShelterNotFoundException(fromObj.getShelterId()))
-        );
+        toObj.setShelter(shelterRepository.findAll().stream()
+                .findFirst()
+                .orElseThrow(ShelterNotFoundException::new));
         return toObj;
     }
 
@@ -36,8 +34,7 @@ public class VolunteerMapper {
                 fromObj.getTelegramId(),
                 fromObj.getUsername(),
                 fromObj.getFirstname(),
-                fromObj.getLastname(),
-                shelterMapper.toDto(fromObj.getShelter())
+                fromObj.getLastname()
         );
     }
 }

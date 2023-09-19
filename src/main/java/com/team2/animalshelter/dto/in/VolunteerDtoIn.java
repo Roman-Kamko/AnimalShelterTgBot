@@ -27,9 +27,4 @@ public class VolunteerDtoIn {
     @Schema(name = "Фамилия волонтера", example = "Петров")
     String lastname;
 
-    @NotNull
-    @Positive
-    @Schema(name = "Идентификатор приюта", example = "1")
-    Long shelterId;
-
 }

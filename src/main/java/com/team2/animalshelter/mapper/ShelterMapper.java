@@ -28,7 +28,6 @@ public class ShelterMapper {
 
     public ShelterDtoOut toDto(Shelter fromObj) {
         return new ShelterDtoOut(
-                fromObj.getId(),
                 fromObj.getName(),
                 fromObj.getAddress(),
                 fromObj.getPhoneNumber(),

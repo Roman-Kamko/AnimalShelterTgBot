@@ -14,21 +14,7 @@ class VolunteerServiceTest extends IntegrationTestBase {
 
     @Autowired
     private VolunteerService volunteerService;
-    private static ShelterDtoOut shelter;
     private static final long ID = 666666L;
-
-    @BeforeAll
-    static void beforeAll() {
-        shelter = new ShelterDtoOut(
-                1L,
-                "КотоПес",
-                "г. Астана, ул. Лесная, д. 3.",
-                "Телефон охраны для оформления пропуска: +7-888-88-88; Общий телефон: +7-999-99-99",
-                "Часы работы: Пн-Пт 08:00 - 20:00",
-                "address.jpg",
-                "http://localhost:8081/api/v1/shelters/3/map"
-        );
-    }
 
     @Test
     void shouldReturnOptionalOfVolunteerWhenFindById() {
@@ -39,8 +25,7 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 666666L,
                 "Dimon",
                 "Дмитрий",
-                "Дмитриев",
-                shelter
+                "Дмитриев"
         );
         actualResult.ifPresent(volunteer -> assertThat(volunteer).isEqualTo(expected));
     }
@@ -57,15 +42,13 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 888888L,
                 "Volunteer",
                 "Алексей",
-                "Алексеев",
-                1L
+                "Алексеев"
         );
         var expected = new VolunteerDtoOut(
                 888888L,
                 "Volunteer",
                 "Алексей",
-                "Алексеев",
-                shelter
+                "Алексеев"
         );
 
         var actualResult = volunteerService.create(requestBody);
@@ -81,8 +64,7 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 666666L,
                 "Dimon123",
                 "Дмитрий123",
-                "Дмитриев123",
-                1L
+                "Дмитриев123"
         );
         var actualResult = volunteerService.update(ID, updatedVolunteerIn);
         assertThat(actualResult.isPresent()).isTrue();
@@ -91,8 +73,7 @@ class VolunteerServiceTest extends IntegrationTestBase {
                 666666L,
                 "Dimon123",
                 "Дмитрий123",
-                "Дмитриев123",
-                shelter
+                "Дмитриев123"
         );
         actualResult.ifPresent(actual ->
                 assertThat(actual).isEqualTo(updatedVolunteerOut)

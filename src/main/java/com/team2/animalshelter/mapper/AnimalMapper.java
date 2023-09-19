@@ -27,7 +27,7 @@ public class AnimalMapper {
      * Метод позволяет внести изменения в сущность не создавая новую.
      *
      * @param fromObj объект копирования значений.
-     * @param toObj объект для вставки значений.
+     * @param toObj   объект для вставки значений.
      * @return измененный объект.
      */
     public Animal toEntity(AnimalDtoIn fromObj, Animal toObj) {
@@ -52,9 +52,9 @@ public class AnimalMapper {
         toObj.setBreed(fromObj.getBreed());
         toObj.setHealthy(fromObj.getHealthy());
         toObj.setAnimalType(fromObj.getAnimalType());
-        toObj.setShelter(
-                shelterRepository.findById(fromObj.getShelterId())
-                        .orElseThrow(() -> new ShelterNotFoundException(fromObj.getShelterId()))
+        toObj.setShelter(shelterRepository.findAll().stream()
+                .findFirst()
+                .orElseThrow(ShelterNotFoundException::new)
         );
     }
 }
