@@ -5,8 +5,6 @@ import com.team2.animalshelter.dto.OwnerDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -78,7 +76,6 @@ class OwnerServiceTest extends IntegrationTestBase {
     @Test
     void shouldReturnTrueWhenDeleteIfOwnerIsPresent() {
         long ownerId = 333333L;
-        var byId = ownerService.findById(ownerId);
         var delete = ownerService.delete(ownerId);
         assertThat(delete).isTrue();
 
