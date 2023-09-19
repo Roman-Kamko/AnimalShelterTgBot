@@ -20,7 +20,6 @@ public class MessageService {
 
     private final TelegramBot telegramBot;
 
-
     public void sendMessage(Long chatId, String text) {
         var message = new SendMessage(chatId, text);
         telegramBot.execute(message);
@@ -32,8 +31,6 @@ public class MessageService {
         SendPhoto sendPhoto = new SendPhoto(chatId, image);
         telegramBot.execute(sendPhoto);
     }
-
-
 
 }
 
