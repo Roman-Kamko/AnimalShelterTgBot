@@ -5,7 +5,6 @@ import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -70,7 +69,7 @@ public class ShelterController {
                 .orElseGet(ResponseEntity.notFound()::build);
     }
 
-    @PutMapping(path = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
             summary = "Обновить данные приюта",
             responses = {
@@ -85,7 +84,6 @@ public class ShelterController {
             }
     )
     public ResponseEntity<ShelterDtoOut> update(
-            @PathVariable @Parameter(description = "Идентификатор приюта") Long id,
             @RequestPart(value = "dto") @Validated ShelterDtoIn shelterDtoIn,
             @RequestPart(value = "file", required = false) MultipartFile image
     ) {

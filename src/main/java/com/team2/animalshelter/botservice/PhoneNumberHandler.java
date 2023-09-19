@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
+import static com.team2.animalshelter.botservice.InformationConstants.*;
+import static com.team2.animalshelter.botservice.InformationConstants.PHONE_ACCEPTED;
+
 @Component
 @RequiredArgsConstructor
 public class PhoneNumberHandler {
@@ -32,11 +35,11 @@ public class PhoneNumberHandler {
     }
 
     private void answerContact(Long chatId) {
-        messageService.sendMessage(chatId, "Ваш телефон принят. Ожидайте звонка волонтера.");
+        messageService.sendMessage(chatId, PHONE_ACCEPTED);
     }
 
     private void wrongContact(Long chatId) {
-        messageService.sendMessage(chatId, "Неправильно введен номер телефона");
+        messageService.sendMessage(chatId, PHONE_WRONG);
     }
 
 }
