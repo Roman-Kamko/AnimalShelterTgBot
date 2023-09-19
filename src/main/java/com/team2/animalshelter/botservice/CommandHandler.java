@@ -1,7 +1,10 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.entity.enums.AnimalType;
+import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -24,6 +28,8 @@ public class CommandHandler {
     private final KeyboardService keyboardService;
     private final MessageService messageService;
     private final ShelterService shelterService;
+    private final AnimalService animalService;
+
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
@@ -55,6 +61,8 @@ public class CommandHandler {
         commandExecutor.put(HOME_FOR_DIS_DOG.getText(), this::sendHomeForDisDog);
         commandExecutor.put(CYNOLOGIST_ADVISE.getText(), this::sendCynologistAdvice);
         commandExecutor.put(PROVEN_CYNOLOGISTS.getText(), this::sendProvenCynologists);
+        commandExecutor.put(CAT_SHELTER.getText(), this::sendCatShelter);
+        commandExecutor.put(DOG_SHELTER.getText(), this::sendDogShelter);
     }
 
     /**
@@ -128,6 +136,18 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), timeTable);
     }
 
+    private void showAnimal (Chat chat, List<AnimalDtoOut> text) {
+        for (AnimalDtoOut animal : text) {
+            String message = ("""
+                     Животное: %s
+                     Кличка: %s,
+                     Возраст: %s,
+                     Порода: %s
+                    """).formatted(animal.getAnimalType().getTypeOfAnimal(),animal.getName(), animal.getAge(), animal.getBreed());
+            messageService.sendMessage(chat.id(), message);
+        }
+    }
+
     private void showSafetyPrecautions(Chat chat) {
         messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
@@ -188,4 +208,11 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), InformationConstants.PROVEN_CYNOLOGISTS);
     }
 
+    private void sendCatShelter(Chat chat) {
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.CAT));
+    }
+
+    private void sendDogShelter(Chat chat) {
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.DOG));
+    }
 }
