@@ -61,8 +61,8 @@ public class CommandHandler {
         commandExecutor.put(HOME_FOR_DIS_DOG.getText(), this::sendHomeForDisDog);
         commandExecutor.put(CYNOLOGIST_ADVISE.getText(), this::sendCynologistAdvice);
         commandExecutor.put(PROVEN_CYNOLOGISTS.getText(), this::sendProvenCynologists);
-        commandExecutor.put(CAT_SHELTER.getText(), this::sendCatShelter);
-        commandExecutor.put(DOG_SHELTER.getText(), this::sendDogShelter);
+        commandExecutor.put(CAT_SHELTER.getText(), this::sendCatList);
+        commandExecutor.put(DOG_SHELTER.getText(), this::sendDogList);
     }
 
     /**
@@ -136,18 +136,6 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), timeTable);
     }
 
-    private void showAnimal (Chat chat, List<AnimalDtoOut> text) {
-        for (AnimalDtoOut animal : text) {
-            String message = ("""
-                     Животное: %s
-                     Кличка: %s,
-                     Возраст: %s,
-                     Порода: %s
-                    """).formatted(animal.getAnimalType().getTypeOfAnimal(),animal.getName(), animal.getAge(), animal.getBreed());
-            messageService.sendMessage(chat.id(), message);
-        }
-    }
-
     private void showSafetyPrecautions(Chat chat) {
         messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
@@ -208,11 +196,35 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), InformationConstants.PROVEN_CYNOLOGISTS);
     }
 
-    private void sendCatShelter(Chat chat) {
+    private void sendCatList(Chat chat) {
         showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.CAT));
     }
 
-    private void sendDogShelter(Chat chat) {
+    private void sendDogList(Chat chat) {
         showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.DOG));
+    }
+
+    /**
+     * Конфигурирование вывода списка животных.
+     *
+     * @param chat чат для отправки.
+     * @param animals список животных.
+     */
+    private void showAnimal(Chat chat, List<AnimalDtoOut> animals) {
+        for (AnimalDtoOut animal : animals) {
+            String message = """
+                     Животное: %s
+                     Кличка: %s,
+                     Возраст: %s,
+                     Порода: %s
+                    """
+                    .formatted(
+                            animal.getAnimalType().getTypeOfAnimal(),
+                            animal.getName(),
+                            animal.getAge(),
+                            animal.getBreed()
+                    );
+            messageService.sendMessage(chat.id(), message);
+        }
     }
 }
