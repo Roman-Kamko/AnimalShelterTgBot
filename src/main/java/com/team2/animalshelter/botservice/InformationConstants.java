@@ -32,7 +32,7 @@ public class InformationConstants {
 
     public static final String CONTACT_REQUEST = "Введите свой номер телефона в формате +79998886655:";
 
-    public static final String PHONE_ACCEPTED = "Ваш телефон принят. Ожидайте звонка волонтера";
+    public static final String PHONE_ACCEPTED = "Ваш телефон принят";
 
     public static final String PHONE_WRONG = "Неправильно введен номер телефона";
 
