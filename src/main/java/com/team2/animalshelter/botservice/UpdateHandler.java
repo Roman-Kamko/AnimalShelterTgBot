@@ -25,9 +25,9 @@ public class UpdateHandler {
 
             if (text != null) {
                 if (text.startsWith("+")) {
-                    phoneNumberHandler.handle(chat, text);
+                    phoneNumberHandler.handle(text, chat);
                 } else {
-                    commandHandler.handle(text, chat);
+                    commandHandler.handle(text, message);
                 }
             }
         }

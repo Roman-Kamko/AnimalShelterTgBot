@@ -10,7 +10,7 @@ public enum Command {
     SHELTER_MENU("Меню приюта"),
     FAQ("ЧаВо"),
     CHOOSE_ANIMAL_TYPE("Выбрать питомца"),
-    CALL_A_VOLUNTEER("Позвать волонтёра"),
+    CALL_A_VOLUNTEER("Помощь волонтёра"),
     SEND_REPORT_FORM("Отправить отчёт"),
     CAT_SHELTER("Кошечки"),
     DOG_SHELTER("Собачки"),

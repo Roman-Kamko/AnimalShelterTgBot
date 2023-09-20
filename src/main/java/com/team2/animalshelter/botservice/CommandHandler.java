@@ -1,11 +1,11 @@
 package com.team2.animalshelter.botservice;
 
-import com.pengrad.telegrambot.model.Chat;
+import com.pengrad.telegrambot.model.Message;
 import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
 import com.team2.animalshelter.entity.enums.AnimalType;
-import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.exception.ShelterNotFoundException;
+import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import static com.team2.animalshelter.botservice.Command.*;
 @RequiredArgsConstructor
 public class CommandHandler {
 
-    private final Map<String, Consumer<Chat>> commandExecutor = new HashMap<>();
+    private final Map<String, Consumer<Message>> commandExecutor = new HashMap<>();
     private final UserService userService;
     private final KeyboardService keyboardService;
     private final MessageService messageService;
@@ -63,59 +63,60 @@ public class CommandHandler {
         commandExecutor.put(PROVEN_CYNOLOGISTS.getText(), this::sendProvenCynologists);
         commandExecutor.put(CAT_SHELTER.getText(), this::sendCatList);
         commandExecutor.put(DOG_SHELTER.getText(), this::sendDogList);
+        commandExecutor.put(CALL_A_VOLUNTEER.getText(), this::callVolunteer);
     }
 
     /**
      * Метод для обработки команд. В зависимости от поступившей команды будет выполнен соответствующий метод.
      *
-     * @param navigationText поступившая команда.
-     * @param chat           из какого чата поступила команда.
+     * @param message поступившее сообщение.
      */
-    public void handle(String navigationText, Chat chat) {
-        var navigationCommands = Command.values();
-        if (commandExecutor.containsKey(navigationText)) {
-            for (Command command : navigationCommands) {
-                if (command.getText().equals(navigationText)) {
-                    commandExecutor.get(command.getText()).accept(chat);
+    public void handle(String botCommand, Message message) {
+        var commands = Command.values();
+        if (commandExecutor.containsKey(botCommand)) {
+            for (Command command : commands) {
+                if (command.getText().equals(botCommand)) {
+                    commandExecutor.get(command.getText()).accept(message);
                     return;
                 }
             }
         }
     }
 
-    private void showGreetings(Chat chat) {
-        if (!userService.isRegistered(chat.id())) {
-            userService.create(chat);
-            keyboardService.sendGreetings(chat.id());
+    private void showGreetings(Message message) {
+        var chatId = message.chat().id();
+        if (!userService.isRegistered(chatId)) {
+            userService.create(message.chat());
+            keyboardService.sendGreetings(chatId);
         } else {
-            showMainMenu(chat);
+            showMainMenu(message);
         }
     }
 
-    private void showMainMenu(Chat chat) {
-        keyboardService.sendMainMenu(chat.id());
+    private void showMainMenu(Message message) {
+        keyboardService.sendMainMenu(message.chat().id());
     }
 
-    private void showShelterMenu(Chat chat) {
-        keyboardService.sendShelterMenu(chat.id());
+    private void showShelterMenu(Message message) {
+        keyboardService.sendShelterMenu(message.chat().id());
     }
 
-    private void showFaqMenu(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.FAQ_COMMAND);
+    private void showFaqMenu(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.FAQ_COMMAND);
     }
 
-    private void showChooseAnimalMenu(Chat chat) {
-        keyboardService.sendChooseAnimalMenu(chat.id());
+    private void showChooseAnimalMenu(Message message) {
+        keyboardService.sendChooseAnimalMenu(message.chat().id());
     }
 
-    private void showShelterContact(Chat chat) {
+    private void showShelterContact(Message message) {
         var phone = shelterService.getShelter()
                 .map(ShelterDtoOut::getPhoneNumber)
                 .orElse(null);
-        messageService.sendMessage(chat.id(), phone);
+        messageService.sendMessage(message.chat().id(), phone);
     }
 
-    private void showShelterAddress(Chat chat) {
+    private void showShelterAddress(Message message) {
         var shelter = shelterService.getShelter();
         var address = shelter
                 .map(ShelterDtoOut::getAddress)
@@ -123,96 +124,96 @@ public class CommandHandler {
         var drivingDirections = shelter
                 .map(ShelterDtoOut::getDrivingDirections)
                 .orElse(null);
-        messageService.sendMessage(chat.id(), address);
+        messageService.sendMessage(message.chat().id(), address);
         var path = "image/" + ShelterService.SHELTER_BUCKET + "/" + drivingDirections;
-        messageService.sendPhoto(chat.id(), path);
+        messageService.sendPhoto(message.chat().id(), path);
     }
 
-    private void showTimeTable(Chat chat) {
+    private void showTimeTable(Message message) {
         var timeTable = shelterService.getShelter().stream()
                 .map(ShelterDtoOut::getTimeTable)
                 .findFirst()
                 .orElseThrow(ShelterNotFoundException::new);
-        messageService.sendMessage(chat.id(), timeTable);
+        messageService.sendMessage(message.chat().id(), timeTable);
     }
 
-    private void showSafetyPrecautions(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.SAFETY_PRECAUTIONS);
+    private void showSafetyPrecautions(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.SAFETY_PRECAUTIONS);
     }
 
-    private void sendContactRequest(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.CONTACT_REQUEST);
+    private void sendContactRequest(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.CONTACT_REQUEST);
     }
 
-    private void sendRules(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.DATING_RULES);
+    private void sendRules(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.DATING_RULES);
     }
 
-    private void sendDocList(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.DOC_LIST);
+    private void sendDocList(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.DOC_LIST);
     }
 
-    private void sendDenialReasons(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.DENIAL_REASONS);
+    private void sendDenialReasons(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.DENIAL_REASONS);
     }
 
-    private void sendCatTransportation(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.CAT_TRANSPORTATION);
+    private void sendCatTransportation(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.CAT_TRANSPORTATION);
     }
 
-    private void sendHomeForKitty(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_KITTY);
+    private void sendHomeForKitty(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_KITTY);
     }
 
-    private void sendHomeForAdultCat(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_ADULT_CAT);
+    private void sendHomeForAdultCat(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_ADULT_CAT);
     }
 
-    private void sendHomeForDisCat(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_DISABLED_CAT);
+    private void sendHomeForDisCat(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_DISABLED_CAT);
     }
 
-    private void sendDogTransportation(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.DOG_TRANSPORTATION);
+    private void sendDogTransportation(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.DOG_TRANSPORTATION);
     }
 
-    private void sendHomeForPuppy(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_PUPPY);
+    private void sendHomeForPuppy(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_PUPPY);
     }
 
-    private void sendHomeForAdultDog(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_ADULT_DOG);
+    private void sendHomeForAdultDog(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_ADULT_DOG);
     }
 
-    private void sendHomeForDisDog(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.HOME_FOR_DISABLED_DOG);
+    private void sendHomeForDisDog(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.HOME_FOR_DISABLED_DOG);
     }
 
-    private void sendCynologistAdvice(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.CYNOLOGIST_ADVICE);
+    private void sendCynologistAdvice(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.CYNOLOGIST_ADVICE);
     }
 
-    private void sendProvenCynologists(Chat chat) {
-        messageService.sendMessage(chat.id(), InformationConstants.PROVEN_CYNOLOGISTS);
+    private void sendProvenCynologists(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.PROVEN_CYNOLOGISTS);
     }
 
-    private void sendCatList(Chat chat) {
-        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.CAT));
+    private void sendCatList(Message message) {
+        showAnimal(message, animalService.findAllWithoutOwner(AnimalType.CAT));
     }
 
-    private void sendDogList(Chat chat) {
-        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.DOG));
+    private void sendDogList(Message message) {
+        showAnimal(message, animalService.findAllWithoutOwner(AnimalType.DOG));
     }
 
     /**
      * Конфигурирование вывода списка животных.
      *
-     * @param chat чат для отправки.
+     * @param message принятое сообщение.
      * @param animals список животных.
      */
-    private void showAnimal(Chat chat, List<AnimalDtoOut> animals) {
+    private void showAnimal(Message message, List<AnimalDtoOut> animals) {
         for (AnimalDtoOut animal : animals) {
-            String message = """
+            String view = """
                     Животное: %s,
                     Кличка: %s,
                     Возраст: %s,
@@ -224,7 +225,18 @@ public class CommandHandler {
                             animal.getAge(),
                             animal.getBreed()
                     );
-            messageService.sendMessage(chat.id(), message);
+            messageService.sendMessage(message.chat().id(), view);
         }
     }
+
+    /**
+     * Уведомляет пользователя о принятии запроса, а волонтеров о том что пользователю нужна помощь.
+     *
+     * @param message принятое сообщение.
+     */
+    private void callVolunteer(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.CALL_VOLUNTEER);
+        messageService.sendForwardMessageToVolunteers(message);
+    }
+
 }
