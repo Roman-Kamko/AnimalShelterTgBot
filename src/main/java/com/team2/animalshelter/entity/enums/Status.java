@@ -5,6 +5,6 @@ package com.team2.animalshelter.entity.enums;
  */
 public enum Status {
 
-    NEED_HELP, WAIT_CALL
+    NEED_HELP
 
 }
