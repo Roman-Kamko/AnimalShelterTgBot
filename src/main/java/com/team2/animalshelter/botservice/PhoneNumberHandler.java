@@ -19,7 +19,7 @@ public class PhoneNumberHandler {
     private final UserRepository userRepository;
     private final Pattern pattern = Pattern.compile("\\+7[0-9]{10}$");
 
-    public void handle(Chat chat, String text) {
+    public void handle(String text, Chat chat) {
         var matcher = pattern.matcher(Objects.requireNonNull(text));
         if (matcher.matches()) {
             String phone = matcher.group();

@@ -3,7 +3,7 @@ package com.team2.animalshelter.botservice;
 public class InformationConstants {
 
     public static final String CHOOSE = "Выберите:";
-    public static final String GREETINGS = "Привет";
+    public static final String GREETINGS = "Привет \uD83D\uDE0A";
 
     public static final String FAQ_COMMAND = """
             Вот что я могу тебе рассказать:
@@ -32,9 +32,9 @@ public class InformationConstants {
 
     public static final String CONTACT_REQUEST = "Введите свой номер телефона в формате +79998886655:";
 
-    public static final String PHONE_ACCEPTED = "Ваш телефон принят";
+    public static final String PHONE_ACCEPTED = "Ваш телефон принят \uD83D\uDE0A";
 
-    public static final String PHONE_WRONG = "Неправильно введен номер телефона";
+    public static final String PHONE_WRONG = "Неправильно введен номер телефона \uD83D\uDE14";
 
     public static final String SAFETY_PRECAUTIONS = """
             1. В приют не допускаются:
@@ -230,6 +230,42 @@ public class InformationConstants {
             3. Не забудьте поставить сетки на окна и убрать с пола провода, чтобы котенок не решил поточить о них зубы и не пострадал, а вы не остались без связи. Ваше жилье должно стать безопасным для нового члена семьи.
             4. Домашнему любимцу не должно быть скучно. Больше всего кошки любят четыре вещи — играть, отдыхать, прятаться и карабкаться вверх. Чтобы обезопасить и питомца, и свои вещи, стоит оборудовать специальный кошачий комплекс с крытой норкой наверху и когтеточкой внизу(домик).
             5. Следует помнить, что в природе кошки охотятся на небольших птиц, грызунов и рептилий. Поэтому надо заранее обезопасить этих питомцев, поскольку животное не упустит возможности попытаться их поймать. С крупными грызунами, такими как морские свинки, кошки уживаются мирно. Это касается и таких попугаев, как амазон, какаду, ара. Аквариум кошка также не оставит в покое и попытается выловить рыбок.
+            """;
+
+    public static final String STATUS_NOT_SUCCESSFUL = """
+            "Здравствуйте, хотим сообщить вам, что вы не справились с заботой о своем новом друге, и вам нужно вернуть его в приют.
+            Наши волонтёры готовы помочь вам с этим процессом и забрать животное сами."
+            """;
+
+    public static final String STATUS_EXTENDED = """
+            Ваш испытательный срок продлён. Пожалуйста свяжитесь с волонтёрами.
+            """;
+
+    public static final String STATUS_SUCCESSFUL = """
+            Ваш испытательный срок завершён. Пожалуйста свяжитесь с волонтёрами.
+            """;
+    public static final String VOL_NOTIFICATION_NOT_SUCCESSFUL = """
+            Опекун получил уведомление о провале адаптационного периода!
+            """;
+
+    public static final String VOL_NOTIFICATION_EXTENDED = """
+            Опекун получил уведомление о продлении адаптационного периода!
+            """;
+
+    public static final String VOL_NOTIFICATION_SUCCESSFUL = """
+            Опекун получил уведомление о завершении адаптационного периода!
+            """;
+
+    public static final String END_ADAPTATION = """
+            Адаптационный период опекуна подошел к концу.
+            """;
+
+    public static final String VOL_ADAPTATION_WARN = """
+            Опекун давно не отправлял отчет.
+            """;
+
+    public static final String ADAPTATION_WARN = """
+            Вы не отправляли отчёты уже более двух дней. Пожалуйста, отправьте отчёт или выйдите на связь с волонтёрами.
             """;
 
 }
