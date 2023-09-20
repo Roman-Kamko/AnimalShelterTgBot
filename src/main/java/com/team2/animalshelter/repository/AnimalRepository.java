@@ -13,9 +13,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query("""
             select a
             from Animal a
-                join fetch a.adaptations ad
-            where a.animalType = :type
-                and ad.size = 0
+                left join fetch a.adaptations ad
+            where ad.id is null
+                and a.animalType = :type
             """)
     List<Animal> findAllWithoutOwner(@Param("type") AnimalType type);
 
@@ -24,7 +24,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
             from Animal a
                 join fetch a.adaptations ad
             where a.animalType = :type
-                and ad.size > 0
             """)
     List<Animal> findAllAdopted(@Param("type") AnimalType type);
 

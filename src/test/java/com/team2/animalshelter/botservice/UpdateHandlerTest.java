@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.team2.animalshelter.repository.UserRepository;
+import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +39,8 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = UpdateHandler.class)
 class UpdateHandlerTest {
 
+    @MockBean
+    private AnimalService animalService;
     @MockBean
     private UserRepository userRepository;
     @MockBean
@@ -133,7 +136,7 @@ class UpdateHandlerTest {
         assertAll(
                 () -> verify(phoneNumberHandler, times(1)).handle(any(Chat.class), eq("+71112223344")),
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
-                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Ваш телефон принят")
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.PHONE_ACCEPTED)
         );
     }
 

@@ -30,7 +30,7 @@ Content-Type: application/json
 
 {
   "reportMessage": "test test test",
-  "adaptationId": "5"
+  "adaptationId": "1"
 }
 
 --WebAppBoundary

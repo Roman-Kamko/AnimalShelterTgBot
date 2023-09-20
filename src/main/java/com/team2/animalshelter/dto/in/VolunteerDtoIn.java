@@ -5,7 +5,6 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @Value
 @Schema(name = "Волонтер")
@@ -26,10 +25,5 @@ public class VolunteerDtoIn {
     @NotBlank
     @Schema(name = "Фамилия волонтера", example = "Петров")
     String lastname;
-
-    @NotNull
-    @Positive
-    @Schema(name = "Идентификатор приюта", example = "1")
-    Long shelterId;
 
 }

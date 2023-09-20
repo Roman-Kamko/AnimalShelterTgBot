@@ -1,7 +1,11 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Chat;
+import com.team2.animalshelter.dto.out.AnimalDtoOut;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.entity.enums.AnimalType;
+import com.team2.animalshelter.service.AnimalService;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -23,10 +28,12 @@ public class CommandHandler {
     private final KeyboardService keyboardService;
     private final MessageService messageService;
     private final ShelterService shelterService;
+    private final AnimalService animalService;
+
 
     /**
      * Метод для регистрации команд. Для того что бы зарегистрировать команду положите в
-     * {@link #commandExecutor} команду, передварительно созданную в {@link Command},
+     * {@link #commandExecutor} команду, предварительно созданную в {@link Command},
      * а в виде значения ссылку на метод, который необходимо создать в этом классе.
      */
     @PostConstruct
@@ -54,6 +61,8 @@ public class CommandHandler {
         commandExecutor.put(HOME_FOR_DIS_DOG.getText(), this::sendHomeForDisDog);
         commandExecutor.put(CYNOLOGIST_ADVISE.getText(), this::sendCynologistAdvice);
         commandExecutor.put(PROVEN_CYNOLOGISTS.getText(), this::sendProvenCynologists);
+        commandExecutor.put(CAT_SHELTER.getText(), this::sendCatList);
+        commandExecutor.put(DOG_SHELTER.getText(), this::sendDogList);
     }
 
     /**
@@ -100,14 +109,14 @@ public class CommandHandler {
     }
 
     private void showShelterContact(Chat chat) {
-        var phone = shelterService.findById(1L)
+        var phone = shelterService.getShelter()
                 .map(ShelterDtoOut::getPhoneNumber)
                 .orElse(null);
         messageService.sendMessage(chat.id(), phone);
     }
 
     private void showShelterAddress(Chat chat) {
-        var shelter = shelterService.findById(1L);
+        var shelter = shelterService.getShelter();
         var address = shelter
                 .map(ShelterDtoOut::getAddress)
                 .orElse(null);
@@ -120,9 +129,10 @@ public class CommandHandler {
     }
 
     private void showTimeTable(Chat chat) {
-        var timeTable = shelterService.findById(1L)
+        var timeTable = shelterService.getShelter().stream()
                 .map(ShelterDtoOut::getTimeTable)
-                .orElse(null);
+                .findFirst()
+                .orElseThrow(ShelterNotFoundException::new);
         messageService.sendMessage(chat.id(), timeTable);
     }
 
@@ -186,4 +196,35 @@ public class CommandHandler {
         messageService.sendMessage(chat.id(), InformationConstants.PROVEN_CYNOLOGISTS);
     }
 
+    private void sendCatList(Chat chat) {
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.CAT));
+    }
+
+    private void sendDogList(Chat chat) {
+        showAnimal(chat, animalService.findAllWithoutOwner(AnimalType.DOG));
+    }
+
+    /**
+     * Конфигурирование вывода списка животных.
+     *
+     * @param chat чат для отправки.
+     * @param animals список животных.
+     */
+    private void showAnimal(Chat chat, List<AnimalDtoOut> animals) {
+        for (AnimalDtoOut animal : animals) {
+            String message = """
+                    Животное: %s,
+                    Кличка: %s,
+                    Возраст: %s,
+                    Порода: %s
+                    """
+                    .formatted(
+                            animal.getAnimalType().getTypeOfAnimal(),
+                            animal.getName(),
+                            animal.getAge(),
+                            animal.getBreed()
+                    );
+            messageService.sendMessage(chat.id(), message);
+        }
+    }
 }

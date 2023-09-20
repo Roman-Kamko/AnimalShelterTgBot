@@ -15,6 +15,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "reports")
+@ToString(exclude = "reports")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Adaptation {
 
@@ -27,7 +29,7 @@ public class Adaptation {
     LocalDate endDate;
 
     /**
-     * Описание статуса
+     * Волонтер может оставить комментарий при необходимости, по дефолту устанавливается описание статуса.
      */
     String comment;
 

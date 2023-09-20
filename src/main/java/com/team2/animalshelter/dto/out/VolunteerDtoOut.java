@@ -13,6 +13,4 @@ public class VolunteerDtoOut {
 
     String lastname;
 
-    ShelterDtoOut shelter;
-
 }

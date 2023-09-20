@@ -1,5 +1,6 @@
 package com.team2.animalshelter.botservice;
 
+
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
+
+
 
 /**
  * Класс для отправки сообщений пользователю
@@ -16,7 +19,6 @@ import org.springframework.util.ResourceUtils;
 public class MessageService {
 
     private final TelegramBot telegramBot;
-
 
     public void sendMessage(Long chatId, String text) {
         var message = new SendMessage(chatId, text);
@@ -31,3 +33,7 @@ public class MessageService {
     }
 
 }
+
+
+
+

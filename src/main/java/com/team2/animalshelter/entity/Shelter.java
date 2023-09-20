@@ -1,9 +1,6 @@
 package com.team2.animalshelter.entity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
@@ -13,6 +10,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"animals", "volunteers", "users"})
+@ToString(exclude = {"animals", "volunteers", "users"})
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Shelter {
 

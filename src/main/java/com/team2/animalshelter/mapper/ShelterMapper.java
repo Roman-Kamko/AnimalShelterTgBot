@@ -8,12 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ShelterMapper {
 
-    public Shelter toEntity(ShelterDtoIn fromObj) {
-        var toObj = new Shelter();
-        copy(fromObj, toObj);
-        return toObj;
-    }
-
     /**
      * Метод позволяет внести изменения в сущность не создавая новую.
      *
@@ -22,13 +16,15 @@ public class ShelterMapper {
      * @return измененный объект.
      */
     public Shelter toEntity(ShelterDtoIn fromObj, Shelter toObj) {
-        copy(fromObj, toObj);
+        toObj.setName(fromObj.getName());
+        toObj.setAddress(fromObj.getAddress());
+        toObj.setPhoneNumber(fromObj.getPhoneNumber());
+        toObj.setTimeTable(fromObj.getTimeTable());
         return toObj;
     }
 
     public ShelterDtoOut toDto(Shelter fromObj) {
         return new ShelterDtoOut(
-                fromObj.getId(),
                 fromObj.getName(),
                 fromObj.getAddress(),
                 fromObj.getPhoneNumber(),
@@ -36,13 +32,6 @@ public class ShelterMapper {
                 fromObj.getDrivingDirections(),
                 fromObj.getDrivingDirectionsUrl()
         );
-    }
-
-    private void copy(ShelterDtoIn fromObj, Shelter toObj) {
-        toObj.setName(fromObj.getName());
-        toObj.setAddress(fromObj.getAddress());
-        toObj.setPhoneNumber(fromObj.getPhoneNumber());
-        toObj.setTimeTable(fromObj.getTimeTable());
     }
 
 }

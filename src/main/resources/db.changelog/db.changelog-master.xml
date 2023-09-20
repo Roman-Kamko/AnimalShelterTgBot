@@ -13,5 +13,7 @@
     <include file="table/db.changelog-adaptation-1.0.0.xml" relativeToChangelogFile="true"/>
     <include file="table/db.changelog-report-1.0.0.xml" relativeToChangelogFile="true"/>
     <include file="data/db.changelog-shelter-insert.xml" relativeToChangelogFile="true"/>
+    <include file="table/db.changelog-user-1.0.1.xml" relativeToChangelogFile="true"/>
+    <include file="table/db.changelog-owner-1.0.1.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -214,4 +214,51 @@ class CommandHandlerTest extends IntegrationTestBase {
         verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(InformationConstants.PROVEN_CYNOLOGISTS));
     }
 
+    @Test
+    @DisplayName("sendCatList")
+    void shouldSendCatList() {
+        commandHandler.handle(CAT_SHELTER.getText(), chat);
+        var expected1 = """
+                Животное: Кошка,
+                Кличка: Марсель,
+                Возраст: 4,
+                Порода: Корниш-рекс
+                """;
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(expected1));
+        var expected2 = """
+                Животное: Кошка,
+                Кличка: Бонифаций,
+                Возраст: 9,
+                Порода: Шотландская-веслоухая
+                """;
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(expected2));
+        var expected3 = """
+                Животное: Кошка,
+                Кличка: Пушок,
+                Возраст: 3,
+                Порода: Сфинкс
+                """;
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(expected3));
+    }
+
+    @Test
+    @DisplayName("sendDogList")
+    void shouldSendDogList() {
+        commandHandler.handle(DOG_SHELTER.getText(), chat);
+        var expected1 = """
+                Животное: Собака,
+                Кличка: Граф,
+                Возраст: 10,
+                Порода: Лайка
+                """;
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(expected1));
+        var expected2 = """
+                Животное: Собака,
+                Кличка: Герда,
+                Возраст: 4,
+                Порода: Доберман
+                """;
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(expected2));
+    }
+
 }

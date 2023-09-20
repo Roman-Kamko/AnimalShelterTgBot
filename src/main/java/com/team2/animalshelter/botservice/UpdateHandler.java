@@ -24,9 +24,10 @@ public class UpdateHandler {
             String text = message.text();
 
             if (text != null) {
-                commandHandler.handle(text, chat);
                 if (text.startsWith("+")) {
                     phoneNumberHandler.handle(chat, text);
+                } else {
+                    commandHandler.handle(text, chat);
                 }
             }
         }

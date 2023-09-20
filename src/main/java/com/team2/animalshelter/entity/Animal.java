@@ -11,6 +11,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "adaptations")
+@ToString(exclude = "adaptations")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Animal {
 

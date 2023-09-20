@@ -40,9 +40,4 @@ public class AnimalDtoIn {
     @Schema(name = "Тип животного", example = "CAT")
     AnimalType animalType;
 
-    @NotNull
-    @Positive
-    @Schema(name = "Идентификатор приюта", example = "1")
-    Long shelterId;
-
 }

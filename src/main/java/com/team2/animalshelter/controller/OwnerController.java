@@ -70,7 +70,7 @@ public class OwnerController {
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
-            summary = "Создать нового опекуна на основе usera по идентификатору",
+            summary = "Создать нового опекуна на основе пользователя по идентификатору",
             responses = {
                     @ApiResponse(
                             responseCode = "200",

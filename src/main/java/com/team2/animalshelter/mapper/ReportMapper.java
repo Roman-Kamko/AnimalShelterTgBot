@@ -19,12 +19,12 @@ public class ReportMapper {
 
     public Report toEntity(ReportDtoIn fromObj) {
         var toObj = new Report();
-        toObj.setReportMessage(fromObj.getReportMessage());
-        toObj.setDate(LocalDate.now());
-        toObj.setAdaptation(
-                adaptationRepository.findById(fromObj.getAdaptationId())
-                        .orElseThrow(() -> new AdaptationNotFoundException(fromObj.getAdaptationId()))
-        );
+        copy(fromObj, toObj);
+        return toObj;
+    }
+
+    public Report toEntity(ReportDtoIn fromObj, Report toObj) {
+        copy(fromObj, toObj);
         return toObj;
     }
 
@@ -35,6 +35,15 @@ public class ReportMapper {
                 fromObject.getPhotoUrl(),
                 fromObject.getDate(),
                 adaptationMapper.toDto(fromObject.getAdaptation())
+        );
+    }
+
+    private void copy(ReportDtoIn fromObj, Report toObj) {
+        toObj.setReportMessage(fromObj.getReportMessage());
+        toObj.setDate(LocalDate.now());
+        toObj.setAdaptation(
+                adaptationRepository.findById(fromObj.getAdaptationId())
+                        .orElseThrow(() -> new AdaptationNotFoundException(fromObj.getAdaptationId()))
         );
     }
 
