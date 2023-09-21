@@ -8,24 +8,24 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Value
-@Schema(name = "Приют")
+@Schema(name = "Shelter", description = "Приют для кошечек и собачек")
 public class ShelterDtoIn {
 
     @NotBlank
-    @Schema(name = "Название", example = "КотоПес")
+    @Schema(description = "Название приюта", example = "КотоПес")
     String name;
 
     @NotBlank
-    @Schema(name = "Адрес", example = "г. Астана, ул. Тихая 11, стр. 1")
+    @Schema(description = "Адрес приюта", example = "г. Астана, ул. Тихая 11, стр. 1")
     String address;
 
     @NotNull
     @Pattern(regexp = "\\+7[0-9]{10}$")
-    @Schema(name = "Контактный телефон", example = "+77776665544")
+    @Schema(description = "Контактный телефон приюта", example = "+77776665544")
     String phoneNumber;
 
     @NotBlank
-    @Schema(name = "Время работы", example = "Пн-Пт 9:00-18:00")
+    @Schema(description = "Время работы приюта", example = "Пн-Пт 9:00-18:00")
     String timeTable;
 
 }

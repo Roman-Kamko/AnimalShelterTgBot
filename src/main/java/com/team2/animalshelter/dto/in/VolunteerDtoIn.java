@@ -7,23 +7,23 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Value
-@Schema(name = "Волонтер")
+@Schema(name = "Volunteer", description = "Волонтер, консультирует пользователей/опекунов")
 public class VolunteerDtoIn {
 
     @NotNull
-    @Schema(name = "Идентификатор волонтера", example = "32132121")
+    @Schema(description = "Идентификатор волонтера", example = "32132121")
     Long telegramId;
 
     @NotBlank
-    @Schema(name = "Псевдоним волонтера", example = "Big-Love")
+    @Schema(description = "Псевдоним волонтера", example = "Big-Love")
     String username;
 
     @NotBlank
-    @Schema(name = "Имя волонтера", example = "Петр")
+    @Schema(description = "Имя волонтера", example = "Петр")
     String firstname;
 
     @NotBlank
-    @Schema(name = "Фамилия волонтера", example = "Петров")
+    @Schema(description = "Фамилия волонтера", example = "Петров")
     String lastname;
 
 }
