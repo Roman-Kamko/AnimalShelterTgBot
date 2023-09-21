@@ -18,14 +18,13 @@ import static com.team2.animalshelter.botservice.Command.*;
 public class KeyboardService {
 
     private final TelegramBot telegramBot;
-    private static final String CHOOSE = "Выберите:";
 
     /**
      * Утилитарный метод содержащий необходимые настройки для всех меню.
      *
      * @param replyKeyboardMarkup передать собранное меню
      * @param chatId              передать идентификатор чата.
-     * @param text                передать текст, для всего кроме приветствия использовать {@link KeyboardService#CHOOSE}
+     * @param text                передать текст, для всего кроме приветствия использовать {@link InformationConstants#CHOOSE}
      */
     private void returnResponseReplyKeyboardMarkup(ReplyKeyboardMarkup replyKeyboardMarkup, Long chatId, String text) {
         replyKeyboardMarkup.resizeKeyboard(true);
@@ -46,7 +45,7 @@ public class KeyboardService {
     public void sendGreetings(Long chatId) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup(
                 new KeyboardButton(MAIN_MENU.getText()));
-        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, "Привет");
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, InformationConstants.GREETINGS);
 
     }
 
@@ -63,7 +62,7 @@ public class KeyboardService {
                 new KeyboardButton(SEND_REPORT_FORM.getText()),
                 new KeyboardButton(CALL_A_VOLUNTEER.getText())
         );
-        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, InformationConstants.CHOOSE);
     }
 
     /**
@@ -78,7 +77,7 @@ public class KeyboardService {
         ).addRow(
                 new KeyboardButton(SHELTER_MENU.getText())
         );
-        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, InformationConstants.CHOOSE);
     }
 
     /**
@@ -100,7 +99,7 @@ public class KeyboardService {
                 new KeyboardButton(CALL_A_VOLUNTEER.getText()),
                 new KeyboardButton(MAIN_MENU.getText())
         );
-        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, CHOOSE);
+        returnResponseReplyKeyboardMarkup(replyKeyboardMarkup, chatId, InformationConstants.CHOOSE);
     }
 
 }

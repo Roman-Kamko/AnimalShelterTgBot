@@ -3,6 +3,7 @@ package com.team2.animalshelter.service;
 import com.team2.animalshelter.dto.in.AdaptationDtoIn;
 import com.team2.animalshelter.dto.out.AdaptationDtoOut;
 import com.team2.animalshelter.entity.Adaptation;
+import com.team2.animalshelter.entity.Report;
 import com.team2.animalshelter.entity.enums.AdaptationStatus;
 import com.team2.animalshelter.exception.EntityCreateException;
 import com.team2.animalshelter.mapper.AdaptationMapper;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +86,13 @@ public class AdaptationService {
                     return true;
                 })
                 .orElse(false);
+    }
+
+    public LocalDate findLastReportDate(Long ownerId) {
+        return adaptationRepository.findLastReportDate(ownerId).stream()
+                .findFirst()
+                .map(Report::getDate)
+                .orElse(null);
     }
 
 }

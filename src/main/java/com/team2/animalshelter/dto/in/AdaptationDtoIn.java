@@ -12,17 +12,6 @@ import javax.validation.constraints.Positive;
 @Schema(name = "Адаптационный период")
 public class AdaptationDtoIn {
 
-    //    @Schema(name = "Комментарий волонтера", example = "Просрочена отчетность")
-//    String comment;
-//
-//    @Schema(
-//            name = "Необходимость в комментарии",
-//            description = "true - с адаптационным периодом что-то не так, по умолчанию false",
-//            example = "false"
-//    )
-//    @Pattern(regexp = "true$|false$")
-//    Boolean needComment;
-//
     @NotNull
     @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$")
     @Schema(

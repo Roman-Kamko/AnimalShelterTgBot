@@ -13,6 +13,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Transactional
 @SpringBootTest
-@ActiveProfiles("t")
 public @interface IntegrationTest {
 }

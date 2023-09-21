@@ -8,34 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class OwnerMapper {
 
-    public Owner toEntity(OwnerDto fromObj) {
-        var toObj = new Owner();
-        copy(fromObj, toObj);
-        return toObj;
-    }
-
-    /**
-     * Метод позволяет внести изменения в сущность не создавая новую.
-     *
-     * @param fromObj объект копирования значений.
-     * @param toObj объект для вставки значений.
-     * @return измененный объект.
-     */
-    public Owner toEntity(OwnerDto fromObj, Owner toObj) {
-        copy(fromObj, toObj);
-        return toObj;
-    }
-
-    public OwnerDto toDto(Owner fromObj) {
-        return new OwnerDto(
-                fromObj.getTelegramId(),
-                fromObj.getUsername(),
-                fromObj.getFirstname(),
-                fromObj.getLastname(),
-                fromObj.getPhoneNumber()
-        );
-    }
-
     /**
      * Для создания Опекуна на основе данных Пользователя.
      *
@@ -52,12 +24,30 @@ public class OwnerMapper {
         return toObj;
     }
 
-    private void copy(OwnerDto fromObj, Owner toObj) {
+    /**
+     * Метод позволяет внести изменения в сущность не создавая новую.
+     *
+     * @param fromObj объект копирования значений.
+     * @param toObj объект для вставки значений.
+     * @return измененный объект.
+     */
+    public Owner toEntity(OwnerDto fromObj, Owner toObj) {
         toObj.setTelegramId(fromObj.getTelegramId());
         toObj.setUsername(fromObj.getUsername());
         toObj.setFirstname(fromObj.getFirstname());
         toObj.setLastname(fromObj.getLastname());
         toObj.setPhoneNumber(fromObj.getPhoneNumber());
+        return toObj;
+    }
+
+    public OwnerDto toDto(Owner fromObj) {
+        return new OwnerDto(
+                fromObj.getTelegramId(),
+                fromObj.getUsername(),
+                fromObj.getFirstname(),
+                fromObj.getLastname(),
+                fromObj.getPhoneNumber()
+        );
     }
 
 }

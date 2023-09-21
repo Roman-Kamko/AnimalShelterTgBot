@@ -21,7 +21,7 @@ public class ShelterDtoIn {
 
     @NotNull
     @Pattern(regexp = "\\+7[0-9]{10}$")
-    @Schema(name = "Контактный телефон", example = "77776665544")
+    @Schema(name = "Контактный телефон", example = "+77776665544")
     String phoneNumber;
 
     @NotBlank

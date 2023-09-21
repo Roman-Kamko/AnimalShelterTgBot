@@ -8,12 +8,14 @@ import com.team2.animalshelter.mapper.ReportMapper;
 import com.team2.animalshelter.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +29,9 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
     private final ImageService imageService;
-    private static final String REPORT_BUCKET = "reports";
+    public static final String REPORT_BUCKET = "reports";
+    @Value("${server.port}")
+    private int port;
 
     public Optional<ReportDtoOut> findById(Long id) {
         return reportRepository.findById(id)
@@ -58,7 +62,7 @@ public class ReportService {
         return reportRepository.findById(id)
                 .map(report -> {
                     uploadImage(image, report);
-                    return reportMapper.toEntity(reportDtoIn);
+                    return reportMapper.toEntity(reportDtoIn, report);
                 })
                 .map(reportRepository::saveAndFlush)
                 .map(reportMapper::toDto);
@@ -96,7 +100,7 @@ public class ReportService {
                     UriComponentsBuilder.newInstance()
                             .scheme("http")
                             .host("localhost")
-                            .port("8081")
+                            .port(port)
                             .pathSegment("api", "v1", "reports", String.valueOf(report.getId()), "photo")
                             .toUriString()
             );

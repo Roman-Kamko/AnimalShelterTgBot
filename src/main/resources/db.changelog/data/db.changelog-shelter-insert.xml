@@ -20,7 +20,7 @@
             </column>
             <column name="time_table">Часы работы: Пн-Пт 08:00 - 20:00</column>
             <column name="driving_directions">address.jpg</column>
-            <column name="driving_directions_url">http://localhost:8081/api/v1/shelters/3/map</column>
+            <column name="driving_directions_url">http://localhost:8081/api/v1/shelters/map</column>
         </insert>
     </changeSet>
 
