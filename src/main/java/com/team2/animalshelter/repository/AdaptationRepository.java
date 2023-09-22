@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
 
@@ -30,5 +31,7 @@ public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
             order by r.date desc
             """)
     List<Report> findLastReportDate(@Param("ownerId") Long ownerId);
+
+    Optional<Adaptation> findByOwner_telegramId(Long ownerId);
 
 }
