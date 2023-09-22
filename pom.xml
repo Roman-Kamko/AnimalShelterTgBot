@@ -22,7 +22,7 @@
     </properties>
     <dependencies>
 
-    <!--boot-starters-->
+        <!--boot-starters-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -42,7 +42,7 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-    <!--database-->
+        <!--database-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -53,7 +53,7 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
 
-    <!--tests-->
+        <!--tests-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -71,21 +71,21 @@
             <scope>test</scope>
         </dependency>
 
-    <!--lombok-->
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-    <!--telegram-->
+        <!--telegram-->
         <dependency>
             <groupId>com.github.pengrad</groupId>
             <artifactId>java-telegram-bot-api</artifactId>
             <version>${pengard.version}</version>
         </dependency>
 
-    <!--springdoc-->
+        <!--springdoc-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
