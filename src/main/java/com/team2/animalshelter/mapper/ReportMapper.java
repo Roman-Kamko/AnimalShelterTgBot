@@ -1,9 +1,11 @@
 package com.team2.animalshelter.mapper;
 
+import com.pengrad.telegrambot.model.Message;
 import com.team2.animalshelter.dto.in.ReportDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.entity.Report;
 import com.team2.animalshelter.exception.AdaptationNotFoundException;
+import com.team2.animalshelter.exception.OwnerAdaptationException;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,25 @@ public class ReportMapper {
 
     public Report toEntity(ReportDtoIn fromObj, Report toObj) {
         copy(fromObj, toObj);
+        return toObj;
+    }
+
+    /**
+     * Маппинг в {@link Report} на основе {@link Message}.
+     *
+     * @param fromObj {@link Message}
+     * @return {@link Report}
+     */
+    public Report toEntity(Message fromObj) {
+        var toObj = new Report();
+        toObj.setPhoto(fromObj.photo()[fromObj.photo().length - 1].fileId());
+        toObj.setReportMessage(fromObj.caption());
+        toObj.setDate(LocalDate.now());
+        var ownerId = fromObj.from().id();
+        toObj.setAdaptation(
+                adaptationRepository.findByOwner_telegramId(ownerId)
+                        .orElseThrow(() -> new OwnerAdaptationException(ownerId))
+        );
         return toObj;
     }
 

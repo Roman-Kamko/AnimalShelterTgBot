@@ -9,26 +9,26 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 @Value
-@Schema(name = "Адаптационный период")
+@Schema(name = "Adaptation", description = "Адаптационный период, устанавливается при взятии животного под опеку")
 public class AdaptationDtoIn {
 
     @NotNull
-    @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$")
+    @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$|EXTENDED$")
     @Schema(
-            name = "Текущий статус адаптации",
-            description = "IN_PROGRESS - в процессе, SUCCESSFUL - успешно завершена, NOT_SUCCESSFUL - провалена; по умолчанию - IN_PROGRESS",
+            description = "IN_PROGRESS - в процессе, SUCCESSFUL - успешно завершена, " +
+                    "NOT_SUCCESSFUL - провалена, EXTENDED - продлен; по умолчанию - IN_PROGRESS",
             example = "IN_PROGRESS"
     )
     AdaptationStatus adaptationStatus;
 
     @NotNull
     @Positive
-    @Schema(name = "Идентификатор животного", example = "1")
+    @Schema(description = "Идентификатор животного", example = "1")
     Long animalId;
 
     @NotNull
     @Positive
-    @Schema(name = "Идентификатор опекуна", example = "12312321")
+    @Schema(description = "Идентификатор опекуна", example = "12312321")
     Long ownerId;
 
 }

@@ -7,11 +7,13 @@ import com.team2.animalshelter.repository.OwnerRepository;
 import com.team2.animalshelter.service.AdaptationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
 import static com.team2.animalshelter.botservice.InformationConstants.*;
 
+@Component
 @RequiredArgsConstructor
 public final class BotScheduler {
 

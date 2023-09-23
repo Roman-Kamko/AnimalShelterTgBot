@@ -8,16 +8,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Value
-@Schema(name = "Отчет")
+@Schema(name = "Report", description = "Ежедневный отчет опекуна")
 public class ReportDtoIn {
 
     @NotBlank
-    @Schema(name = "Текст отчета", example = "Кормим сухим кормом, аппетит хороший, спокоен, но к обстановке еще не привык")
+    @Schema(description = "Текст отчета", example = "Кормим сухим кормом, аппетит хороший, спокоен, но к обстановке еще не привык")
     String reportMessage;
 
     @NotNull
     @Positive
-    @Schema(name = "Идентификатор адаптационного периода", example = "1")
+    @Schema(description = "Идентификатор адаптационного периода", example = "1")
     Long adaptationId;
 
 }

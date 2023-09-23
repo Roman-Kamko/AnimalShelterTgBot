@@ -28,6 +28,13 @@ public class ImageService {
     }
 
     @SneakyThrows
+    public void upload(String imagePath, String specialBucket, byte[] image) {
+        var fullPath = Path.of(bucket, specialBucket, imagePath);
+        Files.createDirectories(fullPath.getParent());
+        Files.write(fullPath, image, CREATE, TRUNCATE_EXISTING);
+    }
+
+    @SneakyThrows
     public Optional<byte[]> getImage(String imagePath, String specialBucket) {
         var fullPath = Path.of(bucket, specialBucket, imagePath);
         return Files.exists(fullPath)

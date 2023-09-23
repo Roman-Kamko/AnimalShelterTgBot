@@ -3,19 +3,15 @@ package com.team2.animalshelter.botservice;
 import com.pengrad.telegrambot.model.Chat;
 import com.pengrad.telegrambot.model.Message;
 import com.team2.animalshelter.IntegrationTestBase;
-import com.team2.animalshelter.repository.VolunteerRepository;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
-import com.team2.animalshelter.service.VolunteerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static com.team2.animalshelter.botservice.Command.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -281,6 +277,12 @@ class CommandHandlerTest extends IntegrationTestBase {
         commandHandler.handle(CALL_A_VOLUNTEER.getText(), message);
         verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(InformationConstants.CALL_VOLUNTEER));
         verify(messageService, times(ONCE)).sendForwardMessageToVolunteers(any(Message.class));
+    }
+
+    @Test
+    void sendReportInfo() {
+        commandHandler.handle(SEND_REPORT_FORM.getText(), message);
+        verify(messageService, times(ONCE)).sendMessage(anyLong(), eq(InformationConstants.REPORT_MESSAGE));
     }
 
 }
