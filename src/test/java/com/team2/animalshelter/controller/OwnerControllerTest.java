@@ -41,7 +41,7 @@ class OwnerControllerTest {
     private static final String OWNER_LAST_NAME = "last_name";
     private static final String OWNER_PHONE_NUMBER = "+79969598987";
     private static final JSONObject OWNER_OBJECT = new JSONObject();
-    private static final OwnerDto OWNER_DTO_OUT = new OwnerDto(OWNER_TELEGRAM_ID, OWNER_NAME, OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_PHONE_NUMBER);
+    public static final OwnerDto OWNER_DTO_OUT = new OwnerDto(OWNER_TELEGRAM_ID, OWNER_NAME, OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_PHONE_NUMBER);
 
 
     @BeforeEach

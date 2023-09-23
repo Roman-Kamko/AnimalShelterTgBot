@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,11 +45,9 @@ class VolunteerControllerTest {
     private static final String VOLUNTEER_FIRST_NAME = "first_name";
     private static final String VOLUNTEER_LAST_NAME = "last_name";
     private static final Long VOLUNTEER_SHELTER_ID = 2L;
-
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    private static final JSONObject VOLUNTEER_OBJECT = new JSONObject();
     private static final ShelterDtoOut SHELTER_DTO_OUT = new ShelterDtoOut(
-            VOLUNTEER_SHELTER_ID,
             faker.name().toString(),
             faker.address().toString(),
             faker.phoneNumber().toString(),
@@ -58,16 +55,12 @@ class VolunteerControllerTest {
             faker.address().streetAddress(),
             faker.company().url()
     );
-
     public static final VolunteerDtoIn VOLUNTEER_DTO_IN = new VolunteerDtoIn(
-            VOLUNTEER_TELEGRAM_ID, VOLUNTEER_NAME, VOLUNTEER_FIRST_NAME, VOLUNTEER_LAST_NAME, VOLUNTEER_SHELTER_ID
+            VOLUNTEER_TELEGRAM_ID, VOLUNTEER_NAME, VOLUNTEER_FIRST_NAME, VOLUNTEER_LAST_NAME
     );
-
     private static final VolunteerDtoOut VOLUNTEER_DTO_OUT = new VolunteerDtoOut(
-            VOLUNTEER_TELEGRAM_ID, VOLUNTEER_NAME, VOLUNTEER_FIRST_NAME, VOLUNTEER_LAST_NAME, SHELTER_DTO_OUT
+            VOLUNTEER_TELEGRAM_ID, VOLUNTEER_NAME, VOLUNTEER_FIRST_NAME, VOLUNTEER_LAST_NAME
     );
-
-    private static final JSONObject VOLUNTEER_OBJECT = new JSONObject();
 
     @BeforeEach
     void setUp() {
@@ -75,12 +68,10 @@ class VolunteerControllerTest {
         VOLUNTEER_OBJECT.put("username", VOLUNTEER_NAME);
         VOLUNTEER_OBJECT.put("firstname", VOLUNTEER_FIRST_NAME);
         VOLUNTEER_OBJECT.put("lastname", VOLUNTEER_LAST_NAME);
-        VOLUNTEER_OBJECT.put("shelter", SHELTER_DTO_OUT);
     }
 
-    private static ResultMatcher shelter(final String prefix, final ShelterDtoOut shelterDtoOut) {
+    /*private static ResultMatcher shelter(final String prefix, final ShelterDtoOut shelterDtoOut) {
         return ResultMatcher.matchAll(
-                jsonPath(prefix + ".id").value(shelterDtoOut.getId()),
                 jsonPath(prefix + ".name").value(shelterDtoOut.getName()),
                 jsonPath(prefix + ".address").value(shelterDtoOut.getAddress()),
                 jsonPath(prefix + ".phoneNumber").value(shelterDtoOut.getPhoneNumber()),
@@ -88,7 +79,7 @@ class VolunteerControllerTest {
                 jsonPath(prefix + ".drivingDirections").value(shelterDtoOut.getDrivingDirections()),
                 jsonPath(prefix + ".drivingDirectionsUrl").value(shelterDtoOut.getDrivingDirectionsUrl())
         );
-    }
+    }*/
 
     @Nested
     @Tag("volunteerControllerCrud")
@@ -110,9 +101,7 @@ class VolunteerControllerTest {
                     .andExpect(jsonPath("$.telegramId").value(VOLUNTEER_TELEGRAM_ID))
                     .andExpect(jsonPath("$.username").value(VOLUNTEER_NAME))
                     .andExpect(jsonPath("$.firstname").value(VOLUNTEER_FIRST_NAME))
-                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME))
-                    .andExpect(jsonPath("$.shelter").isNotEmpty())
-                    .andExpect(shelter("shelter", SHELTER_DTO_OUT));
+                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME));
             verify(volunteerService, times(1)).findById(anyLong());
         }
 
@@ -140,9 +129,7 @@ class VolunteerControllerTest {
                     .andExpect(jsonPath("$[0].telegramId").value(VOLUNTEER_TELEGRAM_ID))
                     .andExpect(jsonPath("$[0].username").value(VOLUNTEER_NAME))
                     .andExpect(jsonPath("$[0].firstname").value(VOLUNTEER_FIRST_NAME))
-                    .andExpect(jsonPath("$[0].lastname").value(VOLUNTEER_LAST_NAME))
-                    .andExpect(jsonPath("$[0].shelter").isNotEmpty())
-                    .andExpect(shelter("[0].shelter", SHELTER_DTO_OUT));
+                    .andExpect(jsonPath("$[0].lastname").value(VOLUNTEER_LAST_NAME));
             verify(volunteerService, times(1)).findAll();
         }
 
@@ -162,9 +149,7 @@ class VolunteerControllerTest {
                     .andExpect(jsonPath("$.telegramId").value(VOLUNTEER_TELEGRAM_ID))
                     .andExpect(jsonPath("$.username").value(VOLUNTEER_NAME))
                     .andExpect(jsonPath("$.firstname").value(VOLUNTEER_FIRST_NAME))
-                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME))
-                    .andExpect(jsonPath("$.shelter.id").isNotEmpty())
-                    .andExpect(shelter("shelter", SHELTER_DTO_OUT));
+                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME));
             verify(volunteerService, times(1)).create(any(VolunteerDtoIn.class));
         }
 
@@ -184,9 +169,7 @@ class VolunteerControllerTest {
                     .andExpect(jsonPath("$.telegramId").value(VOLUNTEER_TELEGRAM_ID))
                     .andExpect(jsonPath("$.username").value(VOLUNTEER_NAME))
                     .andExpect(jsonPath("$.firstname").value(VOLUNTEER_FIRST_NAME))
-                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME))
-                    .andExpect(jsonPath("$.shelter.id").isNotEmpty())
-                    .andExpect(shelter("shelter", SHELTER_DTO_OUT));
+                    .andExpect(jsonPath("$.lastname").value(VOLUNTEER_LAST_NAME));
             verify(volunteerService, times(1)).update(anyLong(), any(VolunteerDtoIn.class));
         }
 

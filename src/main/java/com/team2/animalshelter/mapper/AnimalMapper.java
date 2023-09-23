@@ -50,7 +50,7 @@ public class AnimalMapper {
         toObj.setName(fromObj.getName());
         toObj.setAge(fromObj.getAge());
         toObj.setBreed(fromObj.getBreed());
-        toObj.setHealthy(fromObj.getHealthy());
+        toObj.setHealthy(Boolean.getBoolean(fromObj.getHealthy()));
         toObj.setAnimalType(fromObj.getAnimalType());
         toObj.setShelter(shelterRepository.findAll().stream()
                 .findFirst()
