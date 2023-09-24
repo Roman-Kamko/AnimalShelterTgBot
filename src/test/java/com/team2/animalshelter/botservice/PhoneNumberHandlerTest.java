@@ -34,7 +34,7 @@ class PhoneNumberHandlerTest extends IntegrationTestBase {
     @DisplayName("handlePositive")
     void shouldReturnAnswerMessageIfPhoneNumberCorrectAndSaveNewPhoneNumber() {
         doReturn(111111L).when(chat).id();
-        phoneNumberHandler.handle(chat, "+71112223344");
+        phoneNumberHandler.handle("+71112223344", chat);
         verify(messageService, times(1)).sendMessage(anyLong(), eq(InformationConstants.PHONE_ACCEPTED));
         userRepository.findById(chat.id())
                 .ifPresent(user -> assertThat(user.getPhoneNumber()).isEqualTo("+71112223344"));
@@ -44,7 +44,7 @@ class PhoneNumberHandlerTest extends IntegrationTestBase {
     @DisplayName("handleNegative")
     void shouldReturnWrongContactMessageIfPhoneNumberNotCorrectAndDontSavePhoneNumber() {
         doReturn(111111L).when(chat).id();
-        phoneNumberHandler.handle(chat, "+7111222334455");
+        phoneNumberHandler.handle("+7111222334455", chat);
         verify(messageService, times(1)).sendMessage(anyLong(), eq(InformationConstants.PHONE_WRONG));
         userRepository.findById(chat.id())
                 .ifPresent(user -> assertThat(user.getPhoneNumber()).isEqualTo("+79115648532"));

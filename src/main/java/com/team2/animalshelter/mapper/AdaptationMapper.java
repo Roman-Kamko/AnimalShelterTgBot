@@ -27,13 +27,13 @@ public class AdaptationMapper {
     /**
      * Длительность адаптационного периода.
      */
-    private final int duration = 30;
+    private final int durationInDays = 30;
 
     //todo проверить
     public Adaptation toEntity(AdaptationDtoIn fromObj) {
         var toObj = new Adaptation();
         toObj.setStartDate(LocalDate.now());
-        toObj.setEndDate(LocalDate.now().plusDays(duration));
+        toObj.setEndDate(LocalDate.now().plusDays(durationInDays));
         toObj.setAnimal(verifyAnimal(fromObj.getAnimalId()));
         copy(fromObj, toObj);
         return toObj;

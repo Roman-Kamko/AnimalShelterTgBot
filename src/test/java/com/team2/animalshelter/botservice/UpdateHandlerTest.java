@@ -7,6 +7,7 @@ import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.response.SendResponse;
 import com.team2.animalshelter.repository.UserRepository;
+import com.team2.animalshelter.repository.VolunteerRepository;
 import com.team2.animalshelter.service.AnimalService;
 import com.team2.animalshelter.service.ShelterService;
 import com.team2.animalshelter.service.UserService;
@@ -39,6 +40,10 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = UpdateHandler.class)
 class UpdateHandlerTest {
 
+    @MockBean
+    private ReportHandler reportHandler;
+    @MockBean
+    private VolunteerRepository volunteerRepository;
     @MockBean
     private AnimalService animalService;
     @MockBean
@@ -112,7 +117,7 @@ class UpdateHandlerTest {
         SendMessage actual = getArgumentCaptor(START.getText()).getValue();
         assertAll(
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
-                () -> assertThat(actual.getParameters().get("text")).isEqualTo("Привет"),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.GREETINGS),
                 () -> assertThat(actual.getParameters().get("parse_mode")).isEqualTo("HTML"),
                 () -> assertThat(actual.getParameters().get("disable_web_page_preview")).isEqualTo(true)
         );
@@ -134,7 +139,7 @@ class UpdateHandlerTest {
     void shouldStartPhoneNumberHandleIfTextStartWithPlus() throws IOException, URISyntaxException {
         var actual = getArgumentCaptor("+71112223344").getValue();
         assertAll(
-                () -> verify(phoneNumberHandler, times(1)).handle(any(Chat.class), eq("+71112223344")),
+                () -> verify(phoneNumberHandler, times(1)).handle(eq("+71112223344"), any(Chat.class)),
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo(InformationConstants.PHONE_ACCEPTED)
         );
@@ -147,7 +152,7 @@ class UpdateHandlerTest {
         Update update = getUpdate(json, command);
         updateHandler.handleUpdate(update);
         ArgumentCaptor<SendMessage> argumentCaptor = ArgumentCaptor.forClass(SendMessage.class);
-        Mockito.verify(telegramBot).execute(argumentCaptor.capture());
+        verify(telegramBot).execute(argumentCaptor.capture());
         return argumentCaptor;
     }
 

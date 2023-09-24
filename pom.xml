@@ -18,10 +18,11 @@
         <testconteiners.version>1.19.0</testconteiners.version>
         <pengard.version>5.7.0</pengard.version>
         <springdoc.version>1.7.0</springdoc.version>
+        <faker.version>1.0.2</faker.version>
     </properties>
     <dependencies>
 
-    <!--boot-starters-->
+        <!--boot-starters-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -41,7 +42,7 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-    <!--database-->
+        <!--database-->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -52,7 +53,7 @@
             <artifactId>liquibase-core</artifactId>
         </dependency>
 
-    <!--tests-->
+        <!--tests-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -63,22 +64,28 @@
             <artifactId>postgresql</artifactId>
             <version>${testconteiners.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${faker.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-    <!--lombok-->
+        <!--lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-    <!--telegram-->
+        <!--telegram-->
         <dependency>
             <groupId>com.github.pengrad</groupId>
             <artifactId>java-telegram-bot-api</artifactId>
             <version>${pengard.version}</version>
         </dependency>
 
-    <!--springdoc-->
+        <!--springdoc-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>

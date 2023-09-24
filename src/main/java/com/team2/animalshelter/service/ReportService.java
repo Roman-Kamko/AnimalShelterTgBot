@@ -1,5 +1,7 @@
 package com.team2.animalshelter.service;
 
+import com.pengrad.telegrambot.model.Message;
+import com.team2.animalshelter.botservice.MessageService;
 import com.team2.animalshelter.dto.in.ReportDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.entity.Report;
@@ -8,6 +10,7 @@ import com.team2.animalshelter.mapper.ReportMapper;
 import com.team2.animalshelter.repository.ReportRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,8 @@ public class ReportService {
     private final ReportRepository reportRepository;
     private final ReportMapper reportMapper;
     private final ImageService imageService;
+    private final MessageService messageService;
+
     public static final String REPORT_BUCKET = "reports";
     @Value("${server.port}")
     private int port;
@@ -53,6 +58,18 @@ public class ReportService {
                     return reportRepository.save(report);
                 })
                 .map(reportMapper::toDto)
+                .orElseThrow(EntityCreateException::new);
+    }
+
+    @Transactional
+    public Report createFromTelegram(Message message) {
+        return Optional.of(message)
+                .map(reportMapper::toEntity)
+                .map(report -> {
+                    reportRepository.saveAndFlush(report);
+                    uploadImage(report);
+                    return reportRepository.save(report);
+                })
                 .orElseThrow(EntityCreateException::new);
     }
 
@@ -95,15 +112,30 @@ public class ReportService {
         if (!image.isEmpty()) {
             imageService.upload(image.getOriginalFilename(), REPORT_BUCKET, image.getInputStream());
             report.setPhoto(image.getOriginalFilename());
-            report.setPhotoUrl(
-                    UriComponentsBuilder.newInstance()
-                            .scheme("http")
-                            .host("localhost")
-                            .port(port)
-                            .pathSegment("api", "v1", "reports", String.valueOf(report.getId()), "photo")
-                            .toUriString()
-            );
+            report.setPhotoUrl(buildUrl(report));
         }
     }
 
+    /**
+     * Загрузка картинки на сервер из телеграма.
+     *
+     * @param report {@link Report}.
+     */
+    @SneakyThrows
+    private void uploadImage(Report report) {
+        messageService.getPhoto(report).ifPresent(image -> {
+            imageService.upload(report.getPhoto(), REPORT_BUCKET, image);
+            report.setPhotoUrl(buildUrl(report));
+        });
+    }
+
+    @NotNull
+    private String buildUrl(Report report) {
+        return UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(port)
+                .pathSegment("api", "v1", "reports", String.valueOf(report.getId()), "photo")
+                .toUriString();
+    }
 }
