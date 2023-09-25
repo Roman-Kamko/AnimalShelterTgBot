@@ -47,4 +47,19 @@ public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
             """)
     List<Adaptation> findAllWhereEndDateEqualsLastReportDate();
 
+    @Query(value = """
+            select case
+                       when (select date
+                             from report r
+                                      join adaptation a on a.id = r.adaptation_id
+                             where a.owner_id = :ownerId
+                             order by date desc
+                             limit 1) <= now()::date - 2
+                           then true
+                       else false
+                       end
+            """,
+            nativeQuery = true)
+    boolean isExpiredAdaptation (@Param("ownerId") Long ownerId);
+
 }

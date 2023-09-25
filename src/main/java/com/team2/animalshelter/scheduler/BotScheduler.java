@@ -5,12 +5,9 @@ import com.team2.animalshelter.entity.Adaptation;
 import com.team2.animalshelter.entity.Owner;
 import com.team2.animalshelter.repository.AdaptationRepository;
 import com.team2.animalshelter.repository.OwnerRepository;
-import com.team2.animalshelter.service.AdaptationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 import static com.team2.animalshelter.botservice.InformationConstants.*;
 import static com.team2.animalshelter.entity.enums.AdaptationStatus.*;
@@ -21,7 +18,6 @@ public final class BotScheduler {
 
     private final OwnerRepository ownerRepository;
     private final AdaptationRepository adaptationRepository;
-    private final AdaptationService adaptationService;
     private final MessageService messageService;
 
     /**
@@ -67,17 +63,11 @@ public final class BotScheduler {
      */
     @Scheduled(cron = "@daily")
     private void sendAdaptationWarning() {
-        int ignoredReportsDays = 2;
         for (Owner owner : ownerRepository.findAll()) {
-            for (Adaptation adaptation : adaptationRepository.findAll()) {
-                var lastReportDate = adaptationService.findLastReportDate(owner.getTelegramId());
-                if (!lastReportDate.isEqual(adaptation.getEndDate()) &&
-                        lastReportDate.isBefore(LocalDate.now().minusDays(ignoredReportsDays))) {
-                    messageService.sendMessage(owner.getTelegramId(), ADAPTATION_WARN);
-                    messageService.sendMessageToVolunteers(VOL_ADAPTATION_WARN, owner.getTelegramId());
-                }
+            if (adaptationRepository.isExpiredAdaptation(owner.getTelegramId())) {
+                messageService.sendMessage(owner.getTelegramId(), ADAPTATION_WARN);
+                messageService.sendMessageToVolunteers(VOL_ADAPTATION_WARN, owner.getTelegramId());
             }
-
         }
     }
 
