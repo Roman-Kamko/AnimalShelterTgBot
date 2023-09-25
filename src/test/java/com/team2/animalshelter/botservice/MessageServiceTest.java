@@ -9,8 +9,6 @@ import com.pengrad.telegrambot.request.SendMessage;
 import com.pengrad.telegrambot.request.SendPhoto;
 import com.team2.animalshelter.entity.Volunteer;
 import com.team2.animalshelter.repository.VolunteerRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -57,7 +55,7 @@ class MessageServiceTest {
     }
 
     @Test
-    void sendMessageToVolunteers() {
+    void sendMessageToVolunteersWithId() {
         var volunteer = new Volunteer();
         volunteer.setTelegramId(VOL_ID);
         var volunteers = new ArrayList<>(List.of(volunteer));
@@ -68,6 +66,21 @@ class MessageServiceTest {
                 () -> verify(telegramBot, times(ONCE)).execute(any(SendMessage.class)),
                 () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(VOL_ID),
                 () -> assertThat(actual.getParameters().get("text")).isEqualTo(USER_ID + " " + TEXT)
+        );
+    }
+
+    @Test
+    void sendMessageToVolunteers() {
+        var volunteer = new Volunteer();
+        volunteer.setTelegramId(VOL_ID);
+        var volunteers = new ArrayList<>(List.of(volunteer));
+        doReturn(volunteers).when(volunteerRepository).findAll();
+        messageService.sendMessageToVolunteers(TEXT);
+        var actual = getMessage(SendMessage.class);
+        assertAll(
+                () -> verify(telegramBot, times(ONCE)).execute(any(SendMessage.class)),
+                () -> assertThat(actual.getParameters().get("chat_id")).isEqualTo(VOL_ID),
+                () -> assertThat(actual.getParameters().get("text")).isEqualTo(TEXT)
         );
     }
 

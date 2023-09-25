@@ -64,6 +64,7 @@ public class CommandHandler {
         commandExecutor.put(CAT_SHELTER.getText(), this::sendCatList);
         commandExecutor.put(DOG_SHELTER.getText(), this::sendDogList);
         commandExecutor.put(CALL_A_VOLUNTEER.getText(), this::callVolunteer);
+        commandExecutor.put(SEND_REPORT_FORM.getText(), this::sendReportInfo);
     }
 
     /**
@@ -237,6 +238,10 @@ public class CommandHandler {
     private void callVolunteer(Message message) {
         messageService.sendMessage(message.chat().id(), InformationConstants.CALL_VOLUNTEER);
         messageService.sendForwardMessageToVolunteers(message);
+    }
+
+    private void sendReportInfo(Message message) {
+        messageService.sendMessage(message.chat().id(), InformationConstants.REPORT_MESSAGE);
     }
 
 }

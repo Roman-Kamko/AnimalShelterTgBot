@@ -24,14 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
-import java.util.concurrent.CountDownLatch;
 import java.util.stream.Stream;
 
 import static com.team2.animalshelter.botservice.Command.*;
@@ -42,6 +40,8 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = UpdateHandler.class)
 class UpdateHandlerTest {
 
+    @MockBean
+    private ReportHandler reportHandler;
     @MockBean
     private VolunteerRepository volunteerRepository;
     @MockBean

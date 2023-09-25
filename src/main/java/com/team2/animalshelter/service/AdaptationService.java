@@ -38,13 +38,13 @@ public class AdaptationService {
     }
 
     /**
-     * Найти список {@link Adaptation} с нужным статусом.
+     * Найти {@link Adaptation} с нужными статусами.
      *
-     * @param status {@link AdaptationStatus}
+     * @param statuses {@link AdaptationStatus}
      * @return {@code List<AdaptationDtoOut>}.
      */
-    public List<AdaptationDtoOut> findAllByAdaptationStatus(AdaptationStatus status) {
-        return adaptationRepository.findAllByAdaptationStatus(status).stream()
+    public List<AdaptationDtoOut> findAllByAdaptationStatus(AdaptationStatus ...statuses) {
+        return adaptationRepository.findAllByAdaptationStatus(statuses).stream()
                 .map(adaptationMapper::toDto)
                 .collect(toList());
     }
