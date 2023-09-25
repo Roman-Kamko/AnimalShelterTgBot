@@ -33,11 +33,6 @@ public class Adaptation {
      */
     String comment;
 
-    /**
-     * Флаг для волонтеров в случае при длительной не отправке отчетов опекуном.
-     */
-    Boolean problem;
-
     @Enumerated(EnumType.STRING)
     AdaptationStatus adaptationStatus;
 

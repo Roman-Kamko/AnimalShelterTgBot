@@ -31,8 +31,6 @@ public class AdaptationDtoOut {
     )
     String comment;
 
-    Boolean problem;
-
     @Schema(
             name = "Текущий статус адаптации",
             description = "IN_PROGRESS - в процессе, SUCCESSFUL - успешно завершена, " +

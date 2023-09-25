@@ -27,7 +27,7 @@ public class AnimalDtoIn {
     String breed;
 
     @NotNull
-    @Pattern(regexp = "true$|false$")
+    //@Pattern(regexp = "true$|false$")
     @Schema(
             description = "true - здоров, false - имеются проблемы со здоровьем",
             example = "true"
@@ -35,7 +35,7 @@ public class AnimalDtoIn {
     Boolean healthy;
 
     @NotNull
-    @Pattern(regexp = "CAT$|DOG$")
+    //@Pattern(regexp = "CAT$|DOG$")
     @Schema(description = "Тип животного", example = "CAT")
     AnimalType animalType;
 

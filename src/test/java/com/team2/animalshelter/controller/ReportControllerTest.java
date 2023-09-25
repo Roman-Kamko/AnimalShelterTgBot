@@ -3,7 +3,6 @@ package com.team2.animalshelter.controller;
 import com.team2.animalshelter.dto.in.ReportDtoIn;
 import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.exception.ReportNotFoundException;
-import com.team2.animalshelter.exception.VolunteerNotFoundException;
 import com.team2.animalshelter.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,7 +25,6 @@ import java.util.Optional;
 
 import static com.team2.animalshelter.controller.AdaptationControllerTest.ADAPTATION_DTO_OUT;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,12 +54,12 @@ class ReportControllerTest {
     public static final MockMultipartFile MULTIPART_IMAGES = new MockMultipartFile("file",
             "testAddress.jpg",
             MediaType.IMAGE_JPEG.getType(),
-            "testAddress.jpg" .getBytes());
+            "testAddress.jpg".getBytes());
 
     public static final MockMultipartFile MULTIPART_JSON = new MockMultipartFile("dto",
             "",
             "application/json",
-            "{\"reportMessage\": \"somevalue\",\"adaptationId\": \"2\"}" .getBytes());
+            "{\"reportMessage\": \"somevalue\",\"adaptationId\": \"2\"}".getBytes());
 
     @BeforeEach
     void setUp() {
@@ -161,9 +158,9 @@ class ReportControllerTest {
                     .andDo(print());
         }
 
-        /*@Test
+        @Test
         void update() throws Exception {
-            when(reportService.findById(anyLong())).thenReturn(Optional.of(REPORT_DTO_OUT));
+            when(reportService.update(anyLong(), any(ReportDtoIn.class), any(MultipartFile.class))).thenReturn(Optional.of(REPORT_DTO_OUT));
             mockMvc.perform(
                             MockMvcRequestBuilders.multipart(HttpMethod.PUT, "/api/v1/reports/" + 1L)
                                     .file(MULTIPART_JSON)
@@ -171,7 +168,7 @@ class ReportControllerTest {
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
-        }*/
+        }
 
         @Test
         void delete() throws Exception {

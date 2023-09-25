@@ -57,7 +57,6 @@ public class AdaptationMapper {
                 fromObj.getStartDate(),
                 fromObj.getEndDate(),
                 fromObj.getComment(),
-                fromObj.getProblem(),
                 fromObj.getAdaptationStatus(),
                 animalMapper.toDto(fromObj.getAnimal()),
                 ownerMapper.toDto(fromObj.getOwner())
@@ -78,7 +77,7 @@ public class AdaptationMapper {
      *
      * @param animalId идентификатор животного.
      * @return {@link Animal} в случае если id животного существует в базе и еще не взято под опеку.
-     * @throws AnimalNotFoundException выбрасывается если животного нет в базе.
+     * @throws AnimalNotFoundException       выбрасывается если животного нет в базе.
      * @throws AnimalAlreadyAdoptedException выбрасывается если животное уже взято под опеку.
      */
     private Animal verifyAnimal(Long animalId) {

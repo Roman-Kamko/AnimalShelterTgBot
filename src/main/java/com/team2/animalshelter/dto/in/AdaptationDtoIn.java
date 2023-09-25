@@ -13,7 +13,7 @@ import javax.validation.constraints.Positive;
 public class AdaptationDtoIn {
 
     @NotNull
-    @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$|EXTENDED$")
+    //@Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$|EXTENDED$")
     @Schema(
             description = "IN_PROGRESS - в процессе, SUCCESSFUL - успешно завершена, " +
                     "NOT_SUCCESSFUL - провалена, EXTENDED - продлен; по умолчанию - IN_PROGRESS",
