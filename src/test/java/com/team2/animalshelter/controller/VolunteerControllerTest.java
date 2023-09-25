@@ -44,7 +44,6 @@ class VolunteerControllerTest {
     private static final String VOLUNTEER_NAME = "name";
     private static final String VOLUNTEER_FIRST_NAME = "first_name";
     private static final String VOLUNTEER_LAST_NAME = "last_name";
-    private static final Long VOLUNTEER_SHELTER_ID = 2L;
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final JSONObject VOLUNTEER_OBJECT = new JSONObject();
     private static final ShelterDtoOut SHELTER_DTO_OUT = new ShelterDtoOut(
@@ -69,17 +68,6 @@ class VolunteerControllerTest {
         VOLUNTEER_OBJECT.put("firstname", VOLUNTEER_FIRST_NAME);
         VOLUNTEER_OBJECT.put("lastname", VOLUNTEER_LAST_NAME);
     }
-
-    /*private static ResultMatcher shelter(final String prefix, final ShelterDtoOut shelterDtoOut) {
-        return ResultMatcher.matchAll(
-                jsonPath(prefix + ".name").value(shelterDtoOut.getName()),
-                jsonPath(prefix + ".address").value(shelterDtoOut.getAddress()),
-                jsonPath(prefix + ".phoneNumber").value(shelterDtoOut.getPhoneNumber()),
-                jsonPath(prefix + ".timeTable").value(shelterDtoOut.getTimeTable()),
-                jsonPath(prefix + ".drivingDirections").value(shelterDtoOut.getDrivingDirections()),
-                jsonPath(prefix + ".drivingDirectionsUrl").value(shelterDtoOut.getDrivingDirectionsUrl())
-        );
-    }*/
 
     @Nested
     @Tag("volunteerControllerCrud")

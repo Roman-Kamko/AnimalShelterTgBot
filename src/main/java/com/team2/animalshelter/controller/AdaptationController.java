@@ -70,7 +70,7 @@ public class AdaptationController {
         return adaptationService.findAll();
     }
 
-    @GetMapping("/{status}")
+    @GetMapping("/{status}/status")
     @Operation(
             summary = "Найти адоптации по статусу",
             responses = {
@@ -88,27 +88,9 @@ public class AdaptationController {
             @PathVariable
             @Parameter(description = "Статус адоптации")
             @Pattern(regexp = "IN_PROGRESS$|SUCCESSFUL$|NOT_SUCCESSFUL$")
-            AdaptationStatus status
+            String status
     ) {
-        return adaptationService.findAllByAdaptationStatus(status);
-    }
-
-    @GetMapping("/problem")
-    @Operation(
-            summary = "Найти проблемные адоптации",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Запрос выполнен",
-                            content = @Content(
-                                    mediaType = MediaType.APPLICATION_JSON_VALUE,
-                                    array = @ArraySchema(schema = @Schema(implementation = AdaptationDtoOut.class))
-                            )
-                    )
-            }
-    )
-    public List<AdaptationDtoOut> findAllWithProblem() {
-        return adaptationService.findAllWithProblem();
+        return adaptationService.findAllByAdaptationStatus(AdaptationStatus.valueOf(status.toUpperCase()));
     }
 
     @PostMapping

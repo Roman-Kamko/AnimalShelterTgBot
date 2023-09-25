@@ -4,7 +4,10 @@ import com.team2.animalshelter.entity.enums.AnimalType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 
 @Value
 @Schema(name = "Animal", description = "Животное")
@@ -24,13 +27,12 @@ public class AnimalDtoIn {
     String breed;
 
     @NotNull
-
-    @Pattern(regexp = "true$|false$", message = "разрешенный ввод: true или false")
+    //@Pattern(regexp = "true$|false$")
     @Schema(
             description = "true - здоров, false - имеются проблемы со здоровьем",
             example = "true"
     )
-    String healthy;
+    Boolean healthy;
 
     @NotNull
     //@Pattern(regexp = "CAT$|DOG$")

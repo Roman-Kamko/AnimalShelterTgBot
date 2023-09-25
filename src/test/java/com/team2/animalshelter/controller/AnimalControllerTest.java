@@ -47,11 +47,11 @@ class AnimalControllerTest {
     private static final JSONObject ANIMAL_OBJECT = new JSONObject();
 
     public static final AnimalDtoIn ANIMAL_DTO_IN = new AnimalDtoIn(
-            ANIMAL_NAME, ANIMAL_AGE, ANIMAL_BREED, ANIMAL_IS_HEAlTLY, ANIMAL_TYPE
+            ANIMAL_NAME, ANIMAL_AGE, ANIMAL_BREED, Boolean.valueOf(ANIMAL_IS_HEAlTLY), ANIMAL_TYPE
     );
 
     public static final AnimalDtoOut ANIMAL_DTO_OUT = new AnimalDtoOut(
-            ANIMAL_ID, ANIMAL_NAME, ANIMAL_AGE, ANIMAL_BREED, Boolean.getBoolean(ANIMAL_IS_HEAlTLY), ANIMAL_TYPE
+            ANIMAL_ID, ANIMAL_NAME, ANIMAL_AGE, ANIMAL_BREED, Boolean.valueOf(ANIMAL_IS_HEAlTLY), ANIMAL_TYPE
     );
 
     @BeforeEach

@@ -49,17 +49,6 @@ public class AdaptationService {
                 .collect(toList());
     }
 
-    /**
-     * Найти проблемные {@link Adaptation}.
-     *
-     * @return {@code List<AdaptationDtoOut>}.
-     */
-    public List<AdaptationDtoOut> findAllWithProblem() {
-        return adaptationRepository.findAllWithProblem().stream()
-                .map(adaptationMapper::toDto)
-                .collect(toList());
-    }
-
     @Transactional
     public AdaptationDtoOut create(AdaptationDtoIn adaptationDtoIn) {
         return Optional.of(adaptationDtoIn)

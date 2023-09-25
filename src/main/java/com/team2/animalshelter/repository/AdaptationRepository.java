@@ -12,13 +12,6 @@ import java.util.Optional;
 
 public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
 
-    @Query("""
-            select ad
-            from Adaptation ad
-                join fetch ad.animal a
-                join fetch ad.owner o
-            where ad.problem = true
-            """)
     List<Adaptation> findAllWithProblem();
 
     @Query("""

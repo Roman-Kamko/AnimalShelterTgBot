@@ -52,7 +52,6 @@ class ReportServiceTest extends IntegrationTestBase {
                 LocalDate.of(2023, 9, 9),
                 LocalDate.of(2023, 10, 9),
                 null,
-                false,
                 AdaptationStatus.IN_PROGRESS,
                 new AnimalDtoOut(
                         3L,
