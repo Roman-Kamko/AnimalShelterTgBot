@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Value
-@Schema(description = "Опекун")
+@Schema(name = "Owner", description = "Опекун, пользователь взявший животное под опеку")
 public class OwnerDto {
 
     @NotNull
