@@ -62,7 +62,7 @@ public class ReportService {
     }
 
     @Transactional
-    public Report createFromTelegram(Message message) {
+    public ReportDtoOut createFromTelegram(Message message) {
         return Optional.of(message)
                 .map(reportMapper::toEntity)
                 .map(report -> {
@@ -70,6 +70,7 @@ public class ReportService {
                     uploadImage(report);
                     return reportRepository.save(report);
                 })
+                .map(reportMapper::toDto)
                 .orElseThrow(EntityCreateException::new);
     }
 

@@ -21,7 +21,12 @@ public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
             """)
     List<Adaptation> findAllWithProblem();
 
-    List<Adaptation> findAllByAdaptationStatus(AdaptationStatus status);
+    @Query("""
+            select a
+            from Adaptation a
+            where a.adaptationStatus in (:statuses)
+            """)
+    List<Adaptation> findAllByAdaptationStatus(AdaptationStatus... statuses);
 
     @Query("""
             select r
@@ -33,5 +38,13 @@ public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
     List<Report> findLastReportDate(@Param("ownerId") Long ownerId);
 
     Optional<Adaptation> findByOwner_telegramId(Long ownerId);
+
+    @Query("""
+            select a
+            from Adaptation a
+                join fetch Report r
+            where a.endDate = r.date
+            """)
+    List<Adaptation> findAllWhereEndDateEqualsLastReportDate();
 
 }

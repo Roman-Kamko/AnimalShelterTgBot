@@ -103,9 +103,7 @@ public class MessageService {
     public Optional<byte[]> getPhoto(Report report) {
         var response = telegramBot.execute(new GetFile(report.getPhoto()));
         var content = telegramBot.getFileContent(response.file());
-        return content != null
-                ? Optional.of(content)
-                : Optional.empty();
+        return Optional.ofNullable(content);
     }
 
 }
