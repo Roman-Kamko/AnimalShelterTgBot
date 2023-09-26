@@ -56,7 +56,6 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 LocalDate.of(2023, 9, 9),
                 LocalDate.of(2023, 10, 9),
                 null,
-                false,
                 AdaptationStatus.IN_PROGRESS,
                 animal,
                 owner
@@ -80,15 +79,6 @@ class AdaptationServiceTest extends IntegrationTestBase {
     }
 
     @Test
-    void shouldReturnAllProblemAdaptationsWhenFindAllWithProblem() {
-        var adaptations = adaptationService.findAllWithProblem();
-        assertThat(adaptations).hasSize(1);
-        for (AdaptationDtoOut adaptation : adaptations) {
-            assertThat(adaptation.getProblem()).isTrue();
-        }
-    }
-
-    @Test
     void shouldCreateAdaptationWhenCreate() {
         var requestBody = new AdaptationDtoIn(
                 AdaptationStatus.IN_PROGRESS,
@@ -101,7 +91,6 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 LocalDate.now(),
                 LocalDate.now().plusDays(30),
                 AdaptationStatus.IN_PROGRESS.getDescription(),
-                null,
                 AdaptationStatus.IN_PROGRESS,
                 new AnimalDtoOut(
                         1L,
@@ -157,18 +146,15 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 LocalDate.of(2023, 9, 9),
                 LocalDate.of(2023, 10, 9),
                 AdaptationStatus.SUCCESSFUL.getDescription(),
-                false,
                 AdaptationStatus.SUCCESSFUL,
                 animal,
                 owner
         );
         var adaptations = adaptationService.findAll();
-        actualResult.ifPresent(actual -> {
-            assertAll(
-                    () -> assertThat(actual).isEqualTo(expected),
-                    () -> assertThat(adaptations).contains(actual)
-            );
-        });
+        actualResult.ifPresent(actual -> assertAll(
+                () -> assertThat(actual).isEqualTo(expected),
+                () -> assertThat(adaptations).contains(actual)
+        ));
     }
 
     @Test

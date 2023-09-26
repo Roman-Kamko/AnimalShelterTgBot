@@ -3,8 +3,6 @@
   "from": {
     "id": 111111
   },
-  "chat": {
-    "id": 111111
-  },
-  "text": "text"
+  "text": "text",
+  "caption": "caption"
 }
