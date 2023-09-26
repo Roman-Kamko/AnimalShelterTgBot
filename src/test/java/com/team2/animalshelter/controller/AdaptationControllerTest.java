@@ -121,6 +121,21 @@ class AdaptationControllerTest {
         }
 
         @Test
+        @DisplayName("find [negative]")
+        void find404NotFound() throws Exception {
+            when(adaptationService.findById(anyLong())).thenThrow(AdaptationNotFoundException.class);
+
+            mockMvc.perform(MockMvcRequestBuilders
+                            .put("/api/v1/adaptations/{id}", ADAPTATION_ID)
+                            .content(OBJECT_MAPPER.writeValueAsString(ADAPTATION_DTO_IN))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+                    )
+                    .andExpect(status().isNotFound())
+                    .andDo(print());
+        }
+
+        @Test
         @DisplayName("findAll")
         void findAll() throws Exception {
             when(adaptationService.findAll()).thenReturn(List.of(ADAPTATION_DTO_OUT));
@@ -207,6 +222,21 @@ class AdaptationControllerTest {
                     .andExpect(animal("animal", ADAPTATION_DTO_OUT.getAnimal()))
                     .andExpect(owner("owner", ADAPTATION_DTO_OUT.getOwner()));
             verify(adaptationService, times(1)).update(anyLong(), any(AdaptationDtoIn.class));
+        }
+
+        @Test
+        @DisplayName("update [negative]")
+        void update404NotFound() throws Exception {
+            when(adaptationService.update(anyLong(), any(AdaptationDtoIn.class))).thenThrow(AdaptationNotFoundException.class);
+
+            mockMvc.perform(MockMvcRequestBuilders
+                            .put("/api/v1/adaptations/{id}", ADAPTATION_ID)
+                            .content(OBJECT_MAPPER.writeValueAsString(ADAPTATION_DTO_IN))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+                    )
+                    .andExpect(status().isNotFound())
+                    .andDo(print());
         }
 
         @Test

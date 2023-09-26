@@ -2,8 +2,10 @@ package com.team2.animalshelter.controller;
 
 import com.team2.animalshelter.dto.in.ShelterDtoIn;
 import com.team2.animalshelter.dto.out.ShelterDtoOut;
+import com.team2.animalshelter.exception.ShelterNotFoundException;
 import com.team2.animalshelter.service.ShelterService;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -93,6 +95,19 @@ class ShelterControllerTest {
                                 .file(MULTIPART_IMAGES)
                 )
                 .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("update [negative]")
+    void update404NotFound() throws Exception {
+        when(shelterService.update(any(ShelterDtoIn.class), any(MultipartFile.class))).thenThrow(ShelterNotFoundException.class);
+        mockMvc.perform(
+                        MockMvcRequestBuilders.multipart(HttpMethod.PUT, "/api/v1/shelters")
+                                .file(MULTIPART_JSON)
+                                .file(MULTIPART_IMAGES)
+                )
+                .andExpect(status().isNotFound())
                 .andDo(print());
     }
 }
