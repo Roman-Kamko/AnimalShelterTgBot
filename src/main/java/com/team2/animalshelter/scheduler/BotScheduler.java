@@ -25,23 +25,22 @@ public final class BotScheduler {
      * об изменении статуса опекуна.
      */
     @Scheduled(cron = "@daily")
-    private void sendNotificationAboutAdaptationStatus() {
-        for (Owner owner : ownerRepository.findAll()) {
-            var adaptations = adaptationRepository.findAllByAdaptationStatus(NOT_SUCCESSFUL, EXTENDED, SUCCESSFUL);
-            for (Adaptation adaptation : adaptations) {
-                switch (adaptation.getAdaptationStatus()) {
-                    case NOT_SUCCESSFUL -> {
-                        messageService.sendMessage(owner.getTelegramId(), STATUS_NOT_SUCCESSFUL);
-                        messageService.sendMessageToVolunteers(VOL_NOTIFICATION_NOT_SUCCESSFUL, owner.getTelegramId());
-                    }
-                    case EXTENDED -> {
-                        messageService.sendMessage(owner.getTelegramId(), STATUS_EXTENDED);
-                        messageService.sendMessageToVolunteers(VOL_NOTIFICATION_EXTENDED, owner.getTelegramId());
-                    }
-                    case SUCCESSFUL -> {
-                        messageService.sendMessage(owner.getTelegramId(), STATUS_SUCCESSFUL);
-                        messageService.sendMessageToVolunteers(VOL_NOTIFICATION_SUCCESSFUL, owner.getTelegramId());
-                    }
+    public void sendNotificationAboutAdaptationStatus() {
+        var adaptations = adaptationRepository.findAllByAdaptationStatus(NOT_SUCCESSFUL, EXTENDED, SUCCESSFUL);
+        for (Adaptation adaptation : adaptations) {
+            final var ownerId = adaptation.getOwner().getTelegramId();
+            switch (adaptation.getAdaptationStatus()) {
+                case NOT_SUCCESSFUL -> {
+                    messageService.sendMessage(ownerId, STATUS_NOT_SUCCESSFUL);
+                    messageService.sendMessageToVolunteers(VOL_NOTIFICATION_NOT_SUCCESSFUL, ownerId);
+                }
+                case EXTENDED -> {
+                    messageService.sendMessage(ownerId, STATUS_EXTENDED);
+                    messageService.sendMessageToVolunteers(VOL_NOTIFICATION_EXTENDED, ownerId);
+                }
+                case SUCCESSFUL -> {
+                    messageService.sendMessage(ownerId, STATUS_SUCCESSFUL);
+                    messageService.sendMessageToVolunteers(VOL_NOTIFICATION_SUCCESSFUL, ownerId);
                 }
             }
         }
@@ -51,7 +50,7 @@ public final class BotScheduler {
      * Уведомляет волонтеров о том что адаптационный период подошел к концу.
      */
     @Scheduled(cron = "@daily")
-    private void successfulAdaptation() {
+    public void successfulAdaptation() {
         for (Adaptation adaptation : adaptationRepository.findAllWhereEndDateEqualsLastReportDate()) {
             messageService.sendMessageToVolunteers(END_ADAPTATION, adaptation.getOwner().getTelegramId());
         }
@@ -62,7 +61,7 @@ public final class BotScheduler {
      * Так же уведомляет волонтеров о проблемных опекунах.
      */
     @Scheduled(cron = "@daily")
-    private void sendAdaptationWarning() {
+    public void sendAdaptationWarning() {
         for (Owner owner : ownerRepository.findAll()) {
             if (adaptationRepository.isExpiredAdaptation(owner.getTelegramId())) {
                 messageService.sendMessage(owner.getTelegramId(), ADAPTATION_WARN);

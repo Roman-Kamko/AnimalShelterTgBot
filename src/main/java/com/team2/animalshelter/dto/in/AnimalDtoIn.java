@@ -6,7 +6,6 @@ import lombok.Value;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 
 @Value
@@ -27,7 +26,6 @@ public class AnimalDtoIn {
     String breed;
 
     @NotNull
-    //@Pattern(regexp = "true$|false$")
     @Schema(
             description = "true - здоров, false - имеются проблемы со здоровьем",
             example = "true"
@@ -35,7 +33,6 @@ public class AnimalDtoIn {
     Boolean healthy;
 
     @NotNull
-    //@Pattern(regexp = "CAT$|DOG$")
     @Schema(description = "Тип животного", example = "CAT")
     AnimalType animalType;
 

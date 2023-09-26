@@ -12,8 +12,6 @@ import java.util.Optional;
 
 public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
 
-    List<Adaptation> findAllWithProblem();
-
     @Query("""
             select a
             from Adaptation a

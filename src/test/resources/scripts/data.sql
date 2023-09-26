@@ -15,10 +15,10 @@ VALUES (111111, 'Ivan_Ivanov', 'Иван', 'Иванов', '+79115648532'),
        (444444, 'Semen_Semenov', 'Семен', 'Семенов', '+79308493265'),
        (555555, 'Svetlaya', 'Света', 'Светикова', '+79913665885');
 
-INSERT INTO adaptation (id, start_date, end_date, comment, problem, adaptation_status, animal_id, owner_id)
-VALUES (1, '2023-09-09', '2023-10-09', null, false, 'IN_PROGRESS', 3, 111111),
-       (2, '2023-09-09', '2023-10-09', null, false, 'IN_PROGRESS', 7, 444444),
-       (3, '2023-09-09', '2023-10-09', 'забыла отправить отчет', true, 'IN_PROGRESS', 2, 555555);
+INSERT INTO adaptation (id, start_date, end_date, comment, adaptation_status, animal_id, owner_id)
+VALUES (1, '2023-09-09', '2023-10-09', null, 'IN_PROGRESS', 3, 111111),
+       (2, '2023-09-09', '2023-10-09', null, 'IN_PROGRESS', 7, 444444),
+       (3, '2023-09-09', '2023-10-09', 'забыла отправить отчет', 'IN_PROGRESS', 2, 555555);
 SELECT SETVAL('adaptation_id_seq', (SELECT MAX(id) FROM adaptation));
 
 INSERT INTO report (id, report_message, photo, photo_url, date, adaptation_id)

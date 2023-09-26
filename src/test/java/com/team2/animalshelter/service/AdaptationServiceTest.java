@@ -90,7 +90,7 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 4L,
                 LocalDate.now(),
                 LocalDate.now().plusDays(30),
-                null,
+                AdaptationStatus.IN_PROGRESS.getDescription(),
                 AdaptationStatus.IN_PROGRESS,
                 new AnimalDtoOut(
                         1L,
@@ -151,12 +151,10 @@ class AdaptationServiceTest extends IntegrationTestBase {
                 owner
         );
         var adaptations = adaptationService.findAll();
-        actualResult.ifPresent(actual -> {
-            assertAll(
-                    () -> assertThat(actual).isEqualTo(expected),
-                    () -> assertThat(adaptations).contains(actual)
-            );
-        });
+        actualResult.ifPresent(actual -> assertAll(
+                () -> assertThat(actual).isEqualTo(expected),
+                () -> assertThat(adaptations).contains(actual)
+        ));
     }
 
     @Test
