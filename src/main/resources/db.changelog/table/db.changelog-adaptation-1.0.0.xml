@@ -64,7 +64,8 @@
                                  baseColumnNames="owner_id"
                                  constraintName="FK_ADAPTATION_OWNER_ID"
                                  referencedTableName="owner"
-                                 referencedColumnNames="telegram_id"/>
+                                 referencedColumnNames="telegram_id"
+                                 deleteCascade="true"/>
         <rollback>
             <dropForeignKeyConstraint baseTableName="FK_ADAPTATION_OWNER_ID"/>
         </rollback>
