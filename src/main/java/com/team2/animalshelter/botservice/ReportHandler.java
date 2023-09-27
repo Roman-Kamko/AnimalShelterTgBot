@@ -33,7 +33,8 @@ public class ReportHandler {
         var id = message.from().id();
         if (ownersId.contains(id)) {
             if (message.caption() != null) {
-                if (adaptationService.findLastReportDate(id).equals(LocalDate.now())) {
+                var lastReportDate = adaptationService.findLastReportDate(id);
+                if (lastReportDate != null && lastReportDate.equals(LocalDate.now())) {
                     messageService.sendMessage(id, InformationConstants.REPORT_EXIST);
                     return;
                 }

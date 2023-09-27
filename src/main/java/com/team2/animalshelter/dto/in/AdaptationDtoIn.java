@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Value
-@Schema(name = "Adaptation", description = "Адаптационный период, устанавливается при взятии животного под опеку")
+@Schema(name = "AdaptationIn", description = "Адаптационный период, устанавливается при взятии животного под опеку")
 public class AdaptationDtoIn {
 
     @NotNull
