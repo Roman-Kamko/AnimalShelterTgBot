@@ -83,7 +83,7 @@ class AnimalServiceTest extends IntegrationTestBase {
                 "Пушок",
                 3,
                 "Сфинкс",
-                Boolean.valueOf("true"),
+                true,
                 AnimalType.CAT
         );
         var expected = new AnimalDtoOut(
@@ -108,7 +108,7 @@ class AnimalServiceTest extends IntegrationTestBase {
                 "Плюх",
                 4,
                 "Сфинкс",
-                Boolean.valueOf("true"),
+                true,
                 AnimalType.CAT
         );
         var actualResult = animalService.update(ID, requestBody);
