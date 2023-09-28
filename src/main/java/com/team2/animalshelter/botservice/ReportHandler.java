@@ -1,8 +1,8 @@
 package com.team2.animalshelter.botservice;
 
 import com.pengrad.telegrambot.model.Message;
+import com.team2.animalshelter.dto.out.ReportDtoOut;
 import com.team2.animalshelter.entity.Owner;
-import com.team2.animalshelter.entity.Report;
 import com.team2.animalshelter.repository.OwnerRepository;
 import com.team2.animalshelter.service.AdaptationService;
 import com.team2.animalshelter.service.ReportService;
@@ -33,7 +33,8 @@ public class ReportHandler {
         var id = message.from().id();
         if (ownersId.contains(id)) {
             if (message.caption() != null) {
-                if (adaptationService.findLastReportDate(id).equals(LocalDate.now())) {
+                var lastReportDate = adaptationService.findLastReportDate(id);
+                if (lastReportDate != null && lastReportDate.equals(LocalDate.now())) {
                     messageService.sendMessage(id, InformationConstants.REPORT_EXIST);
                     return;
                 }
@@ -49,7 +50,7 @@ public class ReportHandler {
         }
     }
 
-    private String buildInfo(Report report) {
+    private String buildInfo(ReportDtoOut report) {
         return "id отчета: %d".formatted(report.getId());
     }
 

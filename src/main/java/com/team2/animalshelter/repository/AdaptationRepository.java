@@ -13,15 +13,11 @@ import java.util.Optional;
 public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
 
     @Query("""
-            select ad
-            from Adaptation ad
-                join fetch ad.animal a
-                join fetch ad.owner o
-            where ad.problem = true
+            select a
+            from Adaptation a
+            where a.adaptationStatus in (:statuses)
             """)
-    List<Adaptation> findAllWithProblem();
-
-    List<Adaptation> findAllByAdaptationStatus(AdaptationStatus status);
+    List<Adaptation> findAllByAdaptationStatus(AdaptationStatus... statuses);
 
     @Query("""
             select r
@@ -33,5 +29,28 @@ public interface AdaptationRepository extends JpaRepository<Adaptation, Long> {
     List<Report> findLastReportDate(@Param("ownerId") Long ownerId);
 
     Optional<Adaptation> findByOwner_telegramId(Long ownerId);
+
+    @Query("""
+            select a
+            from Adaptation a
+                join fetch Report r
+            where a.endDate = r.date
+            """)
+    List<Adaptation> findAllWhereEndDateEqualsLastReportDate();
+
+    @Query(value = """
+            select case
+                       when (select date
+                             from report r
+                                      join adaptation a on a.id = r.adaptation_id
+                             where a.owner_id = :ownerId
+                             order by date desc
+                             limit 1) <= now()::date - 2
+                           then true
+                       else false
+                       end
+            """,
+            nativeQuery = true)
+    boolean isExpiredAdaptation (@Param("ownerId") Long ownerId);
 
 }
